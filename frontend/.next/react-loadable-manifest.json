@@ -1,0 +1,20 @@
+{
+  "..\\node_modules\\@tanstack\\query-devtools\\build\\dev.js -> ./DevtoolsComponent/XMTSMVTM.js": {
+    "id": "..\\node_modules\\@tanstack\\query-devtools\\build\\dev.js -> ./DevtoolsComponent/XMTSMVTM.js",
+    "files": [
+      "static/chunks/_app-pages-browser_node_modules_tanstack_query-devtools_build_DevtoolsComponent_XMTSMVTM_js.js"
+    ]
+  },
+  "..\\node_modules\\@tanstack\\query-devtools\\build\\dev.js -> ./DevtoolsPanelComponent/AY2UQYZQ.js": {
+    "id": "..\\node_modules\\@tanstack\\query-devtools\\build\\dev.js -> ./DevtoolsPanelComponent/AY2UQYZQ.js",
+    "files": [
+      "static/chunks/_app-pages-browser_node_modules_tanstack_query-devtools_build_DevtoolsPanelComponent_AY2UQYZQ_js.js"
+    ]
+  },
+  "..\\node_modules\\react-map-gl\\dist\\esm\\exports-mapbox.js -> mapbox-gl": {
+    "id": "..\\node_modules\\react-map-gl\\dist\\esm\\exports-mapbox.js -> mapbox-gl",
+    "files": [
+      "static/chunks/_app-pages-browser_node_modules_mapbox-gl_dist_mapbox-gl_js.js"
+    ]
+  }
+}

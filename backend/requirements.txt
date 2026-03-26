@@ -1,0 +1,75 @@
+# ============================================================
+# AIDSTL Project — FastAPI Backend Dependencies
+# Predicting Inland Waterway Navigability Using
+# Satellite Remote Sensing and Deep Learning
+# ============================================================
+
+# --- Web Framework ---
+fastapi>=0.110.0
+uvicorn[standard]>=0.27.0
+
+# --- Data Validation & Settings ---
+pydantic>=2.6.3
+pydantic-settings>=2.2.1
+
+# --- Database ---
+sqlalchemy>=2.0.28
+asyncpg>=0.29.0
+alembic>=1.13.1
+psycopg2-binary>=2.9.9
+
+# --- Caching & Task Queue ---
+redis>=5.0.2
+celery>=5.3.6
+
+# --- Geospatial ---
+geopandas>=0.14.3
+shapely>=2.0.3
+pyproj>=3.6.1
+geojson>=3.1.0
+
+# --- Numerical & Scientific Computing ---
+numpy>=1.26.4
+pandas>=2.2.1
+pyarrow>=15.0.1
+scikit-learn>=1.4.0
+
+# --- Gradient Boosting ---
+lightgbm>=4.3.0
+xgboost>=2.0.3
+
+# --- Deep Learning ---
+torch>=2.2.0
+timm>=0.9.16
+
+# --- Model Persistence ---
+joblib>=1.3.2
+
+# --- HTTP Client ---
+httpx>=0.27.0
+
+# --- Environment & Config ---
+python-dotenv>=1.0.1
+
+# --- Auth & Security ---
+python-jose[cryptography]>=3.3.0
+passlib[bcrypt]>=1.7.4
+python-multipart>=0.0.9
+
+# --- File Handling ---
+aiofiles>=23.2.1
+
+# --- Cloud Storage ---
+boto3>=1.34.60
+
+# --- Resilience ---
+tenacity>=8.2.3
+
+# --- Logging ---
+structlog>=24.1.0
+
+# --- Observability ---
+prometheus-fastapi-instrumentator>=7.0.0
+
+# --- Google Earth Engine ---
+earthengine-api>=0.1.390

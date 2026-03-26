@@ -1,0 +1,435 @@
+# =============================================================================
+# AIDSTL Project — Docker Compose
+# "Predicting Inland Waterway Navigability Using Satellite Remote Sensing
+#  and Deep Learning"
+#
+# Services
+# --------
+#   api       FastAPI backend (uvicorn)
+#   frontend  Next.js frontend
+#   db        PostgreSQL 16 + PostGIS 3.4
+#   redis     Redis 7 (cache + Celery broker/backend)
+#   worker    Celery worker (batch inference tasks)
+#   nginx     Reverse proxy (routes /api -> api, / -> frontend)
+#
+# Usage
+# -----
+#   cp backend/.env.example backend/.env   # fill in real values
+#   docker compose up --build
+#   docker compose up -d                   # detached
+#   docker compose logs -f api             # follow API logs
+#   docker compose down -v                 # tear down + remove volumes
+# =============================================================================
+
+version: "3.9"
+
+# ---------------------------------------------------------------------------
+# Named volumes
+# ---------------------------------------------------------------------------
+volumes:
+  postgres_data:
+    driver: local
+    labels:
+      project: "aidstl"
+      component: "database"
+
+  redis_data:
+    driver: local
+    labels:
+      project: "aidstl"
+      component: "cache"
+
+  model_files:
+    driver: local
+    labels:
+      project: "aidstl"
+      component: "ml-models"
+
+  gee_secrets:
+    driver: local
+    labels:
+      project: "aidstl"
+      component: "gee-credentials"
+
+  nginx_logs:
+    driver: local
+
+# ---------------------------------------------------------------------------
+# Networks
+# ---------------------------------------------------------------------------
+networks:
+  # Internal network — only backend services communicate here
+  internal:
+    driver: bridge
+    internal: true
+    labels:
+      project: "aidstl"
+      tier: "internal"
+
+  # External network — nginx, frontend, and anything that needs host egress
+  external:
+    driver: bridge
+    labels:
+      project: "aidstl"
+      tier: "external"
+
+# ---------------------------------------------------------------------------
+# Common re-usable fragments (YAML anchors)
+# ---------------------------------------------------------------------------
+x-api-environment: &api-environment
+  APP_NAME: "${APP_NAME:-AIDSTL API}"
+  APP_VERSION: "${APP_VERSION:-1.0.0}"
+  DEBUG: "${DEBUG:-False}"
+  ENVIRONMENT: "${ENVIRONMENT:-production}"
+  SECRET_KEY: "${SECRET_KEY}"
+  DATABASE_URL: "postgresql+asyncpg://${POSTGRES_USER:-aidstl_user}:${POSTGRES_PASSWORD:-aidstl_password}@db:5432/${POSTGRES_DB:-aidstl_db}"
+  SYNC_DATABASE_URL: "postgresql+psycopg2://${POSTGRES_USER:-aidstl_user}:${POSTGRES_PASSWORD:-aidstl_password}@db:5432/${POSTGRES_DB:-aidstl_db}"
+  REDIS_URL: "redis://redis:6379/0"
+  CELERY_BROKER_URL: "redis://redis:6379/1"
+  CELERY_RESULT_BACKEND: "redis://redis:6379/2"
+  GEE_SERVICE_ACCOUNT: "${GEE_SERVICE_ACCOUNT:-}"
+  GEE_KEY_FILE: "/app/secrets/gee_service_account_key.json"
+  GEE_PROJECT_ID: "${GEE_PROJECT_ID:-}"
+  MODEL_DIR: "/app/models"
+  ENSEMBLE_MODEL_PATH: "/app/models/ensemble/tft_swin_ensemble.pt"
+  NAVIGABILITY_MODEL_PATH: "/app/models/classifier/navigability_classifier.joblib"
+  FEATURE_SCALER_PATH: "/app/models/preprocessors/feature_scaler.joblib"
+  SHAP_EXPLAINER_PATH: "/app/models/explainers/shap_explainer.joblib"
+  TORCH_DEVICE: "${TORCH_DEVICE:-cpu}"
+  INFERENCE_BATCH_SIZE: "${INFERENCE_BATCH_SIZE:-32}"
+  MAPBOX_TOKEN: "${MAPBOX_TOKEN:-}"
+  ALLOWED_ORIGINS: "${ALLOWED_ORIGINS:-http://localhost:3000,http://localhost:80}"
+  ALLOWED_HOSTS: "${ALLOWED_HOSTS:-localhost,127.0.0.1,api}"
+  LOG_LEVEL: "${LOG_LEVEL:-INFO}"
+  LOG_FORMAT: "${LOG_FORMAT:-json}"
+  ENABLE_METRICS: "${ENABLE_METRICS:-True}"
+  DEPTH_NAVIGABLE_MIN: "${DEPTH_NAVIGABLE_MIN:-3.0}"
+  DEPTH_CONDITIONAL_MIN: "${DEPTH_CONDITIONAL_MIN:-1.5}"
+  WIDTH_NAVIGABLE_MIN: "${WIDTH_NAVIGABLE_MIN:-50.0}"
+  WIDTH_CONDITIONAL_MIN: "${WIDTH_CONDITIONAL_MIN:-25.0}"
+  RISK_ALERT_THRESHOLD: "${RISK_ALERT_THRESHOLD:-0.7}"
+  SEGMENT_LENGTH_KM: "${SEGMENT_LENGTH_KM:-5.0}"
+
+x-healthcheck-defaults: &healthcheck-defaults
+  interval: 30s
+  timeout: 10s
+  retries: 5
+  start_period: 60s
+
+x-logging-defaults: &logging-defaults
+  driver: "json-file"
+  options:
+    max-size: "20m"
+    max-file: "5"
+    labels: "project,service"
+
+# =============================================================================
+# Services
+# =============================================================================
+services:
+  # ---------------------------------------------------------------------------
+  # PostgreSQL 16 + PostGIS 3.4
+  # ---------------------------------------------------------------------------
+  db:
+    image: postgis/postgis:16-3.4
+    container_name: aidstl_db
+    restart: unless-stopped
+
+    environment:
+      POSTGRES_DB: "${POSTGRES_DB:-aidstl_db}"
+      POSTGRES_USER: "${POSTGRES_USER:-aidstl_user}"
+      POSTGRES_PASSWORD: "${POSTGRES_PASSWORD:-aidstl_password}"
+      # Tune PostgreSQL for the workload
+      POSTGRES_INITDB_ARGS: "--encoding=UTF-8 --lc-collate=C --lc-ctype=C"
+
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+      # Optional: mount an init script directory for schema bootstrapping
+      # - ./backend/db/init:/docker-entrypoint-initdb.d:ro
+
+    networks:
+      - internal
+
+    ports:
+      # Expose on localhost only for pgAdmin / DBeaver during development.
+      # Remove this mapping in production.
+      - "127.0.0.1:5432:5432"
+
+    healthcheck:
+      <<: *healthcheck-defaults
+      test:
+        - "CMD-SHELL"
+        - "pg_isready -U ${POSTGRES_USER:-aidstl_user} -d ${POSTGRES_DB:-aidstl_db}"
+
+    logging: *logging-defaults
+
+    labels:
+      project: "aidstl"
+      service: "db"
+      component: "database"
+
+    # PostgreSQL performance tuning (adjust to match your host resources)
+    command: >
+      postgres
+      -c shared_buffers=256MB
+      -c effective_cache_size=768MB
+      -c maintenance_work_mem=64MB
+      -c checkpoint_completion_target=0.9
+      -c wal_buffers=16MB
+      -c default_statistics_target=100
+      -c random_page_cost=1.1
+      -c effective_io_concurrency=200
+      -c max_connections=100
+      -c timezone=UTC
+
+  # ---------------------------------------------------------------------------
+  # Redis 7 (Alpine)
+  # ---------------------------------------------------------------------------
+  redis:
+    image: redis:7-alpine
+    container_name: aidstl_redis
+    restart: unless-stopped
+
+    command: >
+      redis-server
+      --save 60 1
+      --loglevel notice
+      --maxmemory 512mb
+      --maxmemory-policy allkeys-lru
+      --requirepass "${REDIS_PASSWORD:-}"
+
+    volumes:
+      - redis_data:/data
+
+    networks:
+      - internal
+
+    ports:
+      # Expose locally for Redis CLI / RedisInsight during development.
+      - "127.0.0.1:6379:6379"
+
+    healthcheck:
+      <<: *healthcheck-defaults
+      test:
+        - "CMD"
+        - "redis-cli"
+        - "ping"
+
+    logging: *logging-defaults
+
+    labels:
+      project: "aidstl"
+      service: "redis"
+      component: "cache"
+
+  # ---------------------------------------------------------------------------
+  # FastAPI Backend (Uvicorn)
+  # ---------------------------------------------------------------------------
+  api:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+      target: runtime
+      args:
+        # Build-time arguments (used only in builder stage)
+        PYTHON_VERSION: "3.11"
+
+    image: aidstl-api:${APP_VERSION:-latest}
+    container_name: aidstl_api
+    restart: unless-stopped
+
+    environment:
+      <<: *api-environment
+      HOST: "0.0.0.0"
+      PORT: "8000"
+      WORKERS: "${API_WORKERS:-4}"
+
+    volumes:
+      # Mount model artefacts (populated by ML pipeline / CI/CD)
+      - model_files:/app/models:ro
+      # Mount GEE service account key (managed secret)
+      - gee_secrets:/app/secrets:ro
+      # Mount logs directory (optional)
+      - ./backend/logs:/app/logs
+
+    networks:
+      - internal
+      - external
+
+    # Do NOT expose port 8000 directly to the host in production.
+    # All traffic should flow through nginx.
+    # Uncomment for local development without nginx:
+    # ports:
+    #   - "8000:8000"
+
+    depends_on:
+      db:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+
+    healthcheck:
+      <<: *healthcheck-defaults
+      test:
+        - "CMD-SHELL"
+        - "curl --silent --fail http://localhost:8000/health/live || exit 1"
+      start_period: 90s
+
+    logging: *logging-defaults
+
+    labels:
+      project: "aidstl"
+      service: "api"
+      component: "backend"
+
+  # ---------------------------------------------------------------------------
+  # Celery Worker (background batch inference tasks)
+  # ---------------------------------------------------------------------------
+  worker:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+      target: runtime
+
+    image: aidstl-api:${APP_VERSION:-latest}
+    container_name: aidstl_worker
+    restart: unless-stopped
+
+    # Override the default CMD to run Celery instead of Uvicorn
+    command: >
+      celery -A app.celery_app worker
+      --loglevel=${LOG_LEVEL:-INFO}
+      --concurrency=${CELERY_WORKER_CONCURRENCY:-4}
+      --max-tasks-per-child=${CELERY_MAX_TASKS_PER_CHILD:-100}
+      --queues=navigability,batch_inference,alerts
+      --hostname=worker@%h
+
+    environment:
+      <<: *api-environment
+      # Worker-specific overrides
+      WORKERS: "1"
+      HOST: "0.0.0.0"
+
+    volumes:
+      - model_files:/app/models:ro
+      - gee_secrets:/app/secrets:ro
+      - ./backend/logs:/app/logs
+
+    networks:
+      - internal
+
+    depends_on:
+      db:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+      api:
+        condition: service_healthy
+
+    healthcheck:
+      <<: *healthcheck-defaults
+      test:
+        - "CMD-SHELL"
+        - "celery -A app.celery_app inspect ping -d worker@$$HOSTNAME || exit 1"
+      interval: 60s
+      start_period: 120s
+
+    logging: *logging-defaults
+
+    labels:
+      project: "aidstl"
+      service: "worker"
+      component: "celery"
+
+  # ---------------------------------------------------------------------------
+  # Next.js Frontend
+  # ---------------------------------------------------------------------------
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+      # Pass public environment variables as build args so Next.js can
+      # embed them into the static bundle at build time.
+      args:
+        NEXT_PUBLIC_API_URL: "${NEXT_PUBLIC_API_URL:-http://localhost/api/v1}"
+        NEXT_PUBLIC_MAPBOX_TOKEN: "${MAPBOX_TOKEN:-}"
+        NEXT_PUBLIC_APP_VERSION: "${APP_VERSION:-1.0.0}"
+        NODE_ENV: "production"
+
+    image: aidstl-frontend:${APP_VERSION:-latest}
+    container_name: aidstl_frontend
+    restart: unless-stopped
+
+    environment:
+      NODE_ENV: production
+      PORT: "3000"
+      HOSTNAME: "0.0.0.0"
+
+    networks:
+      - external
+
+    # Port 3000 is only exposed to the nginx container, not the host.
+    # Uncomment for local development without nginx:
+    # ports:
+    #   - "3000:3000"
+
+    depends_on:
+      - api
+
+    healthcheck:
+      <<: *healthcheck-defaults
+      test:
+        - "CMD-SHELL"
+        - "curl --silent --fail http://localhost:3000/ || exit 1"
+      start_period: 45s
+
+    logging: *logging-defaults
+
+    labels:
+      project: "aidstl"
+      service: "frontend"
+      component: "next.js"
+
+  # ---------------------------------------------------------------------------
+  # Nginx Reverse Proxy
+  # ---------------------------------------------------------------------------
+  nginx:
+    image: nginx:1.25-alpine
+    container_name: aidstl_nginx
+    restart: unless-stopped
+
+    ports:
+      - "${NGINX_PORT:-80}:80"
+      # Uncomment and configure SSL certificates for HTTPS:
+      # - "${NGINX_SSL_PORT:-443}:443"
+
+    volumes:
+      - ./nginx/nginx.conf:/etc/nginx/nginx.conf:ro
+      - ./nginx/conf.d:/etc/nginx/conf.d:ro
+      - nginx_logs:/var/log/nginx
+      # Uncomment for SSL:
+      # - ./nginx/ssl:/etc/nginx/ssl:ro
+
+    networks:
+      - external
+
+    depends_on:
+      api:
+        condition: service_healthy
+      frontend:
+        condition: service_started
+
+    healthcheck:
+      <<: *healthcheck-defaults
+      test:
+        - "CMD-SHELL"
+        - "curl --silent --fail http://localhost:80/health/live || exit 1"
+      interval: 15s
+      start_period: 15s
+
+    logging: *logging-defaults
+
+    labels:
+      project: "aidstl"
+      service: "nginx"
+      component: "reverse-proxy"
