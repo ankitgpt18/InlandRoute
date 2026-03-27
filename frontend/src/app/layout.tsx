@@ -91,7 +91,7 @@ export default function RootLayout({ children }: RootLayoutProps) {
       className={`${inter.variable} ${jetbrainsMono.variable} dark`}
       suppressHydrationWarning
     >
-      <body className="bg-[#020817] text-slate-100 antialiased font-sans overflow-hidden">
+      <body className="bg-slate-50 text-slate-900 antialiased font-sans overflow-hidden">
         <Providers>
           {/* App Shell */}
           <div className="flex h-screen w-screen overflow-hidden">
@@ -110,7 +110,7 @@ export default function RootLayout({ children }: RootLayoutProps) {
                   className="absolute inset-0 pointer-events-none"
                   style={{
                     backgroundImage:
-                      'radial-gradient(rgba(255,255,255,0.025) 1px, transparent 1px)',
+                      'radial-gradient(rgba(15,23,42,0.025) 1px, transparent 1px)',
                     backgroundSize: '28px 28px',
                   }}
                   aria-hidden="true"

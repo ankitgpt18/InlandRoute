@@ -165,7 +165,7 @@ function cellBgClass(cls: NavigabilityClass, probability: number): string {
 
   const bucket = (Math.round(clamp / 10) *
     10) as keyof (typeof map)[NavigabilityClass];
-  return map[cls][bucket] ?? "bg-slate-700/40";
+  return map[cls][bucket] ?? "bg-slate-200/40";
 }
 
 /** Returns border class for selected/highlighted cells */
@@ -227,11 +227,11 @@ function CellTooltip({ hoveredCell, containerRef }: CellTooltipProps) {
     >
       <div
         className="
-          bg-slate-900/98 backdrop-blur-xl
+          bg-white
           border rounded-xl px-3.5 py-3
-          shadow-2xl shadow-black/70
+          shadow-xl
         "
-        style={{ borderColor: `${accentColor}35` }}
+        style={{ borderColor: `${accentColor}50` }}
       >
         {/* ── Header ── */}
         <div
@@ -239,7 +239,7 @@ function CellTooltip({ hoveredCell, containerRef }: CellTooltipProps) {
           style={{ borderBottom: `1px solid ${accentColor}20` }}
         >
           <div>
-            <div className="text-[12px] font-bold text-slate-100">
+            <div className="text-[12px] font-bold text-slate-900">
               {MONTH_FULL[cell.month - 1]}
             </div>
             <div className="text-[10px] text-slate-500 mt-0.5 tabular-nums">
@@ -261,13 +261,12 @@ function CellTooltip({ hoveredCell, containerRef }: CellTooltipProps) {
         {/* ── Depth (hero value) ── */}
         <div className="flex items-baseline gap-1 mb-2.5">
           <span
-            className="text-2xl font-extrabold tracking-tight tabular-nums leading-none"
-            style={{ color: accentColor }}
+            className="text-2xl font-extrabold tracking-tight tabular-nums leading-none text-slate-800"
           >
             {cell.predicted_depth_m.toFixed(2)}
           </span>
           <span className="text-sm font-semibold text-slate-500">m</span>
-          <span className="text-[10px] text-slate-600 ml-0.5">
+          <span className="text-[10px] text-slate-400 ml-0.5">
             predicted depth
           </span>
         </div>
@@ -312,8 +311,8 @@ function CellTooltip({ hoveredCell, containerRef }: CellTooltipProps) {
             bg-blue-500/10 border border-blue-500/20
           "
           >
-            <Droplets size={11} className="text-blue-400 flex-shrink-0" />
-            <span className="text-[10px] font-semibold text-blue-400">
+            <Droplets size={11} className="text-slate-400 flex-shrink-0" />
+            <span className="text-[10px] font-semibold text-slate-400">
               Monsoon month — elevated discharge
             </span>
           </div>
@@ -334,12 +333,11 @@ function MetricRow({
 }) {
   return (
     <div>
-      <div className="text-[10px] text-slate-600 font-medium leading-none mb-0.5">
+      <div className="text-[10px] text-slate-400 font-medium leading-none mb-0.5">
         {label}
       </div>
       <div
-        className="text-[12px] font-bold tabular-nums"
-        style={{ color: highlight ?? "#e2e8f0" }}
+        className="text-[12px] font-bold tabular-nums text-slate-800"
       >
         {value}
       </div>
@@ -370,9 +368,9 @@ function MonthHeader({
         className={cn(
           "text-[10px] font-bold tracking-wide",
           isCurrentMonth
-            ? "text-blue-400"
+            ? "text-slate-400"
             : isMonsoon
-              ? "text-sky-400"
+              ? "text-slate-400"
               : "text-slate-500",
         )}
       >
@@ -411,7 +409,7 @@ function SeasonLabels() {
       {SEASON_BANDS.map((season) => (
         <div
           key={season.label}
-          className="flex items-center justify-center text-[9px] font-semibold text-slate-600 tracking-wider uppercase"
+          className="flex items-center justify-center text-[9px] font-semibold text-slate-400 tracking-wider uppercase"
           style={{ flex: season.months.length }}
         >
           {season.label}
@@ -459,7 +457,7 @@ function CalendarSummary({
   const items = [
     {
       icon: CheckCircle2,
-      color: "text-emerald-400",
+      color: "text-slate-400",
       bg: "bg-emerald-500/10 border-emerald-500/20",
       label: "Avg Navigability",
       value: `${avgNavPct.toFixed(0)}%`,
@@ -467,7 +465,7 @@ function CalendarSummary({
     },
     {
       icon: TrendingUp,
-      color: "text-blue-400",
+      color: "text-slate-400",
       bg: "bg-blue-500/10 border-blue-500/20",
       label: "Best Month",
       value: MONTH_SHORT[peakMonth],
@@ -475,7 +473,7 @@ function CalendarSummary({
     },
     {
       icon: AlertTriangle,
-      color: "text-amber-400",
+      color: "text-slate-400",
       bg: "bg-amber-500/10 border-amber-500/20",
       label: "Worst Month",
       value: MONTH_SHORT[worstMonth],
@@ -483,7 +481,7 @@ function CalendarSummary({
     },
     {
       icon: Anchor,
-      color: "text-sky-400",
+      color: "text-slate-400",
       bg: "bg-sky-500/10 border-sky-500/20",
       label: "Reliable Months",
       value: `${totalNavMonths}/12`,
@@ -492,7 +490,7 @@ function CalendarSummary({
   ];
 
   return (
-    <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 mt-4 pt-4 border-t border-white/[0.05]">
+    <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 mt-4 pt-4 border-t border-slate-900/[0.05]">
       {items.map((item) => (
         <div
           key={item.label}
@@ -514,7 +512,7 @@ function CalendarSummary({
             >
               {item.value}
             </div>
-            <div className="text-[10px] text-slate-600">{item.sub}</div>
+            <div className="text-[10px] text-slate-400">{item.sub}</div>
           </div>
         </div>
       ))}
@@ -549,7 +547,7 @@ function SegmentRowLabel({
       <span
         className={cn(
           "text-[11px] font-bold tabular-nums leading-tight",
-          isSelected ? "text-blue-300" : "text-slate-300",
+          isSelected ? "text-slate-300" : "text-slate-700",
         )}
       >
         {row.km_label}
@@ -619,7 +617,7 @@ function CalendarCell({
         // Border
         isHovered || isSelected
           ? cn("border-2", cellBorderClass(cls))
-          : "border-transparent hover:border-white/20",
+          : "border-transparent hover:border-slate-300",
         // Current month ring
         isCurrentMonth && "ring-1 ring-blue-500/40",
       )}
@@ -628,8 +626,7 @@ function CalendarCell({
     >
       {/* Depth text (shown at larger sizes) */}
       <span
-        className="text-[9px] font-bold tabular-nums leading-none"
-        style={{ color: NAV_HEX[cls], textShadow: "0 1px 2px rgba(0,0,0,0.6)" }}
+        className="text-[9px] font-bold tabular-nums leading-none text-slate-800"
       >
         {depth.toFixed(1)}
       </span>
@@ -691,7 +688,7 @@ function MonthlySummaryRow({
     >
       {/* Spacer for row label column */}
       <div className="w-[80px] flex-shrink-0">
-        <span className="text-[9px] font-semibold text-slate-600 uppercase tracking-wider px-2">
+        <span className="text-[9px] font-semibold text-slate-400 uppercase tracking-wider px-2">
           Overall
         </span>
       </div>
@@ -837,7 +834,7 @@ export function SeasonalCalendar({
       <div
         className={cn(
           "flex flex-col items-center justify-center",
-          "bg-white/[0.03] border border-white/[0.06] rounded-2xl",
+          "bg-white/[0.03] border border-slate-900/[0.06] rounded-2xl",
           "py-16 px-8 text-center",
           className,
         )}
@@ -859,14 +856,14 @@ export function SeasonalCalendar({
       <div className="flex items-start justify-between gap-4 mb-4">
         <div>
           <div className="flex items-center gap-2">
-            <h3 className="text-sm font-bold text-slate-100">
+            <h3 className="text-sm font-bold text-slate-900">
               Seasonal Navigability Calendar
             </h3>
             <span
               className="
               text-[9px] font-bold tracking-wider uppercase
               px-2 py-0.5 rounded-full
-              bg-white/[0.06] text-slate-500 border border-white/[0.08]
+              bg-white/[0.06] text-slate-500 border border-slate-900/[0.08]
             "
             >
               {year}
@@ -886,8 +883,8 @@ export function SeasonalCalendar({
             className="
               flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg
               text-[11px] font-semibold
-              bg-white/[0.04] border border-white/[0.08]
-              text-slate-400 hover:text-slate-200
+              bg-white/[0.04] border border-slate-900/[0.08]
+              text-slate-400 hover:text-slate-800
               transition-colors duration-150
             "
             title="Toggle season bands"
@@ -1025,8 +1022,8 @@ export function SeasonalCalendar({
             className="
               flex items-center gap-1.5 px-4 py-2 rounded-xl
               text-[12px] font-semibold
-              bg-white/[0.04] border border-white/[0.08]
-              text-slate-400 hover:text-slate-200 hover:bg-white/[0.07]
+              bg-white/[0.04] border border-slate-900/[0.08]
+              text-slate-400 hover:text-slate-800 hover:bg-white/[0.07]
               transition-all duration-150
             "
           >
@@ -1044,7 +1041,7 @@ export function SeasonalCalendar({
       )}
 
       {/* ── Legend ──────────────────────────────────────────────────────── */}
-      <div className="flex items-center flex-wrap gap-4 mt-4 pt-3 border-t border-white/[0.05]">
+      <div className="flex items-center flex-wrap gap-4 mt-4 pt-3 border-t border-slate-900/[0.05]">
         {/* Navigability class legend */}
         <div className="flex items-center gap-3">
           {(
@@ -1069,11 +1066,11 @@ export function SeasonalCalendar({
         <div className="flex items-center gap-3 ml-auto">
           <div className="flex items-center gap-1.5">
             <span className="w-2 h-2 rounded-full bg-sky-400/80" />
-            <span className="text-[10px] text-slate-600">Monsoon</span>
+            <span className="text-[10px] text-slate-400">Monsoon</span>
           </div>
           <div className="flex items-center gap-1.5">
             <span className="w-2 h-2 rounded-full bg-red-400/80" />
-            <span className="text-[10px] text-slate-600">High risk</span>
+            <span className="text-[10px] text-slate-400">High risk</span>
           </div>
           <div className="flex items-center gap-1.5">
             <span
@@ -1084,7 +1081,7 @@ export function SeasonalCalendar({
                 backgroundColor: "transparent",
               }}
             />
-            <span className="text-[10px] text-slate-600">Current month</span>
+            <span className="text-[10px] text-slate-400">Current month</span>
           </div>
         </div>
       </div>
@@ -1128,8 +1125,8 @@ function FilterDropdown({
         className="
           flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg
           text-[11px] font-semibold
-          bg-white/[0.04] border border-white/[0.08]
-          text-slate-400 hover:text-slate-200
+          bg-white/[0.04] border border-slate-900/[0.08]
+          text-slate-400 hover:text-slate-800
           transition-colors duration-150
         "
       >
@@ -1160,8 +1157,8 @@ function FilterDropdown({
               transition={{ duration: 0.12, ease: [0.16, 1, 0.3, 1] }}
               className="
                 absolute right-0 top-full mt-1.5 w-44 z-50
-                bg-slate-900/95 backdrop-blur-xl
-                border border-white/[0.1] rounded-xl
+                bg-white/95 backdrop-blur-xl
+                border border-slate-900/[0.1] rounded-xl
                 shadow-2xl overflow-hidden p-1
               "
             >
@@ -1176,8 +1173,8 @@ function FilterDropdown({
                     "w-full flex items-center gap-2.5 px-3 py-2.5 rounded-lg",
                     "text-[12px] font-medium transition-colors duration-100",
                     current === opt.value
-                      ? "bg-blue-500/15 text-blue-300"
-                      : "text-slate-400 hover:text-white hover:bg-white/[0.06]",
+                      ? "bg-blue-500/15 text-slate-300"
+                      : "text-slate-400 hover:text-slate-900 hover:bg-white/[0.06]",
                   )}
                 >
                   {opt.color ? (
@@ -1190,7 +1187,7 @@ function FilterDropdown({
                   )}
                   {opt.label}
                   {current === opt.value && (
-                    <span className="ml-auto text-[10px] text-blue-400 font-bold">
+                    <span className="ml-auto text-[10px] text-slate-400 font-bold">
                       ✓
                     </span>
                   )}

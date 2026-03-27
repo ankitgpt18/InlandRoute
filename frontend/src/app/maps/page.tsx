@@ -125,7 +125,7 @@ function MetricPill({
   icon?:  React.ElementType;
 }) {
   return (
-    <div className="flex flex-col gap-0.5 px-3 py-2 rounded-xl bg-white/[0.04] border border-white/[0.07]">
+    <div className="flex flex-col gap-0.5 px-3 py-2 rounded-xl bg-white/[0.04] border border-slate-900/[0.07]">
       <div className="flex items-center gap-1.5">
         {Icon && <Icon size={10} className="text-slate-500 flex-shrink-0" />}
         <span className="text-[9px] font-semibold text-slate-500 uppercase tracking-wider">{label}</span>
@@ -172,8 +172,8 @@ function SegmentListItem({
         isSelected
           ? 'bg-blue-500/15 border-blue-500/35'
           : isHovered
-            ? 'bg-white/[0.06] border-white/[0.12]'
-            : 'bg-white/[0.02] border-white/[0.06] hover:bg-white/[0.05]',
+            ? 'bg-white/[0.06] border-slate-900/[0.12]'
+            : 'bg-white/[0.02] border-slate-900/[0.06] hover:bg-white/[0.05]',
       )}
     >
       {/* Left accent bar */}
@@ -189,13 +189,13 @@ function SegmentListItem({
             <span
               className={cn(
                 'text-[12px] font-bold tabular-nums',
-                isSelected ? 'text-blue-300' : 'text-slate-200',
+                isSelected ? 'text-slate-300' : 'text-slate-800',
               )}
             >
               {formatKm(segment.km_start, segment.km_end)}
             </span>
             {segment.state && (
-              <span className="text-[9px] text-slate-600 font-medium truncate hidden sm:block">
+              <span className="text-[9px] text-slate-400 font-medium truncate hidden sm:block">
                 {segment.state}
               </span>
             )}
@@ -205,7 +205,7 @@ function SegmentListItem({
               {segment.depth_m.toFixed(2)} m
             </span>
             <span className="text-slate-700 text-[10px]">·</span>
-            <span className="text-[10px] text-slate-600 tabular-nums">
+            <span className="text-[10px] text-slate-400 tabular-nums">
               {segment.width_m.toFixed(0)} m wide
             </span>
           </div>
@@ -219,7 +219,7 @@ function SegmentListItem({
             variant="subtle"
             pulse={isCritical && isSelected}
           />
-          <span className="text-[9px] text-slate-600 tabular-nums">
+          <span className="text-[9px] text-slate-400 tabular-nums">
             {(segment.confidence * 100).toFixed(0)}% conf
           </span>
         </div>
@@ -315,7 +315,7 @@ function SegmentDetailCard({
         <div className="flex items-start justify-between gap-2 mb-3">
           <div>
             <div className="flex items-center gap-2 flex-wrap">
-              <h3 className="text-[14px] font-bold text-slate-100">
+              <h3 className="text-[14px] font-bold text-slate-900">
                 Segment {segment.segment_id.split('-').pop()}
               </h3>
               <NavigabilityBadge
@@ -337,14 +337,14 @@ function SegmentDetailCard({
               {segment.state && (
                 <>
                   <span className="text-slate-700 text-[10px]">·</span>
-                  <span className="text-[11px] text-slate-600">{segment.state}</span>
+                  <span className="text-[11px] text-slate-400">{segment.state}</span>
                 </>
               )}
             </div>
           </div>
           <button
             onClick={onClose}
-            className="flex-shrink-0 w-7 h-7 rounded-lg flex items-center justify-center text-slate-500 hover:text-slate-300 hover:bg-white/[0.08] transition-colors duration-150"
+            className="flex-shrink-0 w-7 h-7 rounded-lg flex items-center justify-center text-slate-500 hover:text-slate-700 hover:bg-white/[0.08] transition-colors duration-150"
             aria-label="Close segment detail"
           >
             <X size={14} />
@@ -380,9 +380,9 @@ function SegmentDetailCard({
               {isAbove ? 'Depth Margin' : 'Depth Deficit'}
             </span>
             {isAbove ? (
-              <ArrowUpRight size={12} className="text-emerald-400" />
+              <ArrowUpRight size={12} className="text-slate-400" />
             ) : (
-              <ArrowDownRight size={12} className="text-red-400" />
+              <ArrowDownRight size={12} className="text-slate-400" />
             )}
           </div>
           <div className="flex items-baseline gap-1">
@@ -393,7 +393,7 @@ function SegmentDetailCard({
               {isAbove ? '+' : '-'}{Math.abs(thresholdDiff).toFixed(2)}
             </span>
             <span className="text-[12px] font-semibold text-slate-500">m</span>
-            <span className="text-[10px] text-slate-600 ml-1">
+            <span className="text-[10px] text-slate-400 ml-1">
               {isAbove ? 'above' : 'below'}{' '}
               {cls === 'navigable' ? 'navigable' : 'conditional'} threshold
             </span>
@@ -403,7 +403,7 @@ function SegmentDetailCard({
           <div className="mt-2 h-1.5 rounded-full bg-white/[0.06] overflow-hidden relative">
             {/* Threshold marker */}
             <div
-              className="absolute top-0 bottom-0 w-0.5 bg-white/30 z-10"
+              className="absolute top-0 bottom-0 w-0.5 bg-slate-200/30 z-10"
               style={{
                 left: `${Math.min(100, (cls === 'navigable' ? 3.0 : 2.0) / Math.max(segment.depth_m + 1, 5) * 100)}%`,
               }}
@@ -422,7 +422,7 @@ function SegmentDetailCard({
         </div>
 
         {/* Month/Year tag */}
-        <div className="flex items-center justify-between text-[10px] text-slate-600">
+        <div className="flex items-center justify-between text-[10px] text-slate-400">
           <div className="flex items-center gap-1.5">
             <Clock size={9} />
             <span>{MONTH_NAMES[month - 1]} {year} composite</span>
@@ -508,8 +508,8 @@ function SegmentListPanel({
           placeholder="Search km, state…"
           className="
             w-full pl-8 pr-3 py-2 rounded-xl
-            bg-white/[0.04] border border-white/[0.08]
-            text-[12px] text-slate-300 placeholder:text-slate-600
+            bg-white/[0.04] border border-slate-900/[0.08]
+            text-[12px] text-slate-700 placeholder:text-slate-400
             focus:outline-none focus:border-blue-500/50 focus:bg-white/[0.06]
             transition-all duration-150
           "
@@ -517,7 +517,7 @@ function SegmentListPanel({
         {searchQuery && (
           <button
             onClick={() => onSearchChange('')}
-            className="absolute right-2.5 top-1/2 -translate-y-1/2 text-slate-500 hover:text-slate-300"
+            className="absolute right-2.5 top-1/2 -translate-y-1/2 text-slate-500 hover:text-slate-700"
           >
             <X size={11} />
           </button>
@@ -525,7 +525,7 @@ function SegmentListPanel({
       </div>
 
       {/* Filter tabs */}
-      <div className="flex items-center gap-1 mb-3 p-0.5 bg-white/[0.03] rounded-xl border border-white/[0.06]">
+      <div className="flex items-center gap-1 mb-3 p-0.5 bg-white/[0.03] rounded-xl border border-slate-900/[0.06]">
         {filterOptions.map((opt) => {
           const isActive = filterClass === opt.value;
           return (
@@ -534,7 +534,7 @@ function SegmentListPanel({
               onClick={() => onFilterChange(opt.value)}
               className={cn(
                 'flex-1 flex items-center justify-center gap-1 py-1.5 rounded-lg text-[10px] font-bold uppercase tracking-wider transition-all duration-150',
-                isActive ? 'text-white' : 'text-slate-500 hover:text-slate-300',
+                isActive ? 'text-slate-900' : 'text-slate-500 hover:text-slate-700',
               )}
               style={
                 isActive
@@ -594,7 +594,7 @@ function SegmentListPanel({
 
       {/* Footer count */}
       <div className="mt-2 text-center">
-        <span className="text-[10px] text-slate-600">
+        <span className="text-[10px] text-slate-400">
           {filtered.length} of {segments.length} segments
         </span>
       </div>
@@ -625,8 +625,8 @@ function MapStatsFloater({
       className="
         absolute top-4 left-1/2 -translate-x-1/2 z-20
         flex items-center gap-0 overflow-hidden
-        bg-slate-900/90 backdrop-blur-xl
-        border border-white/[0.1] rounded-full
+        bg-white/90 backdrop-blur-xl
+        border border-slate-900/[0.1] rounded-full
         shadow-2xl shadow-black/50
         pointer-events-none
       "
@@ -640,7 +640,7 @@ function MapStatsFloater({
             boxShadow:        `0 0 6px ${waterway === 'NW-1' ? '#3b82f6' : '#8b5cf6'}`,
           }}
         />
-        <span className="text-[11px] font-bold text-slate-200">
+        <span className="text-[11px] font-bold text-slate-800">
           {waterway === 'NW-1' ? 'NW-1 · Ganga' : 'NW-2 · Brahmaputra'}
         </span>
       </div>
@@ -653,7 +653,7 @@ function MapStatsFloater({
           {MONTH_NAMES[month - 1].slice(0, 3)} {year}
         </span>
         {isMonsoon && (
-          <span className="text-[9px] font-bold text-sky-400">🌧</span>
+          <span className="text-[9px] font-bold text-slate-400">🌧</span>
         )}
       </div>
 
@@ -662,7 +662,7 @@ function MapStatsFloater({
       {/* Navigable % */}
       <div className="flex items-center gap-1.5 px-3 py-2">
         <span className="w-2 h-2 rounded-full bg-emerald-500 flex-shrink-0" />
-        <span className="text-[11px] font-bold text-emerald-400 tabular-nums">
+        <span className="text-[11px] font-bold text-slate-400 tabular-nums">
           {(navMap?.navigable_pct ?? 0).toFixed(0)}%
         </span>
         <span className="text-[10px] text-slate-500">navigable</span>
@@ -672,7 +672,7 @@ function MapStatsFloater({
 
       {/* Total km */}
       <div className="flex items-center gap-1.5 px-3 py-2">
-        <span className="text-[11px] font-bold text-blue-400 tabular-nums">
+        <span className="text-[11px] font-bold text-slate-400 tabular-nums">
           {(navMap?.navigable_km ?? 0).toFixed(0)} km
         </span>
         <span className="text-[10px] text-slate-500">open</span>
@@ -751,8 +751,8 @@ function LayerSettingsPanel() {
               className={cn(
                 'py-2 px-2 rounded-xl text-[11px] font-semibold border transition-all duration-150',
                 mapStyle === s.value
-                  ? 'bg-blue-500/20 border-blue-500/40 text-blue-300'
-                  : 'bg-white/[0.03] border-white/[0.07] text-slate-500 hover:text-slate-300 hover:bg-white/[0.06]',
+                  ? 'bg-blue-500/20 border-blue-500/40 text-slate-300'
+                  : 'bg-white/[0.03] border-slate-900/[0.07] text-slate-500 hover:text-slate-700 hover:bg-white/[0.06]',
               )}
             >
               {s.label}
@@ -774,15 +774,15 @@ function LayerSettingsPanel() {
               className={cn(
                 'w-full flex items-center gap-3 px-3 py-2.5 rounded-xl border text-left transition-all duration-150',
                 layer.active
-                  ? 'bg-white/[0.05] border-white/[0.10]'
-                  : 'bg-white/[0.02] border-white/[0.06] opacity-60 hover:opacity-80',
+                  ? 'bg-white/[0.05] border-slate-900/[0.10]'
+                  : 'bg-white/[0.02] border-slate-900/[0.06] opacity-60 hover:opacity-80',
               )}
             >
               {/* Toggle */}
               <div
                 className={cn(
                   'relative flex-shrink-0 w-8 h-4.5 rounded-full transition-all duration-300',
-                  layer.active ? '' : 'bg-slate-700',
+                  layer.active ? '' : 'bg-slate-200',
                 )}
                 style={layer.active ? { backgroundColor: `${layer.color}50`, border: `1px solid ${layer.color}60` } : {}}
               >
@@ -795,14 +795,14 @@ function LayerSettingsPanel() {
               </div>
 
               <div className="flex-1 min-w-0">
-                <div className="text-[12px] font-semibold text-slate-200">{layer.label}</div>
+                <div className="text-[12px] font-semibold text-slate-800">{layer.label}</div>
                 <div className="text-[10px] text-slate-500">{layer.sub}</div>
               </div>
 
               {layer.active ? (
                 <Eye size={13} className="text-slate-400 flex-shrink-0" />
               ) : (
-                <EyeOff size={13} className="text-slate-600 flex-shrink-0" />
+                <EyeOff size={13} className="text-slate-400 flex-shrink-0" />
               )}
             </button>
           ))}
@@ -838,11 +838,11 @@ function LayerSettingsPanel() {
                 <div className="text-[11px] font-semibold" style={{ color: NAV_COLORS[row.cls] }}>
                   {NAV_LABELS[row.cls]}
                 </div>
-                <div className="text-[9px] text-slate-600 tabular-nums">
+                <div className="text-[9px] text-slate-400 tabular-nums">
                   {row.depth} · {row.width}
                 </div>
               </div>
-              <div className="text-[9px] text-slate-600 text-right hidden sm:block">
+              <div className="text-[9px] text-slate-400 text-right hidden sm:block">
                 {row.vessels}
               </div>
             </div>
@@ -878,11 +878,11 @@ function AlertQuickPanel({ waterway }: { waterway: WaterwayId }) {
             />
           ))}
           <div className="relative w-9 h-9 rounded-xl bg-emerald-500/15 border border-emerald-500/25 flex items-center justify-center">
-            <CheckCircle2 size={18} className="text-emerald-400" />
+            <CheckCircle2 size={18} className="text-slate-400" />
           </div>
         </div>
-        <p className="text-[13px] font-bold text-slate-300">All Clear</p>
-        <p className="text-[11px] text-slate-600 mt-1">No active alerts for {waterway}</p>
+        <p className="text-[13px] font-bold text-slate-700">All Clear</p>
+        <p className="text-[11px] text-slate-400 mt-1">No active alerts for {waterway}</p>
       </div>
     );
   }
@@ -895,7 +895,7 @@ function AlertQuickPanel({ waterway }: { waterway: WaterwayId }) {
           <motion.span
             animate={{ scale: [1, 1.05, 1] }}
             transition={{ duration: 2, repeat: Infinity }}
-            className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-red-500/12 border border-red-500/30 text-[10px] font-bold text-red-400"
+            className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-red-500/12 border border-red-500/30 text-[10px] font-bold text-slate-400"
           >
             <span className="relative flex h-1.5 w-1.5">
               <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-red-400 opacity-75" />
@@ -922,7 +922,7 @@ function AlertQuickPanel({ waterway }: { waterway: WaterwayId }) {
             transition={{ delay: i * 0.05, duration: 0.2 }}
             className={cn(
               'relative px-3 py-2.5 rounded-xl border overflow-hidden cursor-pointer',
-              'transition-all duration-150 hover:border-white/[0.15] hover:bg-white/[0.05]',
+              'transition-all duration-150 hover:border-slate-900/[0.15] hover:bg-white/[0.05]',
             )}
             style={{
               background:  `${accentColor}08`,
@@ -949,11 +949,11 @@ function AlertQuickPanel({ waterway }: { waterway: WaterwayId }) {
                     km {alert.km_start.toFixed(0)}–{alert.km_end.toFixed(0)}
                   </span>
                   <span className="text-slate-700 text-[9px]">·</span>
-                  <span className="text-[9px] text-slate-600 tabular-nums">
+                  <span className="text-[9px] text-slate-400 tabular-nums">
                     {(alert.predicted_value).toFixed(2)} {alert.unit}
                   </span>
                   <span className="text-slate-700 text-[9px]">·</span>
-                  <span className="text-[9px] text-slate-600">
+                  <span className="text-[9px] text-slate-400">
                     {formatRelativeTime(alert.created_at)}
                   </span>
                 </div>
@@ -972,7 +972,7 @@ function AlertQuickPanel({ waterway }: { waterway: WaterwayId }) {
       })}
 
       {active.length > 6 && (
-        <p className="text-center text-[10px] text-slate-600 pt-1">
+        <p className="text-center text-[10px] text-slate-400 pt-1">
           +{active.length - 6} more alerts — visit Alerts page
         </p>
       )}
@@ -1003,7 +1003,7 @@ function PanelTabBar({
   alertCount: number;
 }) {
   return (
-    <div className="flex items-center gap-0.5 p-0.5 bg-white/[0.04] rounded-xl border border-white/[0.07] flex-shrink-0">
+    <div className="flex items-center gap-0.5 p-0.5 bg-white/[0.04] rounded-xl border border-slate-900/[0.07] flex-shrink-0">
       {PANEL_TABS.map((tab) => {
         const Icon     = tab.icon;
         const isActive = active === tab.id;
@@ -1016,15 +1016,15 @@ function PanelTabBar({
               'relative flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg flex-1 justify-center',
               'text-[10px] font-bold uppercase tracking-wider transition-all duration-200',
               isActive
-                ? 'bg-blue-500/20 text-blue-300'
-                : 'text-slate-500 hover:text-slate-300 hover:bg-white/[0.05]',
+                ? 'bg-blue-500/20 text-slate-300'
+                : 'text-slate-500 hover:text-slate-700 hover:bg-white/[0.05]',
             )}
           >
             <Icon size={11} strokeWidth={isActive ? 2.5 : 2} />
             <span className="hidden sm:inline">{tab.label}</span>
 
             {tab.id === 'alerts' && alertCount > 0 && (
-              <span className="absolute -top-1 -right-1 min-w-[14px] h-3.5 px-1 bg-red-500 text-white text-[8px] font-bold rounded-full flex items-center justify-center leading-none">
+              <span className="absolute -top-1 -right-1 min-w-[14px] h-3.5 px-1 bg-red-500 text-slate-900 text-[8px] font-bold rounded-full flex items-center justify-center leading-none">
                 {alertCount > 9 ? '9+' : alertCount}
               </span>
             )}
@@ -1133,9 +1133,9 @@ export default function MapsPage() {
               className="
                 absolute right-4 top-1/2 -translate-y-1/2 z-20
                 flex items-center gap-2 px-3 py-2.5 rounded-xl
-                bg-slate-900/90 backdrop-blur-sm
-                border border-white/[0.12]
-                text-[11px] font-semibold text-slate-300 hover:text-white
+                bg-white/90 backdrop-blur-sm
+                border border-slate-900/[0.12]
+                text-[11px] font-semibold text-slate-700 hover:text-slate-900
                 shadow-lg transition-all duration-150
               "
               aria-label="Open analysis panel"
@@ -1143,7 +1143,7 @@ export default function MapsPage() {
               <ChevronLeft size={14} />
               <span>Panel</span>
               {alertCount > 0 && (
-                <span className="min-w-[18px] h-4.5 px-1.5 bg-red-500 text-white text-[9px] font-bold rounded-full flex items-center justify-center">
+                <span className="min-w-[18px] h-4.5 px-1.5 bg-red-500 text-slate-900 text-[9px] font-bold rounded-full flex items-center justify-center">
                   {alertCount}
                 </span>
               )}
@@ -1163,8 +1163,8 @@ export default function MapsPage() {
             transition={{ duration: 0.35, ease: [0.16, 1, 0.3, 1] }}
             className="
               relative flex-shrink-0 flex flex-col
-              bg-slate-900/95 backdrop-blur-xl
-              border-l border-white/[0.07]
+              bg-white/95 backdrop-blur-xl
+              border-l border-slate-900/[0.07]
               overflow-hidden z-30
             "
           >
@@ -1173,12 +1173,12 @@ export default function MapsPage() {
               {/* Panel header */}
               <div className="flex-shrink-0 flex items-center justify-between px-4 pt-3 pb-2">
                 <div className="flex items-center gap-2">
-                  <Navigation size={14} className="text-blue-400" />
-                  <span className="text-[13px] font-bold text-slate-100">Analysis Panel</span>
+                  <Navigation size={14} className="text-slate-400" />
+                  <span className="text-[13px] font-bold text-slate-900">Analysis Panel</span>
                 </div>
                 <button
                   onClick={() => setPanelOpen(false)}
-                  className="w-7 h-7 rounded-lg flex items-center justify-center text-slate-500 hover:text-slate-300 hover:bg-white/[0.07] transition-colors duration-150"
+                  className="w-7 h-7 rounded-lg flex items-center justify-center text-slate-500 hover:text-slate-700 hover:bg-white/[0.07] transition-colors duration-150"
                   aria-label="Close panel"
                 >
                   <ChevronRight size={14} />
@@ -1256,12 +1256,12 @@ export default function MapsPage() {
                   >
                     {/* Heading */}
                     <div className="mb-3">
-                      <h3 className="text-[13px] font-bold text-slate-100">Depth Profile</h3>
+                      <h3 className="text-[13px] font-bold text-slate-900">Depth Profile</h3>
                       <p className="text-[11px] text-slate-500 mt-0.5">
                         {selectedWaterway} ·{' '}
                         {MONTH_NAMES[selectedMonth - 1]} {selectedYear}
                         {isMonsoon && (
-                          <span className="ml-1.5 text-sky-400 font-semibold">🌧 Monsoon</span>
+                          <span className="ml-1.5 text-slate-400 font-semibold">🌧 Monsoon</span>
                         )}
                       </p>
                     </div>
@@ -1284,7 +1284,7 @@ export default function MapsPage() {
                           ].map((m) => (
                             <div
                               key={m.label}
-                              className="flex flex-col gap-0.5 px-2.5 py-2 rounded-xl bg-white/[0.03] border border-white/[0.06] text-center"
+                              className="flex flex-col gap-0.5 px-2.5 py-2 rounded-xl bg-white/[0.03] border border-slate-900/[0.06] text-center"
                             >
                               <span className="text-[9px] font-semibold uppercase tracking-wider text-slate-500">{m.label}</span>
                               <span className="text-[14px] font-extrabold tabular-nums leading-tight" style={{ color: m.color }}>
@@ -1318,7 +1318,7 @@ export default function MapsPage() {
                     transition={{ duration: 0.2, ease: [0.16, 1, 0.3, 1] }}
                   >
                     <div className="mb-3">
-                      <h3 className="text-[13px] font-bold text-slate-100">Risk Alerts</h3>
+                      <h3 className="text-[13px] font-bold text-slate-900">Risk Alerts</h3>
                       <p className="text-[11px] text-slate-500 mt-0.5">
                         {selectedWaterway} · Click alert to highlight on map
                       </p>
@@ -1337,7 +1337,7 @@ export default function MapsPage() {
                     transition={{ duration: 0.2, ease: [0.16, 1, 0.3, 1] }}
                   >
                     <div className="mb-4">
-                      <h3 className="text-[13px] font-bold text-slate-100">Map Layers & Style</h3>
+                      <h3 className="text-[13px] font-bold text-slate-900">Map Layers & Style</h3>
                       <p className="text-[11px] text-slate-500 mt-0.5">
                         Customise what's shown on the river map
                       </p>
@@ -1348,8 +1348,8 @@ export default function MapsPage() {
               </div>
 
               {/* Panel footer */}
-              <div className="flex-shrink-0 border-t border-white/[0.06] px-4 py-2.5">
-                <div className="flex items-center justify-between text-[10px] text-slate-600">
+              <div className="flex-shrink-0 border-t border-slate-900/[0.06] px-4 py-2.5">
+                <div className="flex items-center justify-between text-[10px] text-slate-400">
                   <div className="flex items-center gap-1.5">
                     <Satellite size={10} />
                     <span>Sentinel-2 · 10m · 5-day</span>

@@ -83,7 +83,7 @@ const SEVERITY_CONFIG: Record<AlertSeverity, {
 }> = {
   CRITICAL: {
     label:    'Critical',
-    color:    'text-red-400',
+    color:    'text-slate-400',
     bg:       'bg-red-500/10',
     border:   'border-red-500/30',
     glow:     'shadow-[0_0_24px_rgba(239,68,68,0.15)]',
@@ -94,7 +94,7 @@ const SEVERITY_CONFIG: Record<AlertSeverity, {
   },
   WARNING: {
     label:    'Warning',
-    color:    'text-amber-400',
+    color:    'text-slate-400',
     bg:       'bg-amber-500/10',
     border:   'border-amber-500/25',
     glow:     '',
@@ -105,7 +105,7 @@ const SEVERITY_CONFIG: Record<AlertSeverity, {
   },
   INFO: {
     label:    'Info',
-    color:    'text-sky-400',
+    color:    'text-slate-400',
     bg:       'bg-sky-500/8',
     border:   'border-sky-500/20',
     glow:     '',
@@ -261,8 +261,7 @@ function AlertCard({
             {/* Alert type pill */}
             {typeCfg && (
               <span
-                className="inline-flex items-center gap-1 text-[9px] font-semibold uppercase tracking-wider"
-                style={{ color: `${typeCfg.color}99` }}
+                className="inline-flex items-center gap-1 text-[9px] font-semibold uppercase tracking-wider text-slate-500"
               >
                 <TypeIcon size={9} />
                 {typeCfg.label}
@@ -271,7 +270,7 @@ function AlertCard({
 
             {/* Active indicator */}
             {alert.is_active && (
-              <span className="inline-flex items-center gap-1 text-[9px] font-bold text-emerald-400 uppercase tracking-wider">
+              <span className="inline-flex items-center gap-1 text-[9px] font-bold text-slate-400 uppercase tracking-wider">
                 <span className="w-1.5 h-1.5 rounded-full bg-emerald-400" />
                 Active
               </span>
@@ -309,7 +308,7 @@ function AlertCard({
                 km {alert.km_start.toFixed(0)}–{alert.km_end.toFixed(0)}
               </span>
               <span className="text-slate-700">·</span>
-              <span className="text-slate-600 font-medium">
+              <span className="text-slate-400 font-medium">
                 Segment {alert.segment_id.split('-').pop()}
               </span>
             </div>
@@ -330,8 +329,7 @@ function AlertCard({
               Predicted
             </span>
             <span
-              className="text-xl font-extrabold tabular-nums leading-tight"
-              style={{ color: accentColor }}
+              className="text-xl font-extrabold tabular-nums leading-tight text-slate-800"
             >
               {alert.predicted_value.toFixed(2)}
               <span className="text-[11px] font-semibold ml-0.5 opacity-70">
@@ -345,7 +343,7 @@ function AlertCard({
             <span className="text-[9px] font-semibold uppercase tracking-wider text-slate-500">
               Threshold
             </span>
-            <span className="text-xl font-extrabold tabular-nums leading-tight text-emerald-400">
+            <span className="text-xl font-extrabold tabular-nums leading-tight text-slate-400">
               {alert.threshold_value.toFixed(2)}
               <span className="text-[11px] font-semibold ml-0.5 opacity-70">
                 {alert.unit}
@@ -354,11 +352,11 @@ function AlertCard({
           </div>
 
           {/* Deficit */}
-          <div className="flex flex-col gap-0.5 px-3 py-2.5 rounded-xl border border-white/[0.07] bg-white/[0.03]">
+          <div className="flex flex-col gap-0.5 px-3 py-2.5 rounded-xl border border-slate-900/[0.07] bg-white/[0.03]">
             <span className="text-[9px] font-semibold uppercase tracking-wider text-slate-500">
               Deficit
             </span>
-            <span className="text-xl font-extrabold tabular-nums leading-tight text-red-400">
+            <span className="text-xl font-extrabold tabular-nums leading-tight text-slate-400">
               {Math.abs(deficit).toFixed(2)}
               <span className="text-[11px] font-semibold ml-0.5 opacity-70">
                 {alert.unit}
@@ -374,11 +372,7 @@ function AlertCard({
               Risk Score
             </span>
             <span
-              className="text-[11px] font-bold tabular-nums"
-              style={{
-                color: alert.risk_score >= 0.7 ? '#ef4444' :
-                       alert.risk_score >= 0.4 ? '#f59e0b' : '#22c55e',
-              }}
+              className="text-[11px] font-bold tabular-nums text-slate-800"
             >
               {(alert.risk_score * 100).toFixed(0)} / 100
             </span>
@@ -401,7 +395,7 @@ function AlertCard({
               transition={{ duration: 0.3, ease: [0.16, 1, 0.3, 1] }}
               className="overflow-hidden"
             >
-              <div className="mt-4 pt-4 border-t border-white/[0.06] space-y-4">
+              <div className="mt-4 pt-4 border-t border-slate-900/[0.06] space-y-4">
 
                 {/* Recommended actions */}
                 {alert.recommended_actions?.length > 0 && (
@@ -445,7 +439,7 @@ function AlertCard({
                       {alert.affected_vessels.map((v, i) => (
                         <span
                           key={i}
-                          className="text-[11px] font-medium px-2.5 py-1 rounded-full bg-white/[0.05] border border-white/[0.08] text-slate-400"
+                          className="text-[11px] font-medium px-2.5 py-1 rounded-full bg-white/[0.05] border border-slate-900/[0.08] text-slate-400"
                         >
                           {v}
                         </span>
@@ -455,27 +449,27 @@ function AlertCard({
                 )}
 
                 {/* Alert metadata */}
-                <div className="grid grid-cols-2 gap-3 pt-2 border-t border-white/[0.05]">
+                <div className="grid grid-cols-2 gap-3 pt-2 border-t border-slate-900/[0.05]">
                   <div>
-                    <div className="text-[9px] font-semibold uppercase tracking-wider text-slate-600 mb-0.5">
+                    <div className="text-[9px] font-semibold uppercase tracking-wider text-slate-400 mb-0.5">
                       Valid From
                     </div>
                     <div className="text-[11px] font-medium text-slate-400">{formatDate(alert.valid_from)}</div>
                   </div>
                   <div>
-                    <div className="text-[9px] font-semibold uppercase tracking-wider text-slate-600 mb-0.5">
+                    <div className="text-[9px] font-semibold uppercase tracking-wider text-slate-400 mb-0.5">
                       Valid Until
                     </div>
                     <div className="text-[11px] font-medium text-slate-400">{formatDate(alert.valid_until)}</div>
                   </div>
                   <div>
-                    <div className="text-[9px] font-semibold uppercase tracking-wider text-slate-600 mb-0.5">
+                    <div className="text-[9px] font-semibold uppercase tracking-wider text-slate-400 mb-0.5">
                       Alert ID
                     </div>
                     <div className="text-[11px] font-mono text-slate-500">{alert.alert_id.slice(-12)}</div>
                   </div>
                   <div>
-                    <div className="text-[9px] font-semibold uppercase tracking-wider text-slate-600 mb-0.5">
+                    <div className="text-[9px] font-semibold uppercase tracking-wider text-slate-400 mb-0.5">
                       Created
                     </div>
                     <div className="text-[11px] font-medium text-slate-400">{formatDate(alert.created_at)}</div>
@@ -487,13 +481,13 @@ function AlertCard({
         </AnimatePresence>
 
         {/* ── Footer actions ──────────────────────────────────────────────── */}
-        <div className="flex items-center justify-between mt-3 pt-3 border-t border-white/[0.05]">
+        <div className="flex items-center justify-between mt-3 pt-3 border-t border-slate-900/[0.05]">
           {/* View on map */}
           <motion.button
             whileHover={{ x: 2 }}
             whileTap={{ scale: 0.96 }}
             onClick={() => onViewOnMap(alert.segment_id)}
-            className="flex items-center gap-1.5 text-[12px] font-semibold text-blue-400 hover:text-blue-300 transition-colors duration-150"
+            className="flex items-center gap-1.5 text-[12px] font-semibold text-slate-400 hover:text-slate-300 transition-colors duration-150"
           >
             <Eye size={13} />
             View on Map
@@ -503,7 +497,7 @@ function AlertCard({
           {/* Expand / collapse */}
           <button
             onClick={() => setExpanded((v) => !v)}
-            className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-[11px] font-medium text-slate-500 hover:text-slate-300 hover:bg-white/[0.05] transition-all duration-150"
+            className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-[11px] font-medium text-slate-500 hover:text-slate-700 hover:bg-white/[0.05] transition-all duration-150"
             aria-expanded={expanded}
           >
             <motion.span
@@ -542,7 +536,7 @@ function SeverityTabs({
   };
 
   return (
-    <div className="flex items-center gap-1.5 p-1 bg-white/[0.03] rounded-xl border border-white/[0.06]">
+    <div className="flex items-center gap-1.5 p-1 bg-white/[0.03] rounded-xl border border-slate-900/[0.06]">
       {tabs.map((tab) => {
         const isActive = current === tab;
         const color    = colors[tab];
@@ -557,8 +551,8 @@ function SeverityTabs({
               'relative flex items-center gap-2 px-3.5 py-2 rounded-lg flex-1 justify-center',
               'text-[11px] font-bold uppercase tracking-wider transition-all duration-200',
               isActive
-                ? 'text-white'
-                : 'text-slate-500 hover:text-slate-300 hover:bg-white/[0.04]',
+                ? 'text-slate-900'
+                : 'text-slate-500 hover:text-slate-700 hover:bg-white/[0.04]',
             )}
             style={
               isActive
@@ -576,7 +570,7 @@ function SeverityTabs({
               <span
                 className="min-w-[20px] h-5 px-1.5 rounded-full flex items-center justify-center text-[10px] font-bold"
                 style={{
-                  background: isActive ? `${color}30` : 'rgba(255,255,255,0.06)',
+                  background: isActive ? `${color}30` : 'rgba(15,23,42,0.06)',
                   color:       isActive ? color : '#64748b',
                 }}
               >
@@ -611,7 +605,7 @@ function AlertTypeFilter({
     <div className="relative">
       <button
         onClick={() => setOpen((v) => !v)}
-        className="flex items-center gap-2 px-3.5 py-2 rounded-xl border border-white/[0.08] bg-white/[0.04] text-[12px] font-semibold text-slate-300 hover:text-white hover:bg-white/[0.07] transition-all duration-150"
+        className="flex items-center gap-2 px-3.5 py-2 rounded-xl border border-slate-900/[0.08] bg-white/[0.04] text-[12px] font-semibold text-slate-700 hover:text-slate-900 hover:bg-white/[0.07] transition-all duration-150"
       >
         <SlidersHorizontal size={13} className="text-slate-500" />
         {currentLabel}
@@ -630,18 +624,18 @@ function AlertTypeFilter({
               animate={{ opacity: 1, y: 0, scale: 1 }}
               exit={{ opacity: 0, y: -8, scale: 0.95 }}
               transition={{ duration: 0.15, ease: [0.16, 1, 0.3, 1] }}
-              className="absolute left-0 top-full mt-1.5 w-52 z-50 bg-slate-900/98 backdrop-blur-xl border border-white/[0.1] rounded-xl shadow-2xl overflow-hidden p-1"
+              className="absolute left-0 top-full mt-1.5 w-52 z-50 bg-white/98 backdrop-blur-xl border border-slate-900/[0.1] rounded-xl shadow-2xl overflow-hidden p-1"
             >
               <button
                 onClick={() => { onChange('ALL'); setOpen(false); }}
                 className={cn(
                   'w-full flex items-center gap-2.5 px-3 py-2.5 rounded-lg text-[12px] font-medium transition-colors duration-100',
-                  selected === 'ALL' ? 'bg-blue-500/15 text-blue-300' : 'text-slate-400 hover:text-white hover:bg-white/[0.06]',
+                  selected === 'ALL' ? 'bg-blue-500/15 text-slate-300' : 'text-slate-400 hover:text-slate-900 hover:bg-white/[0.06]',
                 )}
               >
                 <Filter size={12} className="flex-shrink-0" />
                 All Types
-                {selected === 'ALL' && <span className="ml-auto text-[10px] text-blue-400 font-bold">✓</span>}
+                {selected === 'ALL' && <span className="ml-auto text-[10px] text-slate-400 font-bold">✓</span>}
               </button>
               {available.map((type) => {
                 const cfg  = ALERT_TYPE_CONFIG[type];
@@ -653,12 +647,12 @@ function AlertTypeFilter({
                     onClick={() => { onChange(type); setOpen(false); }}
                     className={cn(
                       'w-full flex items-center gap-2.5 px-3 py-2.5 rounded-lg text-[12px] font-medium transition-colors duration-100',
-                      selected === type ? 'bg-blue-500/15 text-blue-300' : 'text-slate-400 hover:text-white hover:bg-white/[0.06]',
+                      selected === type ? 'bg-blue-500/15 text-slate-300' : 'text-slate-400 hover:text-slate-900 hover:bg-white/[0.06]',
                     )}
                   >
                     <Icon size={12} className="flex-shrink-0" style={{ color: cfg.color }} />
                     {cfg.label}
-                    {selected === type && <span className="ml-auto text-[10px] text-blue-400 font-bold">✓</span>}
+                    {selected === type && <span className="ml-auto text-[10px] text-slate-400 font-bold">✓</span>}
                   </button>
                 );
               })}
@@ -687,7 +681,7 @@ function WaterwayToggle({
   };
 
   return (
-    <div className="flex items-center gap-1 p-0.5 bg-white/[0.03] rounded-xl border border-white/[0.06]">
+    <div className="flex items-center gap-1 p-0.5 bg-white/[0.03] rounded-xl border border-slate-900/[0.06]">
       {opts.map((opt) => {
         const isActive = selected === opt;
         const color    = colors[opt];
@@ -697,7 +691,7 @@ function WaterwayToggle({
             onClick={() => onChange(opt)}
             className={cn(
               'px-3 py-1.5 rounded-lg text-[11px] font-bold transition-all duration-150',
-              isActive ? 'text-white' : 'text-slate-500 hover:text-slate-300',
+              isActive ? 'text-slate-900' : 'text-slate-500 hover:text-slate-700',
             )}
             style={isActive ? { background: `${color}22`, color, border: `1px solid ${color}40` } : {}}
           >
@@ -729,7 +723,7 @@ function SortControl({
 
   return (
     <div className="flex items-center gap-1.5">
-      <span className="text-[10px] text-slate-600 font-medium">Sort:</span>
+      <span className="text-[10px] text-slate-400 font-medium">Sort:</span>
       {opts.map((opt) => (
         <button
           key={opt.value}
@@ -737,8 +731,8 @@ function SortControl({
           className={cn(
             'px-2.5 py-1 rounded-lg text-[10px] font-semibold border transition-all duration-150',
             current === opt.value
-              ? 'bg-blue-500/15 text-blue-300 border-blue-500/30'
-              : 'text-slate-500 hover:text-slate-300 border-white/[0.06] bg-white/[0.03]',
+              ? 'bg-blue-500/15 text-slate-300 border-blue-500/30'
+              : 'text-slate-500 hover:text-slate-700 border-slate-900/[0.06] bg-white/[0.03]',
           )}
         >
           {opt.label}
@@ -763,12 +757,12 @@ function AlertTimeline({ alerts }: { alerts: Alert[] }) {
   const maxCount = Math.max(...hourBuckets.map((b) => b.count), 1);
 
   return (
-    <div className="p-4 rounded-2xl border border-white/[0.06] bg-white/[0.02]">
+    <div className="p-4 rounded-2xl border border-slate-900/[0.06] bg-white/[0.02]">
       <div className="flex items-center justify-between mb-3">
         <div className="text-[10px] font-bold text-slate-500 uppercase tracking-wider">
           Alert Activity (by hour of day)
         </div>
-        <span className="text-[10px] text-slate-600">Last 24h</span>
+        <span className="text-[10px] text-slate-400">Last 24h</span>
       </div>
       <div className="flex items-end gap-0.5 h-12">
         {hourBuckets.map((bucket) => (
@@ -778,7 +772,7 @@ function AlertTimeline({ alerts }: { alerts: Alert[] }) {
             style={{
               background: bucket.count > 0
                 ? `rgba(59,130,246,${0.3 + (bucket.count / maxCount) * 0.7})`
-                : 'rgba(255,255,255,0.04)',
+                : 'rgba(15,23,42,0.04)',
               minWidth: 2,
             }}
             initial={{ height: 0 }}
@@ -821,13 +815,13 @@ function EmptyState({ filtered }: { filtered: boolean }) {
         ))}
         <div className="relative w-12 h-12 rounded-2xl bg-emerald-500/15 border border-emerald-500/25 flex items-center justify-center">
           {filtered ? (
-            <Filter size={22} className="text-emerald-400" />
+            <Filter size={22} className="text-slate-400" />
           ) : (
-            <BellOff size={22} className="text-emerald-400" />
+            <BellOff size={22} className="text-slate-400" />
           )}
         </div>
       </div>
-      <h3 className="text-base font-bold text-slate-200 mb-2">
+      <h3 className="text-base font-bold text-slate-800 mb-2">
         {filtered ? 'No matching alerts' : 'All Clear — No Active Alerts'}
       </h3>
       <p className="text-[13px] text-slate-500 max-w-xs leading-relaxed">
@@ -837,8 +831,8 @@ function EmptyState({ filtered }: { filtered: boolean }) {
       </p>
       {!filtered && (
         <div className="mt-4 flex items-center gap-2 px-4 py-2 rounded-xl bg-emerald-500/8 border border-emerald-500/20">
-          <CheckCircle2 size={14} className="text-emerald-400" />
-          <span className="text-[12px] font-semibold text-emerald-400">
+          <CheckCircle2 size={14} className="text-slate-400" />
+          <span className="text-[12px] font-semibold text-slate-400">
             System operating normally
           </span>
         </div>
@@ -986,27 +980,27 @@ export default function AlertsPage() {
         <div className="flex items-start justify-between gap-4 flex-wrap">
           <div>
             <div className="flex items-center gap-3">
-              <h1 className="text-2xl font-extrabold text-slate-100 tracking-tight">
+              <h1 className="text-2xl font-extrabold text-slate-900 tracking-tight">
                 Risk Alerts
               </h1>
               {criticalCount > 0 && (
                 <motion.span
                   animate={{ scale: [1, 1.06, 1] }}
                   transition={{ duration: 2, repeat: Infinity }}
-                  className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-red-500/12 border border-red-500/30 text-[10px] font-bold text-red-400 uppercase tracking-wider"
+                  className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-red-500/12 border border-red-500/30 text-[10px] font-bold text-slate-400 uppercase tracking-wider"
                 >
                   <PulsingDot severity="CRITICAL" size={6} />
                   {criticalCount} Critical
                 </motion.span>
               )}
               {criticalCount === 0 && activeAlerts.length > 0 && (
-                <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-amber-500/10 border border-amber-500/25 text-[10px] font-bold text-amber-400 uppercase tracking-wider">
+                <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-amber-500/10 border border-amber-500/25 text-[10px] font-bold text-slate-400 uppercase tracking-wider">
                   <AlertTriangle size={10} />
                   {activeAlerts.length} Active
                 </span>
               )}
               {activeAlerts.length === 0 && (
-                <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-emerald-500/10 border border-emerald-500/25 text-[10px] font-bold text-emerald-400 uppercase tracking-wider">
+                <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-emerald-500/10 border border-emerald-500/25 text-[10px] font-bold text-slate-400 uppercase tracking-wider">
                   <CheckCircle2 size={10} />
                   All Clear
                 </span>
@@ -1025,7 +1019,7 @@ export default function AlertsPage() {
               onClick={handleRefresh}
               whileTap={{ scale: 0.93 }}
               disabled={refreshing}
-              className="flex items-center gap-2 px-3.5 py-2 rounded-xl border border-white/[0.08] bg-white/[0.04] text-[12px] font-semibold text-slate-400 hover:text-slate-200 hover:bg-white/[0.07] transition-all duration-150 disabled:opacity-50"
+              className="flex items-center gap-2 px-3.5 py-2 rounded-xl border border-slate-900/[0.08] bg-white/[0.04] text-[12px] font-semibold text-slate-400 hover:text-slate-800 hover:bg-white/[0.07] transition-all duration-150 disabled:opacity-50"
               aria-label="Refresh alerts"
             >
               <motion.div
@@ -1038,7 +1032,7 @@ export default function AlertsPage() {
             </motion.button>
 
             {/* Export */}
-            <button className="flex items-center gap-2 px-3.5 py-2 rounded-xl bg-blue-600 hover:bg-blue-500 border border-blue-500 text-[12px] font-semibold text-white transition-all duration-150 shadow-lg shadow-blue-500/20">
+            <button className="flex items-center gap-2 px-3.5 py-2 rounded-xl bg-blue-600 hover:bg-blue-500 border border-blue-500 text-[12px] font-semibold text-slate-900 transition-all duration-150 shadow-lg shadow-blue-500/20">
               <Download size={13} />
               <span className="hidden sm:inline">Export</span>
             </button>
@@ -1110,7 +1104,7 @@ export default function AlertsPage() {
         <div className="xl:col-span-3 space-y-4">
 
           {/* Filter controls */}
-          <div className="p-4 rounded-2xl border border-white/[0.06] bg-white/[0.02] space-y-3">
+          <div className="p-4 rounded-2xl border border-slate-900/[0.06] bg-white/[0.02] space-y-3">
             {/* Row 1: Severity tabs */}
             <SeverityTabs
               current={severityFilter}
@@ -1142,7 +1136,7 @@ export default function AlertsPage() {
                   animate={{ opacity: 1, scale: 1 }}
                   exit={{ opacity: 0, scale: 0.9 }}
                   onClick={handleResetFilters}
-                  className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-[11px] font-semibold text-red-400 hover:text-red-300 bg-red-500/8 border border-red-500/20 hover:bg-red-500/12 transition-all duration-150"
+                  className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-[11px] font-semibold text-slate-400 hover:text-slate-300 bg-red-500/8 border border-red-500/20 hover:bg-red-500/12 transition-all duration-150"
                 >
                   <X size={11} />
                   Reset Filters
@@ -1153,7 +1147,7 @@ export default function AlertsPage() {
               <div className="ml-auto text-[11px] text-slate-500 font-medium">
                 {filteredAlerts.length} alert{filteredAlerts.length !== 1 ? 's' : ''}
                 {isFiltered && (
-                  <span className="ml-1 text-slate-600">
+                  <span className="ml-1 text-slate-400">
                     (filtered from {activeAlerts.length})
                   </span>
                 )}
@@ -1185,7 +1179,7 @@ export default function AlertsPage() {
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               onClick={() => setShowAll((v) => !v)}
-              className="w-full flex items-center justify-center gap-2 py-3 rounded-2xl text-[13px] font-semibold text-slate-400 hover:text-slate-200 bg-white/[0.03] border border-white/[0.06] hover:bg-white/[0.06] hover:border-white/[0.10] transition-all duration-150"
+              className="w-full flex items-center justify-center gap-2 py-3 rounded-2xl text-[13px] font-semibold text-slate-400 hover:text-slate-800 bg-white/[0.03] border border-slate-900/[0.06] hover:bg-white/[0.06] hover:border-slate-900/[0.10] transition-all duration-150"
             >
               <motion.span
                 animate={{ rotate: showAll ? 180 : 0 }}
@@ -1208,7 +1202,7 @@ export default function AlertsPage() {
           <AlertTimeline alerts={allAlerts} />
 
           {/* Quick summary by waterway */}
-          <div className="p-4 rounded-2xl border border-white/[0.06] bg-white/[0.02]">
+          <div className="p-4 rounded-2xl border border-slate-900/[0.06] bg-white/[0.02]">
             <div className="text-[10px] font-bold text-slate-500 uppercase tracking-wider mb-3">
               By Waterway
             </div>
@@ -1232,7 +1226,7 @@ export default function AlertsPage() {
                 <div className="flex items-center justify-between mb-1.5">
                   <div className="flex items-center gap-2">
                     <span className="w-2 h-2 rounded-full" style={{ backgroundColor: ww.color }} />
-                    <span className="text-[11px] font-semibold text-slate-300">{ww.id}</span>
+                    <span className="text-[11px] font-semibold text-slate-700">{ww.id}</span>
                     <span className="text-[10px] text-slate-500">· {ww.label}</span>
                   </div>
                   <span className="text-[11px] font-bold tabular-nums" style={{ color: ww.color }}>
@@ -1253,7 +1247,7 @@ export default function AlertsPage() {
           </div>
 
           {/* Quick breakdown by type */}
-          <div className="p-4 rounded-2xl border border-white/[0.06] bg-white/[0.02]">
+          <div className="p-4 rounded-2xl border border-slate-900/[0.06] bg-white/[0.02]">
             <div className="text-[10px] font-bold text-slate-500 uppercase tracking-wider mb-3">
               By Alert Type
             </div>
@@ -1277,7 +1271,7 @@ export default function AlertsPage() {
                       'w-full flex items-center gap-2.5 px-3 py-2.5 rounded-xl border text-left transition-all duration-150',
                       typeFilter === type
                         ? 'bg-blue-500/15 border-blue-500/30'
-                        : 'bg-white/[0.02] border-white/[0.06] hover:bg-white/[0.05]',
+                        : 'bg-white/[0.02] border-slate-900/[0.06] hover:bg-white/[0.05]',
                     )}
                   >
                     <div
@@ -1286,7 +1280,7 @@ export default function AlertsPage() {
                     >
                       <Icon size={13} style={{ color: cfg.color }} />
                     </div>
-                    <span className="flex-1 text-[11px] font-medium text-slate-300 min-w-0 truncate">
+                    <span className="flex-1 text-[11px] font-medium text-slate-700 min-w-0 truncate">
                       {cfg.label}
                     </span>
                     <span
@@ -1313,13 +1307,13 @@ export default function AlertsPage() {
             }}
           >
             <div className="flex items-center gap-2 mb-2">
-              <Zap size={14} className="text-blue-400 flex-shrink-0" />
-              <span className="text-[12px] font-bold text-slate-200">Alert Webhooks</span>
+              <Zap size={14} className="text-slate-400 flex-shrink-0" />
+              <span className="text-[12px] font-bold text-slate-800">Alert Webhooks</span>
             </div>
             <p className="text-[11px] text-slate-500 leading-relaxed mb-3">
               Receive instant notifications when new critical alerts are generated for your monitored segments.
             </p>
-            <button className="w-full flex items-center justify-center gap-1.5 py-2 rounded-xl bg-blue-600/80 hover:bg-blue-600 text-white text-[11px] font-bold transition-all duration-150 border border-blue-500/50">
+            <button className="w-full flex items-center justify-center gap-1.5 py-2 rounded-xl bg-blue-600/80 hover:bg-blue-600 text-slate-900 text-[11px] font-bold transition-all duration-150 border border-blue-500/50">
               <Bell size={12} />
               Subscribe to Webhooks
               <ExternalLink size={10} className="opacity-60" />

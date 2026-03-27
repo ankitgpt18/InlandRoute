@@ -134,7 +134,7 @@ function LogoMark({ size = 28 }: { size?: number }) {
         boxShadow: '0 0 16px rgba(59,130,246,0.4)',
       }}
     >
-      <Waves size={size * 0.55} className="text-white" strokeWidth={2.5} />
+      <Waves size={size * 0.55} className="text-slate-900" strokeWidth={2.5} />
     </div>
   );
 }
@@ -166,8 +166,8 @@ function NavItem({
           relative flex items-center gap-3 px-3 py-2.5 rounded-xl cursor-pointer
           transition-colors duration-150
           ${isActive
-            ? 'bg-blue-500/15 text-blue-400'
-            : 'text-slate-400 hover:text-slate-200 hover:bg-white/5'
+            ? 'bg-blue-50 text-slate-700'
+            : 'text-slate-500 hover:text-slate-900 hover:bg-slate-50'
           }
         `}
         whileHover={{ x: isActive ? 0 : 2 }}
@@ -188,11 +188,11 @@ function NavItem({
           <Icon
             size={18}
             strokeWidth={isActive ? 2.5 : 2}
-            className={isActive ? 'text-blue-400' : 'text-slate-400 group-hover:text-slate-300'}
+            className={isActive ? 'text-slate-600' : 'text-slate-400 group-hover:text-slate-600'}
           />
           {/* Alert badge on icon (collapsed mode) */}
           {badge && alertCount > 0 && isCollapsed && (
-            <span className="absolute -top-1.5 -right-1.5 w-4 h-4 bg-red-500 text-white text-[9px] font-bold rounded-full flex items-center justify-center leading-none">
+            <span className="absolute -top-1.5 -right-1.5 w-4 h-4 bg-red-500 text-slate-900 text-[9px] font-bold rounded-full flex items-center justify-center leading-none">
               {alertCount > 9 ? '9+' : alertCount}
             </span>
           )}
@@ -210,7 +210,7 @@ function NavItem({
             >
               <span className="text-sm font-medium whitespace-nowrap">{label}</span>
               {badge && alertCount > 0 && (
-                <span className="ml-2 px-1.5 py-0.5 bg-red-500/20 text-red-400 text-[10px] font-bold rounded-full border border-red-500/30 whitespace-nowrap">
+                <span className="ml-2 px-1.5 py-0.5 bg-red-500/20 text-slate-400 text-[10px] font-bold rounded-full border border-red-500/30 whitespace-nowrap">
                   {alertCount}
                 </span>
               )}
@@ -223,7 +223,7 @@ function NavItem({
       {isCollapsed && (
         <div className="
           absolute left-full ml-3 top-1/2 -translate-y-1/2
-          bg-slate-800 border border-white/10 text-slate-200
+          bg-slate-100 border border-slate-300 text-slate-800
           text-xs font-medium px-2.5 py-1.5 rounded-lg whitespace-nowrap
           pointer-events-none opacity-0 group-hover:opacity-100
           transition-opacity duration-150 z-50
@@ -256,13 +256,13 @@ function MonthYearPicker({ isCollapsed }: { isCollapsed: boolean }) {
       <div className="flex flex-col items-center gap-1 px-2">
         <button
           onClick={goToPreviousMonth}
-          className="w-8 h-6 flex items-center justify-center rounded-md text-slate-400 hover:text-slate-200 hover:bg-white/5 transition-colors"
+          className="w-8 h-6 flex items-center justify-center rounded-md text-slate-400 hover:text-slate-800 hover:bg-slate-200/5 transition-colors"
           title="Previous month"
         >
           <ChevronUp size={14} />
         </button>
         <div className="text-center">
-          <div className="text-[10px] font-bold text-slate-300 tabular-nums">
+          <div className="text-[10px] font-bold text-slate-700 tabular-nums">
             {SHORT_MONTH[selectedMonth - 1]}
           </div>
           <div className="text-[9px] text-slate-500 tabular-nums">{selectedYear}</div>
@@ -270,7 +270,7 @@ function MonthYearPicker({ isCollapsed }: { isCollapsed: boolean }) {
         <button
           onClick={goToNextMonth}
           disabled={isCurrentOrFuture}
-          className="w-8 h-6 flex items-center justify-center rounded-md text-slate-400 hover:text-slate-200 hover:bg-white/5 transition-colors disabled:opacity-30 disabled:cursor-not-allowed"
+          className="w-8 h-6 flex items-center justify-center rounded-md text-slate-400 hover:text-slate-800 hover:bg-slate-200/5 transition-colors disabled:opacity-30 disabled:cursor-not-allowed"
           title="Next month"
         >
           <ChevronDown size={14} />
@@ -296,18 +296,18 @@ function MonthYearPicker({ isCollapsed }: { isCollapsed: boolean }) {
       </div>
 
       {/* Month selector */}
-      <div className="glass-card p-2 rounded-xl border border-white/5">
+      <div className="bg-white p-2 rounded-xl border border-slate-200 shadow-sm">
         <div className="flex items-center justify-between mb-2">
           <button
             onClick={goToPreviousMonth}
-            className="w-7 h-7 flex items-center justify-center rounded-lg text-slate-400 hover:text-slate-200 hover:bg-white/8 transition-colors"
+            className="w-7 h-7 flex items-center justify-center rounded-lg text-slate-400 hover:text-slate-800 hover:bg-slate-200/8 transition-colors"
             aria-label="Previous month"
           >
             <ChevronLeft size={14} />
           </button>
 
           <div className="text-center">
-            <div className="text-sm font-semibold text-slate-200 tabular-nums">
+            <div className="text-sm font-semibold text-slate-800 tabular-nums">
               {MONTH_NAMES[selectedMonth - 1]}
             </div>
           </div>
@@ -315,7 +315,7 @@ function MonthYearPicker({ isCollapsed }: { isCollapsed: boolean }) {
           <button
             onClick={goToNextMonth}
             disabled={isCurrentOrFuture}
-            className="w-7 h-7 flex items-center justify-center rounded-lg text-slate-400 hover:text-slate-200 hover:bg-white/8 transition-colors disabled:opacity-30 disabled:cursor-not-allowed"
+            className="w-7 h-7 flex items-center justify-center rounded-lg text-slate-400 hover:text-slate-800 hover:bg-slate-200/8 transition-colors disabled:opacity-30 disabled:cursor-not-allowed"
             aria-label="Next month"
           >
             <ChevronRight size={14} />
@@ -327,7 +327,7 @@ function MonthYearPicker({ isCollapsed }: { isCollapsed: boolean }) {
           <button
             onClick={() => setSelectedYear(selectedYear - 1)}
             disabled={selectedYear <= 2019}
-            className="w-6 h-6 flex items-center justify-center rounded-md text-slate-500 hover:text-slate-300 hover:bg-white/5 transition-colors disabled:opacity-30 disabled:cursor-not-allowed text-[10px] font-bold"
+            className="w-6 h-6 flex items-center justify-center rounded-md text-slate-500 hover:text-slate-700 hover:bg-slate-200/5 transition-colors disabled:opacity-30 disabled:cursor-not-allowed text-[10px] font-bold"
             aria-label="Previous year"
           >
             ‹
@@ -336,7 +336,7 @@ function MonthYearPicker({ isCollapsed }: { isCollapsed: boolean }) {
           <button
             onClick={() => setSelectedYear(selectedYear + 1)}
             disabled={selectedYear >= now.getFullYear()}
-            className="w-6 h-6 flex items-center justify-center rounded-md text-slate-500 hover:text-slate-300 hover:bg-white/5 transition-colors disabled:opacity-30 disabled:cursor-not-allowed text-[10px] font-bold"
+            className="w-6 h-6 flex items-center justify-center rounded-md text-slate-500 hover:text-slate-700 hover:bg-slate-200/5 transition-colors disabled:opacity-30 disabled:cursor-not-allowed text-[10px] font-bold"
             aria-label="Next year"
           >
             ›
@@ -365,19 +365,17 @@ function WaterwaySelector({ isCollapsed }: { isCollapsed: boolean }) {
               relative w-10 h-10 rounded-xl flex items-center justify-center
               text-[10px] font-bold transition-all duration-200
               ${selectedWaterway === w.id
-                ? 'text-white shadow-lg'
-                : 'text-slate-400 hover:text-slate-200 bg-white/5 hover:bg-white/8'
+                ? 'text-white shadow-md'
+                : 'text-slate-500 hover:text-slate-900 bg-white border border-slate-200 hover:bg-slate-50'
               }
             `}
             style={
               selectedWaterway === w.id
                 ? {
-                    background: `linear-gradient(135deg, ${w.color}33, ${w.color}22)`,
-                    border: `1px solid ${w.color}55`,
-                    boxShadow: `0 0 12px ${w.color}30`,
-                    color: w.color,
+                    background: w.color,
+                    boxShadow: `0 4px 12px ${w.color}50`,
                   }
-                : { border: '1px solid rgba(255,255,255,0.06)' }
+                : {}
             }
           >
             {w.id}
@@ -417,17 +415,13 @@ function WaterwaySelector({ isCollapsed }: { isCollapsed: boolean }) {
                 relative w-full text-left px-3 py-2.5 rounded-xl
                 border transition-all duration-200 overflow-hidden
                 ${isSelected
-                  ? 'text-white'
-                  : 'border-white/6 bg-white/3 text-slate-400 hover:text-slate-200 hover:border-white/10 hover:bg-white/5'
+                  ? 'bg-blue-50 border-blue-100'
+                  : 'bg-white border-slate-200 text-slate-500 hover:text-slate-900 hover:bg-slate-50 shadow-sm'
                 }
               `}
               style={
                 isSelected
-                  ? {
-                      background: `linear-gradient(135deg, ${w.color}20 0%, ${w.color}0a 100%)`,
-                      border: `1px solid ${w.color}40`,
-                      boxShadow: `0 0 16px ${w.color}18`,
-                    }
+                  ? { boxShadow: `0 4px 12px ${w.color}15` }
                   : {}
               }
             >
@@ -445,11 +439,11 @@ function WaterwaySelector({ isCollapsed }: { isCollapsed: boolean }) {
                 <div>
                   <div
                     className="text-xs font-bold"
-                    style={{ color: isSelected ? w.color : undefined }}
+                    style={{ color: isSelected ? w.color : '#0f172a' }}
                   >
                     {w.name}
                   </div>
-                  <div className="text-[11px] font-medium text-slate-400 mt-0.5">
+                  <div className={`text-[11px] font-medium mt-0.5 ${isSelected ? 'text-slate-700/70' : 'text-slate-500'}`}>
                     {w.river}
                   </div>
                 </div>
@@ -457,8 +451,7 @@ function WaterwaySelector({ isCollapsed }: { isCollapsed: boolean }) {
                   <div className="text-[10px] text-slate-500">{w.length}</div>
                   {isSelected && (
                     <div
-                      className="text-[9px] font-semibold mt-0.5"
-                      style={{ color: w.color }}
+                      className="text-sm font-bold tracking-tight text-slate-700"
                     >
                       Active
                     </div>
@@ -490,15 +483,15 @@ export function Sidebar() {
       initial={false}
       className="
         relative flex flex-col h-full flex-shrink-0
-        bg-slate-900/80 backdrop-blur-xl
-        border-r border-white/[0.06]
+        bg-white
+        border-r border-slate-200
         overflow-hidden z-40
       "
     >
       {/* ── Header / Logo ─────────────────────────────────────── */}
       <div
         className={`
-          flex items-center h-16 flex-shrink-0 px-4 border-b border-white/[0.06]
+          flex items-center h-16 flex-shrink-0 px-4 border-b border-slate-200
           ${sidebarCollapsed ? 'justify-center' : 'justify-between'}
         `}
       >
@@ -515,7 +508,7 @@ export function Sidebar() {
                 exit="hidden"
                 className="overflow-hidden whitespace-nowrap"
               >
-                <div className="text-sm font-bold text-slate-100 tracking-tight leading-tight">
+                <div className="text-sm font-bold text-slate-900 tracking-tight leading-tight">
                   AIDSTL
                 </div>
                 <div className="text-[10px] text-slate-500 font-medium tracking-wide">
@@ -536,8 +529,8 @@ export function Sidebar() {
               onClick={toggleSidebar}
               className="
                 w-7 h-7 rounded-lg flex items-center justify-center
-                text-slate-500 hover:text-slate-300 hover:bg-white/6
-                border border-white/6 transition-colors duration-150
+                text-slate-500 hover:text-slate-700 hover:bg-slate-200/6
+                border border-slate-300 transition-colors duration-150
                 flex-shrink-0
               "
               aria-label="Collapse sidebar"
@@ -555,7 +548,7 @@ export function Sidebar() {
         <WaterwaySelector isCollapsed={sidebarCollapsed} />
 
         {/* Divider */}
-        <div className="mx-3 h-px bg-white/[0.05]" />
+        <div className="mx-3 h-px bg-slate-100" />
 
         {/* Navigation */}
         <nav className="px-3 flex flex-col gap-1" aria-label="Main navigation">
@@ -586,22 +579,22 @@ export function Sidebar() {
         </nav>
 
         {/* Divider */}
-        <div className="mx-3 h-px bg-white/[0.05]" />
+        <div className="mx-3 h-px bg-slate-100" />
 
         {/* Month/Year Picker */}
         <MonthYearPicker isCollapsed={sidebarCollapsed} />
       </div>
 
       {/* ── Footer ────────────────────────────────────────────── */}
-      <div className="flex-shrink-0 border-t border-white/[0.06] p-3">
+      <div className="flex-shrink-0 border-t border-slate-200 p-3 bg-slate-50/50">
         {sidebarCollapsed ? (
           /* Expand button in collapsed mode */
           <button
             onClick={toggleSidebar}
             className="
               w-10 h-10 mx-auto flex items-center justify-center rounded-xl
-              text-slate-500 hover:text-slate-300 hover:bg-white/6
-              border border-white/6 transition-colors duration-150
+              text-slate-500 hover:text-slate-700 hover:bg-slate-200/6
+              border border-slate-300 transition-colors duration-150
             "
             aria-label="Expand sidebar"
           >
@@ -620,7 +613,7 @@ export function Sidebar() {
                 <div className="text-[10px] font-semibold text-slate-400">
                   HydroFormer v1.0
                 </div>
-                <div className="text-[9px] text-slate-600 mt-0.5">
+                <div className="text-[9px] text-slate-400 mt-0.5">
                   Gati Shakti Vishwavidyalaya
                 </div>
               </div>
@@ -628,7 +621,7 @@ export function Sidebar() {
                 href="https://github.com"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="text-slate-600 hover:text-slate-400 transition-colors"
+                className="text-slate-400 hover:text-slate-400 transition-colors"
                 aria-label="View on GitHub"
               >
                 <ExternalLink size={13} />
@@ -641,8 +634,8 @@ export function Sidebar() {
                 <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75" />
                 <span className="relative inline-flex rounded-full h-2 w-2 bg-green-500" />
               </span>
-              <span className="text-[10px] font-semibold text-green-400">Model Online</span>
-              <span className="ml-auto text-[9px] text-green-600">R² 0.918</span>
+              <span className="text-[10px] font-semibold text-slate-400">Model Online</span>
+              <span className="ml-auto text-[9px] text-slate-600">R² 0.918</span>
             </div>
           </motion.div>
         )}

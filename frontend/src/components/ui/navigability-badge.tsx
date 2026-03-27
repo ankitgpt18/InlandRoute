@@ -63,11 +63,11 @@ const CLASS_CONFIG: Record<NavigabilityClass, ClassConfig> = {
     shortLabel: 'NAV',
     icon:       CheckCircle2,
     colors: {
-      filled:   'bg-emerald-500 text-white border-emerald-500',
-      outlined: 'bg-transparent text-emerald-400 border-emerald-500/60',
-      subtle:   'bg-emerald-500/12 text-emerald-400 border-emerald-500/25',
-      ghost:    'bg-transparent text-emerald-400 border-transparent',
-      glow:     'bg-emerald-500/15 text-emerald-300 border-emerald-500/40',
+      filled:   'bg-emerald-500 text-slate-900 border-emerald-500',
+      outlined: 'bg-transparent text-slate-400 border-emerald-500/60',
+      subtle:   'bg-emerald-500/12 text-slate-400 border-emerald-500/25',
+      ghost:    'bg-transparent text-slate-400 border-transparent',
+      glow:     'bg-emerald-500/15 text-slate-300 border-emerald-500/40',
     },
     dotColor:  'bg-emerald-400',
     glowColor: 'shadow-[0_0_16px_rgba(34,197,94,0.45)]',
@@ -79,11 +79,11 @@ const CLASS_CONFIG: Record<NavigabilityClass, ClassConfig> = {
     shortLabel: 'COND',
     icon:       AlertTriangle,
     colors: {
-      filled:   'bg-amber-500 text-white border-amber-500',
-      outlined: 'bg-transparent text-amber-400 border-amber-500/60',
-      subtle:   'bg-amber-500/12 text-amber-400 border-amber-500/25',
-      ghost:    'bg-transparent text-amber-400 border-transparent',
-      glow:     'bg-amber-500/15 text-amber-300 border-amber-500/40',
+      filled:   'bg-amber-500 text-slate-900 border-amber-500',
+      outlined: 'bg-transparent text-slate-400 border-amber-500/60',
+      subtle:   'bg-amber-500/12 text-slate-400 border-amber-500/25',
+      ghost:    'bg-transparent text-slate-400 border-transparent',
+      glow:     'bg-amber-500/15 text-slate-300 border-amber-500/40',
     },
     dotColor:  'bg-amber-400',
     glowColor: 'shadow-[0_0_16px_rgba(245,158,11,0.45)]',
@@ -95,11 +95,11 @@ const CLASS_CONFIG: Record<NavigabilityClass, ClassConfig> = {
     shortLabel: 'CLOSED',
     icon:       XCircle,
     colors: {
-      filled:   'bg-red-500 text-white border-red-500',
-      outlined: 'bg-transparent text-red-400 border-red-500/60',
-      subtle:   'bg-red-500/12 text-red-400 border-red-500/25',
-      ghost:    'bg-transparent text-red-400 border-transparent',
-      glow:     'bg-red-500/15 text-red-300 border-red-500/40',
+      filled:   'bg-red-500 text-slate-900 border-red-500',
+      outlined: 'bg-transparent text-slate-400 border-red-500/60',
+      subtle:   'bg-red-500/12 text-slate-400 border-red-500/25',
+      ghost:    'bg-transparent text-slate-400 border-transparent',
+      glow:     'bg-red-500/15 text-slate-300 border-red-500/40',
     },
     dotColor:  'bg-red-400',
     glowColor: 'shadow-[0_0_16px_rgba(239,68,68,0.45)]',
@@ -397,9 +397,9 @@ export function NavigabilityText({
   const config = CLASS_CONFIG[navigabilityClass];
 
   const colorMap: Record<NavigabilityClass, string> = {
-    navigable:     'text-emerald-400',
-    conditional:   'text-amber-400',
-    non_navigable: 'text-red-400',
+    navigable:     'text-slate-400',
+    conditional:   'text-slate-400',
+    non_navigable: 'text-slate-400',
   };
 
   return (
@@ -454,13 +454,13 @@ export function MapLegendCard({ className }: { className?: string }) {
                 <span
                   className={cn('w-2.5 h-2.5 rounded-full flex-shrink-0', cfg.dotColor)}
                 />
-                <span className="text-[11px] font-medium text-slate-300">
+                <span className="text-[11px] font-medium text-slate-700">
                   {cfg.label}
                 </span>
               </div>
               <div className="text-right">
                 <div className="text-[10px] text-slate-500 tabular-nums">{depth}</div>
-                <div className="text-[10px] text-slate-600 tabular-nums">{width}</div>
+                <div className="text-[10px] text-slate-400 tabular-nums">{width}</div>
               </div>
             </div>
           );
@@ -468,8 +468,8 @@ export function MapLegendCard({ className }: { className?: string }) {
       </div>
 
       {/* IWAI standard note */}
-      <div className="mt-2.5 pt-2 border-t border-white/[0.06]">
-        <p className="text-[9px] text-slate-600 leading-relaxed">
+      <div className="mt-2.5 pt-2 border-t border-slate-900/[0.06]">
+        <p className="text-[9px] text-slate-400 leading-relaxed">
           IWAI LAD standard · 1,500 DWT barge
         </p>
       </div>

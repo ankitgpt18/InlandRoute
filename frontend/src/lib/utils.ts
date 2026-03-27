@@ -31,9 +31,9 @@ export function getNavigabilityColor(cls: NavigabilityClass): string {
  */
 export function getNavigabilityTextClass(cls: NavigabilityClass): string {
   switch (cls) {
-    case 'navigable':     return 'text-green-400';
-    case 'conditional':   return 'text-amber-400';
-    case 'non_navigable': return 'text-red-400';
+    case 'navigable':     return 'text-slate-400';
+    case 'conditional':   return 'text-slate-400';
+    case 'non_navigable': return 'text-slate-400';
     default:              return 'text-slate-400';
   }
 }
@@ -101,14 +101,14 @@ export function getAlertSeverityClasses(severity: AlertSeverity): {
   switch (severity) {
     case 'CRITICAL':
       return {
-        text:   'text-red-400',
+        text:   'text-slate-400',
         bg:     'bg-red-500/15',
         border: 'border-red-500/40',
         dot:    'bg-red-500',
       };
     case 'WARNING':
       return {
-        text:   'text-amber-400',
+        text:   'text-slate-400',
         bg:     'bg-amber-500/15',
         border: 'border-amber-500/40',
         dot:    'bg-amber-500',
@@ -116,7 +116,7 @@ export function getAlertSeverityClasses(severity: AlertSeverity): {
     case 'INFO':
     default:
       return {
-        text:   'text-blue-400',
+        text:   'text-slate-400',
         bg:     'bg-blue-500/15',
         border: 'border-blue-500/40',
         dot:    'bg-blue-500',

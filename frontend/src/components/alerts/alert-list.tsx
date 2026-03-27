@@ -93,7 +93,7 @@ interface SeverityConfig {
 const SEVERITY_CONFIG: Record<AlertSeverity, SeverityConfig> = {
   CRITICAL: {
     label:    'Critical',
-    color:    'text-red-400',
+    color:    'text-slate-400',
     bg:       'bg-red-500/12',
     border:   'border-red-500/30',
     icon:     AlertCircle,
@@ -103,7 +103,7 @@ const SEVERITY_CONFIG: Record<AlertSeverity, SeverityConfig> = {
   },
   WARNING: {
     label:    'Warning',
-    color:    'text-amber-400',
+    color:    'text-slate-400',
     bg:       'bg-amber-500/12',
     border:   'border-amber-500/30',
     icon:     AlertTriangle,
@@ -113,7 +113,7 @@ const SEVERITY_CONFIG: Record<AlertSeverity, SeverityConfig> = {
   },
   INFO: {
     label:    'Info',
-    color:    'text-sky-400',
+    color:    'text-slate-400',
     bg:       'bg-sky-500/10',
     border:   'border-sky-500/25',
     icon:     Info,
@@ -282,7 +282,7 @@ function AlertCard({ alert, index, compact, onViewOnMap }: AlertCardProps) {
         sevCfg.bg,
         sevCfg.border,
         isCritical && 'shadow-[0_0_20px_rgba(239,68,68,0.12)]',
-        expanded && 'ring-1 ring-white/10',
+        expanded && 'ring-1 ring-slate-900/10',
       )}
     >
       {/* ── Critical pulsing left border ─── */}
@@ -312,8 +312,8 @@ function AlertCard({ alert, index, compact, onViewOnMap }: AlertCardProps) {
             )}
           </div>
           <div className="flex items-center gap-1.5 flex-shrink-0">
-            <Clock size={9} className="text-slate-600" />
-            <span className="text-[10px] text-slate-600 font-medium tabular-nums">
+            <Clock size={9} className="text-slate-400" />
+            <span className="text-[10px] text-slate-400 font-medium tabular-nums">
               {formatRelativeTime(alert.created_at)}
             </span>
           </div>
@@ -344,7 +344,7 @@ function AlertCard({ alert, index, compact, onViewOnMap }: AlertCardProps) {
             </h4>
             <div className="flex items-center gap-1.5 mt-1 flex-wrap">
               <div className="flex items-center gap-1">
-                <MapPin size={10} className="text-slate-600 flex-shrink-0" />
+                <MapPin size={10} className="text-slate-400 flex-shrink-0" />
                 <span className="text-[10px] font-semibold text-slate-500">
                   {alert.waterway_id}
                 </span>
@@ -354,7 +354,7 @@ function AlertCard({ alert, index, compact, onViewOnMap }: AlertCardProps) {
                 {formatKm(alert.km_start, alert.km_end)}
               </span>
               <span className="text-slate-700 text-[10px]">·</span>
-              <span className="text-[10px] text-slate-600 font-medium tabular-nums">
+              <span className="text-[10px] text-slate-400 font-medium tabular-nums">
                 Seg {alert.segment_id.split('-').pop()}
               </span>
             </div>
@@ -371,7 +371,7 @@ function AlertCard({ alert, index, compact, onViewOnMap }: AlertCardProps) {
               border:     `1px solid ${isCritical ? 'rgba(239,68,68,0.2)' : alert.severity === 'WARNING' ? 'rgba(245,158,11,0.2)' : 'rgba(14,165,233,0.2)'}`,
             }}
           >
-            <div className="text-[9px] font-semibold text-slate-600 uppercase tracking-wider mb-0.5">
+            <div className="text-[9px] font-semibold text-slate-400 uppercase tracking-wider mb-0.5">
               Predicted
             </div>
             <div
@@ -389,15 +389,15 @@ function AlertCard({ alert, index, compact, onViewOnMap }: AlertCardProps) {
 
           {/* Arrow */}
           <div className="flex items-center flex-shrink-0">
-            <ChevronRight size={14} className="text-slate-600" />
+            <ChevronRight size={14} className="text-slate-400" />
           </div>
 
           {/* Threshold value */}
           <div className="flex-1 px-2.5 py-2 rounded-lg bg-emerald-500/8 border border-emerald-500/20">
-            <div className="text-[9px] font-semibold text-slate-600 uppercase tracking-wider mb-0.5">
+            <div className="text-[9px] font-semibold text-slate-400 uppercase tracking-wider mb-0.5">
               Threshold
             </div>
-            <div className="text-base font-extrabold tabular-nums leading-none text-emerald-400">
+            <div className="text-base font-extrabold tabular-nums leading-none text-slate-400">
               {alert.threshold_value.toFixed(2)}
               <span className="text-[11px] font-semibold ml-0.5 opacity-70">
                 {alert.unit}
@@ -406,11 +406,11 @@ function AlertCard({ alert, index, compact, onViewOnMap }: AlertCardProps) {
           </div>
 
           {/* Deficit */}
-          <div className="flex-1 px-2.5 py-2 rounded-lg bg-white/[0.03] border border-white/[0.06]">
-            <div className="text-[9px] font-semibold text-slate-600 uppercase tracking-wider mb-0.5">
+          <div className="flex-1 px-2.5 py-2 rounded-lg bg-white/[0.03] border border-slate-900/[0.06]">
+            <div className="text-[9px] font-semibold text-slate-400 uppercase tracking-wider mb-0.5">
               Deficit
             </div>
-            <div className="text-base font-extrabold tabular-nums leading-none text-red-400">
+            <div className="text-base font-extrabold tabular-nums leading-none text-slate-400">
               {Math.abs(margin).toFixed(2)}
               <span className="text-[11px] font-semibold ml-0.5 opacity-70">
                 {alert.unit}
@@ -422,7 +422,7 @@ function AlertCard({ alert, index, compact, onViewOnMap }: AlertCardProps) {
         {/* ── Risk score bar ─── */}
         <div className="mt-2.5">
           <div className="flex items-center justify-between mb-1">
-            <span className="text-[9px] font-semibold text-slate-600 uppercase tracking-wider">
+            <span className="text-[9px] font-semibold text-slate-400 uppercase tracking-wider">
               Risk Score
             </span>
           </div>
@@ -451,7 +451,7 @@ function AlertCard({ alert, index, compact, onViewOnMap }: AlertCardProps) {
               transition={{ duration: 0.25, ease: [0.16, 1, 0.3, 1] }}
               className="overflow-hidden"
             >
-              <div className="mt-3 pt-3 border-t border-white/[0.06]">
+              <div className="mt-3 pt-3 border-t border-slate-900/[0.06]">
                 {/* Recommended actions */}
                 {alert.recommended_actions && alert.recommended_actions.length > 0 && (
                   <div className="mb-3">
@@ -497,7 +497,7 @@ function AlertCard({ alert, index, compact, onViewOnMap }: AlertCardProps) {
                           key={i}
                           className="
                             text-[10px] font-medium px-2 py-0.5 rounded-full
-                            bg-white/[0.06] border border-white/[0.08] text-slate-400
+                            bg-white/[0.06] border border-slate-900/[0.08] text-slate-400
                           "
                         >
                           {v}
@@ -508,7 +508,7 @@ function AlertCard({ alert, index, compact, onViewOnMap }: AlertCardProps) {
                 )}
 
                 {/* Valid period */}
-                <div className="flex items-center gap-3 text-[10px] text-slate-600">
+                <div className="flex items-center gap-3 text-[10px] text-slate-400">
                   <div className="flex items-center gap-1">
                     <Clock size={10} />
                     <span>Valid: {new Date(alert.valid_from).toLocaleDateString('en-IN', { day: 'numeric', month: 'short' })}</span>
@@ -524,7 +524,7 @@ function AlertCard({ alert, index, compact, onViewOnMap }: AlertCardProps) {
         </AnimatePresence>
 
         {/* ── Footer actions ─── */}
-        <div className="flex items-center justify-between mt-2.5 pt-2 border-t border-white/[0.05]">
+        <div className="flex items-center justify-between mt-2.5 pt-2 border-t border-slate-900/[0.05]">
           {/* View on map */}
           <motion.button
             whileHover={{ x: 2 }}
@@ -532,7 +532,7 @@ function AlertCard({ alert, index, compact, onViewOnMap }: AlertCardProps) {
             onClick={() => onViewOnMap(alert.segment_id)}
             className="
               flex items-center gap-1.5
-              text-[11px] font-semibold text-blue-400 hover:text-blue-300
+              text-[11px] font-semibold text-slate-400 hover:text-slate-300
               transition-colors duration-150
             "
           >
@@ -546,7 +546,7 @@ function AlertCard({ alert, index, compact, onViewOnMap }: AlertCardProps) {
             onClick={() => setExpanded((v) => !v)}
             className="
               flex items-center gap-1 px-2 py-1 rounded-lg
-              text-[10px] font-medium text-slate-500 hover:text-slate-300
+              text-[10px] font-medium text-slate-500 hover:text-slate-700
               hover:bg-white/[0.05] transition-all duration-150
             "
             aria-expanded={expanded}
@@ -612,7 +612,7 @@ function FilterBar({
               'transition-all duration-150',
               isActive
                 ? bgMap[opt]
-                : 'border-white/[0.07] bg-transparent hover:bg-white/[0.05]',
+                : 'border-slate-900/[0.07] bg-transparent hover:bg-white/[0.05]',
             )}
             style={{
               color: isActive ? color : '#64748b',
@@ -633,7 +633,7 @@ function FilterBar({
                   text-[9px] font-bold
                 "
                 style={{
-                  backgroundColor: isActive ? `${color}25` : 'rgba(255,255,255,0.06)',
+                  backgroundColor: isActive ? `${color}25` : 'rgba(15,23,42,0.06)',
                   color:            isActive ? color : '#64748b',
                 }}
               >
@@ -676,14 +676,14 @@ function EmptyState({ filtered }: { filtered: boolean }) {
           />
         ))}
         <div className="relative w-8 h-8 rounded-full bg-emerald-500/20 flex items-center justify-center">
-          <BellOff size={16} className="text-emerald-400" />
+          <BellOff size={16} className="text-slate-400" />
         </div>
       </div>
 
-      <h4 className="text-sm font-bold text-slate-300 mb-1">
+      <h4 className="text-sm font-bold text-slate-700 mb-1">
         {filtered ? 'No matching alerts' : 'All Clear'}
       </h4>
-      <p className="text-[12px] text-slate-600 max-w-[200px] leading-relaxed">
+      <p className="text-[12px] text-slate-400 max-w-[200px] leading-relaxed">
         {filtered
           ? 'Try adjusting the severity filter to see more alerts.'
           : 'No active risk alerts for this waterway at the selected time.'}
@@ -707,25 +707,25 @@ function AlertStats({ alerts }: { alerts: Alert[] }) {
       label:  'Critical',
       value:  criticalCount,
       color:  criticalCount > 0 ? '#ef4444' : '#64748b',
-      bg:     criticalCount > 0 ? 'bg-red-500/10 border-red-500/20' : 'bg-white/[0.03] border-white/[0.06]',
+      bg:     criticalCount > 0 ? 'bg-red-500/10 border-red-500/20' : 'bg-white/[0.03] border-slate-900/[0.06]',
     },
     {
       label:  'Warning',
       value:  warningCount,
       color:  warningCount > 0 ? '#f59e0b' : '#64748b',
-      bg:     warningCount > 0 ? 'bg-amber-500/10 border-amber-500/20' : 'bg-white/[0.03] border-white/[0.06]',
+      bg:     warningCount > 0 ? 'bg-amber-500/10 border-amber-500/20' : 'bg-white/[0.03] border-slate-900/[0.06]',
     },
     {
       label:  'Avg Risk',
       value:  `${(avgRisk * 100).toFixed(0)}%`,
       color:  avgRisk > 0.6 ? '#ef4444' : avgRisk > 0.3 ? '#f59e0b' : '#22c55e',
-      bg:     'bg-white/[0.03] border-white/[0.06]',
+      bg:     'bg-white/[0.03] border-slate-900/[0.06]',
     },
     {
       label:  'Active',
       value:  activeAlerts.length,
       color:  '#94a3b8',
-      bg:     'bg-white/[0.03] border-white/[0.06]',
+      bg:     'bg-white/[0.03] border-slate-900/[0.06]',
     },
   ];
 
@@ -748,7 +748,7 @@ function AlertStats({ alerts }: { alerts: Alert[] }) {
           >
             {s.value}
           </span>
-          <span className="text-[9px] font-semibold uppercase tracking-wider text-slate-600">
+          <span className="text-[9px] font-semibold uppercase tracking-wider text-slate-400">
             {s.label}
           </span>
         </motion.div>
@@ -843,7 +843,7 @@ export function AlertList({
         <div className="flex items-center justify-between gap-3 mb-3">
           <div>
             <div className="flex items-center gap-2">
-              <h3 className="text-sm font-bold text-slate-100">Risk Alerts</h3>
+              <h3 className="text-sm font-bold text-slate-900">Risk Alerts</h3>
               {alertCounts.CRITICAL > 0 && (
                 <motion.span
                   animate={{ scale: [1, 1.08, 1] }}
@@ -851,7 +851,7 @@ export function AlertList({
                   className="
                     inline-flex items-center gap-1 px-2 py-0.5 rounded-full
                     bg-red-500/15 border border-red-500/30
-                    text-[9px] font-bold text-red-400 uppercase tracking-wider
+                    text-[9px] font-bold text-slate-400 uppercase tracking-wider
                   "
                 >
                   <span className="w-1.5 h-1.5 rounded-full bg-red-400 animate-ping" />
@@ -870,8 +870,8 @@ export function AlertList({
             whileTap={{ scale: 0.93 }}
             className="
               flex items-center justify-center w-8 h-8 rounded-lg
-              text-slate-500 hover:text-slate-300
-              bg-white/[0.04] border border-white/[0.08]
+              text-slate-500 hover:text-slate-700
+              bg-white/[0.04] border border-slate-900/[0.08]
               hover:bg-white/[0.07]
               transition-all duration-150
             "
@@ -900,7 +900,7 @@ export function AlertList({
       {/* ── Filters ──────────────────────────────────────────────────────── */}
       {showFilters && !compact && (
         <div className="flex items-center gap-2 mb-3">
-          <Filter size={11} className="text-slate-600 flex-shrink-0" />
+          <Filter size={11} className="text-slate-400 flex-shrink-0" />
           <FilterBar
             currentFilter={severityFilter}
             onFilterChange={setSeverityFilter}
@@ -938,9 +938,9 @@ export function AlertList({
           onClick={() => setShowAll((v) => !v)}
           className="
             flex items-center justify-center gap-2 mt-3 py-2.5 rounded-xl
-            text-[12px] font-semibold text-slate-400 hover:text-slate-200
-            bg-white/[0.03] border border-white/[0.06]
-            hover:bg-white/[0.06] hover:border-white/[0.10]
+            text-[12px] font-semibold text-slate-400 hover:text-slate-800
+            bg-white/[0.03] border border-slate-900/[0.06]
+            hover:bg-white/[0.06] hover:border-slate-900/[0.10]
             transition-all duration-150
           "
         >

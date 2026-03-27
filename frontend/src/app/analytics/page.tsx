@@ -97,17 +97,17 @@ function SectionHeading({
     <div className={cn('flex items-center gap-3 mb-5', className)}>
       {Icon && (
         <div className="w-8 h-8 rounded-xl bg-blue-500/15 border border-blue-500/25 flex items-center justify-center flex-shrink-0">
-          <Icon size={15} className="text-blue-400" />
+          <Icon size={15} className="text-slate-400" />
         </div>
       )}
       <div className="min-w-0 flex-1">
         <div className="flex items-center gap-2 flex-wrap">
-          <h2 className="text-base font-bold text-slate-100 leading-tight">{title}</h2>
+          <h2 className="text-base font-bold text-slate-900 leading-tight">{title}</h2>
           {badge && (
             <span className="
               text-[9px] font-bold tracking-wider uppercase
               px-2 py-0.5 rounded-full
-              bg-blue-500/15 text-blue-400 border border-blue-500/25
+              bg-blue-500/15 text-slate-400 border border-blue-500/25
             ">
               {badge}
             </span>
@@ -184,72 +184,72 @@ function ModelArchitectureCard() {
       />
 
       {/* Architecture diagram (ASCII-art style visual) */}
-      <div className="relative mb-5 p-4 rounded-xl bg-slate-950/60 border border-white/[0.06] overflow-x-auto">
+      <div className="relative mb-5 p-4 rounded-xl bg-slate-50/60 border border-slate-900/[0.06] overflow-x-auto">
         <div className="flex items-center justify-center gap-2 min-w-[500px]">
           {/* Input block */}
           <div className="flex flex-col gap-1.5">
-            <div className="px-3 py-2 rounded-lg bg-slate-800/80 border border-white/[0.08] text-center">
+            <div className="px-3 py-2 rounded-lg bg-slate-100/80 border border-slate-900/[0.08] text-center">
               <div className="text-[9px] font-bold text-slate-400 uppercase tracking-wider">Input</div>
-              <div className="text-[11px] font-semibold text-slate-200 mt-0.5">Sentinel-2</div>
+              <div className="text-[11px] font-semibold text-slate-800 mt-0.5">Sentinel-2</div>
               <div className="text-[9px] text-slate-500">12 bands · 10m</div>
             </div>
-            <div className="px-3 py-2 rounded-lg bg-slate-800/80 border border-white/[0.08] text-center">
+            <div className="px-3 py-2 rounded-lg bg-slate-100/80 border border-slate-900/[0.08] text-center">
               <div className="text-[9px] font-bold text-slate-400 uppercase tracking-wider">Input</div>
-              <div className="text-[11px] font-semibold text-slate-200 mt-0.5">CWC + ERA5</div>
+              <div className="text-[11px] font-semibold text-slate-800 mt-0.5">CWC + ERA5</div>
               <div className="text-[9px] text-slate-500">T=12 months</div>
             </div>
           </div>
 
           {/* Arrow */}
-          <div className="text-slate-600 text-lg">→</div>
+          <div className="text-slate-400 text-lg">→</div>
 
           {/* Backbone block */}
           <div className="flex flex-col gap-1.5">
             <div className="px-3 py-2 rounded-lg border text-center" style={{ background: 'rgba(139,92,246,0.12)', borderColor: 'rgba(139,92,246,0.3)' }}>
               <div className="text-[9px] font-bold uppercase tracking-wider" style={{ color: '#8b5cf6' }}>Swin-T</div>
-              <div className="text-[11px] font-semibold text-slate-200 mt-0.5">Spatial</div>
+              <div className="text-[11px] font-semibold text-slate-800 mt-0.5">Spatial</div>
               <div className="text-[9px] text-slate-500">64-dim</div>
             </div>
             <div className="px-3 py-2 rounded-lg border text-center" style={{ background: 'rgba(59,130,246,0.12)', borderColor: 'rgba(59,130,246,0.3)' }}>
               <div className="text-[9px] font-bold uppercase tracking-wider" style={{ color: '#3b82f6' }}>TFT</div>
-              <div className="text-[11px] font-semibold text-slate-200 mt-0.5">Temporal</div>
+              <div className="text-[11px] font-semibold text-slate-800 mt-0.5">Temporal</div>
               <div className="text-[9px] text-slate-500">128-dim</div>
             </div>
           </div>
 
           {/* Arrow */}
-          <div className="text-slate-600 text-lg">→</div>
+          <div className="text-slate-400 text-lg">→</div>
 
           {/* Fusion */}
           <div className="px-3 py-3 rounded-lg border text-center" style={{ background: 'rgba(245,158,11,0.12)', borderColor: 'rgba(245,158,11,0.3)' }}>
             <div className="text-[9px] font-bold uppercase tracking-wider" style={{ color: '#f59e0b' }}>Cross-Modal</div>
-            <div className="text-[11px] font-semibold text-slate-200 mt-0.5">Fusion</div>
+            <div className="text-[11px] font-semibold text-slate-800 mt-0.5">Fusion</div>
             <div className="text-[9px] text-slate-500">Attention</div>
           </div>
 
           {/* Arrow */}
-          <div className="text-slate-600 text-lg">→</div>
+          <div className="text-slate-400 text-lg">→</div>
 
           {/* Ensemble */}
           <div className="px-3 py-3 rounded-lg border text-center" style={{ background: 'rgba(34,197,94,0.10)', borderColor: 'rgba(34,197,94,0.25)' }}>
             <div className="text-[9px] font-bold uppercase tracking-wider" style={{ color: '#22c55e' }}>Stack</div>
-            <div className="text-[11px] font-semibold text-slate-200 mt-0.5">Ensemble</div>
+            <div className="text-[11px] font-semibold text-slate-800 mt-0.5">Ensemble</div>
             <div className="text-[9px] text-slate-500">Ridge CV</div>
           </div>
 
           {/* Arrow */}
-          <div className="text-slate-600 text-lg">→</div>
+          <div className="text-slate-400 text-lg">→</div>
 
           {/* Output */}
           <div className="flex flex-col gap-1.5">
             <div className="px-3 py-2 rounded-lg bg-emerald-500/12 border border-emerald-500/25 text-center">
-              <div className="text-[9px] font-bold text-emerald-400 uppercase tracking-wider">Output A</div>
-              <div className="text-[11px] font-semibold text-slate-200 mt-0.5">Depth (m)</div>
+              <div className="text-[9px] font-bold text-slate-400 uppercase tracking-wider">Output A</div>
+              <div className="text-[11px] font-semibold text-slate-800 mt-0.5">Depth (m)</div>
               <div className="text-[9px] text-slate-500">+ 90% CI</div>
             </div>
             <div className="px-3 py-2 rounded-lg bg-blue-500/12 border border-blue-500/25 text-center">
-              <div className="text-[9px] font-bold text-blue-400 uppercase tracking-wider">Output B</div>
-              <div className="text-[11px] font-semibold text-slate-200 mt-0.5">Nav Class</div>
+              <div className="text-[9px] font-bold text-slate-400 uppercase tracking-wider">Output B</div>
+              <div className="text-[11px] font-semibold text-slate-800 mt-0.5">Nav Class</div>
               <div className="text-[9px] text-slate-500">Prob + SHAP</div>
             </div>
           </div>
@@ -266,7 +266,7 @@ function ModelArchitectureCard() {
               initial={{ opacity: 0, y: 8 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: i * 0.05, duration: 0.25, ease: [0.16, 1, 0.3, 1] }}
-              className="flex items-start gap-3 p-3 rounded-xl bg-white/[0.03] border border-white/[0.05]"
+              className="flex items-start gap-3 p-3 rounded-xl bg-white/[0.03] border border-slate-900/[0.05]"
             >
               <div
                 className="flex-shrink-0 w-8 h-8 rounded-lg flex items-center justify-center mt-0.5"
@@ -276,7 +276,7 @@ function ModelArchitectureCard() {
               </div>
               <div className="flex-1 min-w-0">
                 <div className="flex items-center gap-2 flex-wrap">
-                  <span className="text-[12px] font-bold text-slate-200">{comp.name}</span>
+                  <span className="text-[12px] font-bold text-slate-800">{comp.name}</span>
                   <span
                     className="text-[9px] font-bold uppercase tracking-wider px-1.5 py-0.5 rounded-full"
                     style={{ background: `${comp.color}18`, color: comp.color, border: `1px solid ${comp.color}30` }}
@@ -284,7 +284,7 @@ function ModelArchitectureCard() {
                     {comp.abbr}
                   </span>
                   {comp.params !== '—' && (
-                    <span className="text-[9px] text-slate-600 font-medium">{comp.params} params</span>
+                    <span className="text-[9px] text-slate-400 font-medium">{comp.params} params</span>
                   )}
                 </div>
                 <p className="text-[11px] text-slate-500 mt-0.5 leading-snug">{comp.role}</p>
@@ -292,7 +292,7 @@ function ModelArchitectureCard() {
                   <motion.p
                     initial={{ opacity: 0 }}
                     animate={{ opacity: 1 }}
-                    className="text-[10px] text-slate-600 mt-1.5 leading-relaxed font-mono"
+                    className="text-[10px] text-slate-400 mt-1.5 leading-relaxed font-mono"
                   >
                     {comp.details}
                   </motion.p>
@@ -307,8 +307,8 @@ function ModelArchitectureCard() {
         onClick={() => setExpanded(v => !v)}
         className="
           mt-3 flex items-center gap-1.5 w-full justify-center py-2 rounded-xl
-          text-[11px] font-semibold text-slate-500 hover:text-slate-300
-          bg-white/[0.03] border border-white/[0.06]
+          text-[11px] font-semibold text-slate-500 hover:text-slate-700
+          bg-white/[0.03] border border-slate-900/[0.06]
           hover:bg-white/[0.06]
           transition-all duration-150
         "
@@ -434,7 +434,7 @@ function ConfusionMatrix({ data }: { data: { actual: string; predicted: string; 
       </div>
 
       {/* Legend */}
-      <div className="flex items-center gap-4 mt-3 text-[10px] text-slate-600">
+      <div className="flex items-center gap-4 mt-3 text-[10px] text-slate-400">
         <div className="flex items-center gap-1.5">
           <div className="w-3 h-3 rounded bg-emerald-500/30 border border-emerald-500/40" />
           <span>Correct prediction (diagonal)</span>
@@ -463,10 +463,10 @@ function FITooltip({ active, payload, features }: FITooltipProps) {
 
   return (
     <div className="
-      bg-slate-900/98 backdrop-blur-xl border border-white/10 rounded-xl
+      bg-white/98 backdrop-blur-xl border border-slate-300 rounded-xl
       px-3.5 py-3 min-w-[220px] shadow-2xl pointer-events-none
     " style={{ borderColor: `${color}30` }}>
-      <div className="text-[12px] font-bold text-slate-100 mb-1">{feat.display_name}</div>
+      <div className="text-[12px] font-bold text-slate-900 mb-1">{feat.display_name}</div>
       <div className="flex items-center gap-2 mb-2">
         <span
           className="text-[9px] font-bold uppercase tracking-wider px-1.5 py-0.5 rounded-full"
@@ -478,15 +478,15 @@ function FITooltip({ active, payload, features }: FITooltipProps) {
       </div>
       <div className="grid grid-cols-2 gap-x-4 gap-y-1.5 text-[11px]">
         <div>
-          <div className="text-slate-600">SHAP value</div>
-          <div className="font-bold text-slate-200 tabular-nums">{feat.shap_value.toFixed(4)}</div>
+          <div className="text-slate-400">SHAP value</div>
+          <div className="font-bold text-slate-800 tabular-nums">{feat.shap_value.toFixed(4)}</div>
         </div>
         <div>
-          <div className="text-slate-600">Importance</div>
+          <div className="text-slate-400">Importance</div>
           <div className="font-bold tabular-nums" style={{ color }}>{feat.importance_pct.toFixed(1)}%</div>
         </div>
       </div>
-      <p className="text-[10px] text-slate-600 mt-2 leading-relaxed border-t border-white/[0.06] pt-2">
+      <p className="text-[10px] text-slate-400 mt-2 leading-relaxed border-t border-slate-900/[0.06] pt-2">
         {feat.description}
       </p>
     </div>
@@ -546,7 +546,7 @@ function FeatureImportanceChart() {
       {/* Controls */}
       <div className="flex items-center gap-3 mb-4 flex-wrap">
         {/* Sort toggle */}
-        <div className="flex items-center rounded-lg border border-white/[0.08] overflow-hidden text-[11px]">
+        <div className="flex items-center rounded-lg border border-slate-900/[0.08] overflow-hidden text-[11px]">
           {(['importance', 'category'] as const).map((opt, i) => (
             <React.Fragment key={opt}>
               {i > 0 && <div className="w-px h-5 bg-white/[0.08]" />}
@@ -554,7 +554,7 @@ function FeatureImportanceChart() {
                 onClick={() => setSortBy(opt)}
                 className={cn(
                   'px-2.5 py-1.5 font-semibold transition-all duration-150',
-                  sortBy === opt ? 'bg-blue-500/20 text-blue-300' : 'text-slate-500 hover:text-slate-300',
+                  sortBy === opt ? 'bg-blue-500/20 text-slate-300' : 'text-slate-500 hover:text-slate-700',
                 )}
               >
                 {opt === 'importance' ? 'By Importance' : 'By Category'}
@@ -570,8 +570,8 @@ function FeatureImportanceChart() {
             className={cn(
               'px-2.5 py-1 rounded-full text-[10px] font-bold uppercase tracking-wider border transition-all duration-150',
               selectedCategory === null
-                ? 'bg-slate-500/20 text-slate-300 border-slate-500/40'
-                : 'border-white/[0.07] text-slate-600 hover:text-slate-400',
+                ? 'bg-slate-500/20 text-slate-700 border-slate-500/40'
+                : 'border-slate-900/[0.07] text-slate-400 hover:text-slate-400',
             )}
           >
             All
@@ -592,7 +592,7 @@ function FeatureImportanceChart() {
                   borderColor:  `${color}40`,
                   color,
                 } : {
-                  borderColor: 'rgba(255,255,255,0.07)',
+                  borderColor: 'rgba(15,23,42,0.07)',
                   color: '#64748b',
                 }}
               >
@@ -603,7 +603,7 @@ function FeatureImportanceChart() {
           })}
         </div>
 
-        <div className="ml-auto text-[10px] text-slate-600">
+        <div className="ml-auto text-[10px] text-slate-400">
           {sorted.length} features · SHAP values
         </div>
       </div>
@@ -625,14 +625,14 @@ function FeatureImportanceChart() {
             >
               <CartesianGrid
                 strokeDasharray="3 4"
-                stroke="rgba(255,255,255,0.04)"
+                stroke="rgba(15,23,42,0.04)"
                 horizontal={false}
               />
               <XAxis
                 type="number"
                 domain={[0, Math.ceil(Math.max(...sorted.map(f => f.importance_pct)) * 1.1)]}
                 tick={{ fill: '#475569', fontSize: 10, fontFamily: 'Inter, sans-serif' }}
-                axisLine={{ stroke: 'rgba(255,255,255,0.06)' }}
+                axisLine={{ stroke: 'rgba(15,23,42,0.06)' }}
                 tickLine={false}
                 tickFormatter={v => `${v}%`}
               />
@@ -646,7 +646,7 @@ function FeatureImportanceChart() {
               />
               <Tooltip
                 content={<FITooltip features={features} />}
-                cursor={{ fill: 'rgba(255,255,255,0.03)' }}
+                cursor={{ fill: 'rgba(15,23,42,0.03)' }}
               />
               <Bar
                 dataKey="importance_pct"
@@ -690,7 +690,7 @@ function FeatureImportanceChart() {
                   formatter={(val: number, name: string) => [`${val.toFixed(1)}%`, name]}
                   contentStyle={{
                     background: 'rgba(15,23,42,0.95)',
-                    border: '1px solid rgba(255,255,255,0.1)',
+                    border: '1px solid rgba(15, 23, 42, 0.1)',
                     borderRadius: 10,
                     fontSize: 12,
                     color: '#e2e8f0',
@@ -779,7 +779,7 @@ function PerClassMetrics({ metrics }: { metrics: typeof MOCK_MODEL_METRICS }) {
                   <RadialBar
                     dataKey="value"
                     cornerRadius={4}
-                    background={{ fill: 'rgba(255,255,255,0.04)' }}
+                    background={{ fill: 'rgba(15,23,42,0.04)' }}
                   />
                 </RadialBarChart>
               </ResponsiveContainer>
@@ -829,7 +829,7 @@ function DataSplitCard({ metrics }: { metrics: typeof MOCK_MODEL_METRICS }) {
   ];
 
   return (
-    <div className="p-4 rounded-2xl border border-white/[0.06] bg-white/[0.02]">
+    <div className="p-4 rounded-2xl border border-slate-900/[0.06] bg-white/[0.02]">
       <div className="text-[10px] font-semibold text-slate-500 uppercase tracking-wider mb-3">
         Dataset Split
       </div>
@@ -854,12 +854,12 @@ function DataSplitCard({ metrics }: { metrics: typeof MOCK_MODEL_METRICS }) {
           <div key={s.label} className="flex items-center gap-2">
             <span className="w-2 h-2 rounded-full flex-shrink-0" style={{ backgroundColor: s.color }} />
             <span className="text-[11px] text-slate-400 w-20">{s.label}</span>
-            <span className="text-[11px] font-bold text-slate-200 tabular-nums flex-1">
+            <span className="text-[11px] font-bold text-slate-800 tabular-nums flex-1">
               {s.n.toLocaleString()} samples
             </span>
-            <span className="text-[10px] text-slate-600 tabular-nums">{s.pct.toFixed(0)}%</span>
+            <span className="text-[10px] text-slate-400 tabular-nums">{s.pct.toFixed(0)}%</span>
             {s.years.length > 0 && (
-              <span className="text-[9px] text-slate-600">
+              <span className="text-[9px] text-slate-400">
                 {s.years[0]}–{s.years[s.years.length - 1]}
               </span>
             )}
@@ -868,7 +868,7 @@ function DataSplitCard({ metrics }: { metrics: typeof MOCK_MODEL_METRICS }) {
       </div>
 
       {/* Validation strategy */}
-      <div className="mt-3 pt-3 border-t border-white/[0.06]">
+      <div className="mt-3 pt-3 border-t border-slate-900/[0.06]">
         <div className="text-[10px] font-bold text-slate-500 uppercase tracking-wider mb-1.5">
           Validation Strategy
         </div>
@@ -881,7 +881,7 @@ function DataSplitCard({ metrics }: { metrics: typeof MOCK_MODEL_METRICS }) {
           ].map(item => (
             <span
               key={item}
-              className="text-[9px] font-medium text-slate-400 px-2 py-0.5 rounded-full bg-white/[0.04] border border-white/[0.06]"
+              className="text-[9px] font-medium text-slate-400 px-2 py-0.5 rounded-full bg-white/[0.04] border border-slate-900/[0.06]"
             >
               {item}
             </span>
@@ -922,11 +922,11 @@ export default function AnalyticsPage() {
         <div className="flex items-start justify-between gap-4 flex-wrap">
           <div>
             <div className="flex items-center gap-3">
-              <h1 className="text-2xl font-extrabold text-slate-100 tracking-tight">Analytics</h1>
+              <h1 className="text-2xl font-extrabold text-slate-900 tracking-tight">Analytics</h1>
               <span className="
                 text-[10px] font-bold tracking-widest uppercase
                 px-2.5 py-1 rounded-full
-                bg-blue-500/12 border border-blue-500/25 text-blue-400
+                bg-blue-500/12 border border-blue-500/25 text-slate-400
               ">
                 HydroFormer v1.0
               </span>
@@ -935,7 +935,7 @@ export default function AnalyticsPage() {
               Model performance · Feature importance · Multi-year navigability trends
             </p>
           </div>
-          <div className="flex items-center gap-2 text-[11px] text-slate-600">
+          <div className="flex items-center gap-2 text-[11px] text-slate-400">
             <Database size={11} />
             <span>
               {metrics.train_samples.toLocaleString()} training ·{' '}
@@ -1058,10 +1058,10 @@ export default function AnalyticsPage() {
           </div>
 
           {/* Confusion matrix (2 cols) */}
-          <div className="xl:col-span-2 p-4 rounded-2xl border border-white/[0.06] bg-white/[0.02]">
+          <div className="xl:col-span-2 p-4 rounded-2xl border border-slate-900/[0.06] bg-white/[0.02]">
             <div className="mb-3">
               <div className="text-[10px] font-bold text-slate-400 uppercase tracking-wider">Confusion Matrix</div>
-              <p className="text-[11px] text-slate-600 mt-0.5">
+              <p className="text-[11px] text-slate-400 mt-0.5">
                 Rows = actual · Columns = predicted
               </p>
             </div>
@@ -1108,7 +1108,7 @@ export default function AnalyticsPage() {
 
       {/* ── Footer: Data sources ──────────────────────────────────────────── */}
       <motion.div variants={itemVariants}>
-        <div className="p-4 rounded-2xl border border-white/[0.06] bg-white/[0.02]">
+        <div className="p-4 rounded-2xl border border-slate-900/[0.06] bg-white/[0.02]">
           <div className="text-[10px] font-bold text-slate-500 uppercase tracking-wider mb-3">
             Data Sources & Specifications
           </div>
@@ -1135,8 +1135,8 @@ export default function AnalyticsPage() {
                     <Icon size={13} style={{ color: src.color }} />
                   </div>
                   <div>
-                    <div className="text-[11px] font-bold text-slate-300 leading-tight">{src.label}</div>
-                    <div className="text-[10px] text-slate-600 mt-0.5">{src.sub}</div>
+                    <div className="text-[11px] font-bold text-slate-700 leading-tight">{src.label}</div>
+                    <div className="text-[10px] text-slate-400 mt-0.5">{src.sub}</div>
                   </div>
                 </div>
               );

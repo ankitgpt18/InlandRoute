@@ -122,20 +122,20 @@ function TrendTooltip({
   return (
     <div
       className="
-        bg-slate-900/98 backdrop-blur-xl
-        border border-white/10 rounded-xl
+        bg-white
+        border border-slate-200 rounded-xl
         px-3.5 py-3 min-w-[200px]
-        shadow-2xl shadow-black/60
+        shadow-xl
         pointer-events-none
       "
     >
       {/* Month header */}
-      <div className="flex items-center gap-2 mb-2.5 pb-2 border-b border-white/[0.07]">
+      <div className="flex items-center gap-2 mb-2.5 pb-2 border-b border-slate-900/[0.07]">
         <Calendar size={11} className="text-slate-500 flex-shrink-0" />
-        <span className="text-[12px] font-bold text-slate-100">{monthName}</span>
+        <span className="text-[12px] font-bold text-slate-900">{monthName}</span>
         {/* Monsoon indicator */}
         {monthIdx >= 5 && monthIdx <= 8 && (
-          <span className="ml-auto text-[9px] font-bold text-sky-400 tracking-wider uppercase">
+          <span className="ml-auto text-[9px] font-bold text-slate-400 tracking-wider uppercase">
             Monsoon
           </span>
         )}
@@ -155,13 +155,12 @@ function TrendTooltip({
                   className="w-2.5 h-2.5 rounded-full flex-shrink-0"
                   style={{ backgroundColor: entry.color ?? '#64748b' }}
                 />
-                <span className="text-[11px] font-semibold text-slate-300">
+                <span className="text-[11px] font-semibold text-slate-700">
                   {entry.name}
                 </span>
               </div>
               <span
-                className="text-[12px] font-bold tabular-nums"
-                style={{ color: entry.color ?? '#94a3b8' }}
+                className="text-[12px] font-bold tabular-nums text-slate-800"
               >
                 {val.toFixed(mode.id === 'depth' ? 2 : 1)}{mode.unit}
               </span>
@@ -172,9 +171,9 @@ function TrendTooltip({
 
       {/* Range (highest - lowest) */}
       {sorted.length > 1 && (
-        <div className="mt-2 pt-2 border-t border-white/[0.06]">
+        <div className="mt-2 pt-2 border-t border-slate-900/[0.06]">
           <div className="flex items-center justify-between">
-            <span className="text-[10px] text-slate-600">Year range</span>
+            <span className="text-[10px] text-slate-400">Year range</span>
             <span className="text-[10px] font-semibold text-slate-400 tabular-nums">
               {((sorted[0].value ?? 0) - (sorted[sorted.length - 1].value ?? 0)).toFixed(
                 mode.id === 'depth' ? 2 : 1,
@@ -211,7 +210,7 @@ function TrendLegend({
             className={cn(
               'flex items-center gap-1.5 px-2.5 py-1 rounded-full border transition-all duration-150',
               isHidden
-                ? 'border-white/[0.06] bg-transparent opacity-40'
+                ? 'border-slate-900/[0.06] bg-transparent opacity-40'
                 : 'border-transparent',
             )}
             style={
@@ -280,7 +279,7 @@ function YearStatsRow({
   const worst = vals.reduce((a, b) => (b.val < a.val ? b : a));
 
   return (
-    <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 mt-4 pt-4 border-t border-white/[0.05]">
+    <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 mt-4 pt-4 border-t border-slate-900/[0.05]">
       {vals.map(({ year, val, color }) => {
         const isBest  = year === best.year;
         const isWorst = year === worst.year;
@@ -297,7 +296,7 @@ function YearStatsRow({
             transition={{ duration: 0.3, ease: [0.16, 1, 0.3, 1] }}
             className="
               flex flex-col gap-1 px-3 py-2.5 rounded-xl
-              bg-white/[0.03] border border-white/[0.06]
+              bg-white/[0.03] border border-slate-900/[0.06]
               relative overflow-hidden
             "
             style={{ borderColor: `${color}25` }}
@@ -321,8 +320,8 @@ function YearStatsRow({
                   className={cn(
                     'text-[9px] font-bold tracking-wider uppercase px-1.5 py-0.5 rounded-full',
                     isBest
-                      ? 'bg-emerald-500/15 text-emerald-400 border border-emerald-500/25'
-                      : 'bg-red-500/15 text-red-400 border border-red-500/25',
+                      ? 'bg-emerald-500/15 text-slate-400 border border-emerald-500/25'
+                      : 'bg-red-500/15 text-slate-400 border border-red-500/25',
                   )}
                 >
                   {isBest ? 'Best' : 'Worst'}
@@ -352,8 +351,8 @@ function YearStatsRow({
                   Math.abs(yoyChange) < 0.5
                     ? 'text-slate-500'
                     : yoyChange > 0
-                      ? 'text-emerald-400'
-                      : 'text-red-400',
+                      ? 'text-slate-400'
+                      : 'text-slate-400',
                 )}
               >
                 {Math.abs(yoyChange) < 0.5 ? (
@@ -384,14 +383,14 @@ function ChartTypeToggle({
   onToggle: () => void;
 }) {
   return (
-    <div className="flex items-center rounded-lg border border-white/[0.08] overflow-hidden">
+    <div className="flex items-center rounded-lg border border-slate-900/[0.08] overflow-hidden">
       <button
         onClick={() => !isArea && onToggle()}
         className={cn(
           'flex items-center gap-1.5 px-2.5 py-1.5 text-[11px] font-semibold transition-all duration-150',
           !isArea
-            ? 'bg-blue-500/20 text-blue-300'
-            : 'text-slate-500 hover:text-slate-300 hover:bg-white/[0.04]',
+            ? 'bg-blue-500/20 text-slate-300'
+            : 'text-slate-500 hover:text-slate-700 hover:bg-white/[0.04]',
         )}
         aria-pressed={!isArea}
         title="Line chart"
@@ -413,8 +412,8 @@ function ChartTypeToggle({
         className={cn(
           'flex items-center gap-1.5 px-2.5 py-1.5 text-[11px] font-semibold transition-all duration-150',
           isArea
-            ? 'bg-blue-500/20 text-blue-300'
-            : 'text-slate-500 hover:text-slate-300 hover:bg-white/[0.04]',
+            ? 'bg-blue-500/20 text-slate-300'
+            : 'text-slate-500 hover:text-slate-700 hover:bg-white/[0.04]',
         )}
         aria-pressed={isArea}
         title="Area chart"
@@ -449,7 +448,7 @@ function ModeToggle({
   onChange: (m: ChartMode) => void;
 }) {
   return (
-    <div className="flex items-center rounded-lg border border-white/[0.08] overflow-hidden">
+    <div className="flex items-center rounded-lg border border-slate-900/[0.08] overflow-hidden">
       {CHART_MODES.map((mode, idx) => (
         <React.Fragment key={mode.id}>
           {idx > 0 && <div className="w-px h-5 bg-white/[0.08]" />}
@@ -458,8 +457,8 @@ function ModeToggle({
             className={cn(
               'px-2.5 py-1.5 text-[11px] font-semibold transition-all duration-150 whitespace-nowrap',
               current.id === mode.id
-                ? 'bg-blue-500/20 text-blue-300'
-                : 'text-slate-500 hover:text-slate-300 hover:bg-white/[0.04]',
+                ? 'bg-blue-500/20 text-slate-300'
+                : 'text-slate-500 hover:text-slate-700 hover:bg-white/[0.04]',
             )}
             aria-pressed={current.id === mode.id}
           >
@@ -582,7 +581,7 @@ function ChangeSummaryBanner({
 
   const TIcon = isFlat ? Minus : isUp ? TrendingUp : TrendingDown;
   const color = isFlat ? '#64748b' : isUp ? '#22c55e' : '#ef4444';
-  const bg    = isFlat ? 'bg-slate-700/20 border-slate-700/30' : isUp ? 'bg-emerald-500/10 border-emerald-500/20' : 'bg-red-500/10 border-red-500/20';
+  const bg    = isFlat ? 'bg-slate-200/20 border-slate-300/30' : isUp ? 'bg-emerald-500/10 border-emerald-500/20' : 'bg-red-500/10 border-red-500/20';
 
   return (
     <motion.div
@@ -601,7 +600,7 @@ function ChangeSummaryBanner({
         <TIcon size={16} style={{ color }} />
       </div>
       <div className="flex-1 min-w-0">
-        <span className="text-[12px] font-semibold text-slate-200">
+        <span className="text-[12px] font-semibold text-slate-800">
           {isFlat
             ? 'Stable trend'
             : isUp
@@ -725,7 +724,7 @@ export function TrendChart({
       <div
         className={cn(
           'flex flex-col items-center justify-center',
-          'bg-white/[0.03] border border-white/[0.06] rounded-2xl',
+          'bg-white/[0.03] border border-slate-900/[0.06] rounded-2xl',
           'py-12 text-center',
           className,
         )}
@@ -748,7 +747,7 @@ export function TrendChart({
       {!compact && (
         <div className="flex items-start justify-between gap-4 mb-4">
           <div>
-            <h3 className="text-sm font-bold text-slate-100">
+            <h3 className="text-sm font-bold text-slate-900">
               Multi-Year Navigability Trends
             </h3>
             <p className="text-xs text-slate-500 mt-0.5">
@@ -785,7 +784,7 @@ export function TrendChart({
         {!compact && (
           <button
             onClick={() => setShowBanner((v) => !v)}
-            className="text-slate-600 hover:text-slate-400 transition-colors flex-shrink-0"
+            className="text-slate-400 hover:text-slate-400 transition-colors flex-shrink-0"
             title={showBanner ? 'Hide summary' : 'Show summary'}
           >
             <Info size={14} />
@@ -824,7 +823,7 @@ export function TrendChart({
 
             <CartesianGrid
               strokeDasharray="3 4"
-              stroke="rgba(255,255,255,0.04)"
+              stroke="rgba(15,23,42,0.04)"
               vertical={false}
             />
 
@@ -834,7 +833,7 @@ export function TrendChart({
               domain={[1, 12]}
               ticks={[1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]}
               tick={<XTick />}
-              axisLine={{ stroke: 'rgba(255,255,255,0.06)' }}
+              axisLine={{ stroke: 'rgba(15,23,42,0.06)' }}
               tickLine={false}
               interval={0}
             />
@@ -843,7 +842,7 @@ export function TrendChart({
               domain={yDomain}
               tickCount={mode.id === 'navigability' ? 6 : 5}
               tick={<YTick unit={mode.unit} />}
-              axisLine={{ stroke: 'rgba(255,255,255,0.06)' }}
+              axisLine={{ stroke: 'rgba(15,23,42,0.06)' }}
               tickLine={false}
               width={38}
             />
@@ -956,19 +955,19 @@ export function TrendChart({
 
       {/* ── Chart footnote ────────────────────────────────────────────────── */}
       {!compact && (
-        <div className="flex items-center flex-wrap gap-4 mt-3 pt-3 border-t border-white/[0.05]">
+        <div className="flex items-center flex-wrap gap-4 mt-3 pt-3 border-t border-slate-900/[0.05]">
           {referenceLines.map((ref) => (
             <div key={ref.y} className="flex items-center gap-1.5">
               <div
                 className="w-7 border-t-2 border-dashed"
                 style={{ borderColor: `${ref.color}80` }}
               />
-              <span className="text-[10px] text-slate-600">{ref.label}</span>
+              <span className="text-[10px] text-slate-400">{ref.label}</span>
             </div>
           ))}
           <div className="flex items-center gap-1.5">
             <span className="w-2 h-2 rounded-full bg-sky-400/60" />
-            <span className="text-[10px] text-slate-600">Monsoon months (Jun–Sep)</span>
+            <span className="text-[10px] text-slate-400">Monsoon months (Jun–Sep)</span>
           </div>
           <div className="ml-auto text-[10px] text-slate-700">
             Source: HydroFormer v1.0 · Sentinel-2

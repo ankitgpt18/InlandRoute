@@ -110,18 +110,18 @@ function DepthTooltip({ active, payload, label }: TooltipProps<number, string>) 
   return (
     <div
       className="
-        bg-slate-900/98 backdrop-blur-xl
-        border border-white/10 rounded-xl
+        bg-white
+        border border-slate-200 rounded-xl
         px-3 py-3 min-w-[200px]
-        shadow-2xl shadow-black/60
+        shadow-xl
         pointer-events-none
       "
-      style={{ borderColor: `${depthColor}30` }}
+      style={{ borderColor: `${depthColor}50` }}
     >
       {/* Header */}
-      <div className="flex items-center justify-between mb-2 pb-2 border-b border-white/[0.07]">
+      <div className="flex items-center justify-between mb-2 pb-2 border-b border-slate-900/[0.07]">
         <div>
-          <div className="text-[12px] font-bold text-slate-100 tabular-nums">
+          <div className="text-[12px] font-bold text-slate-900 tabular-nums">
             km {(label as number).toFixed(1)}
           </div>
           {dataPoint.landmark && (
@@ -145,13 +145,12 @@ function DepthTooltip({ active, payload, label }: TooltipProps<number, string>) 
       {/* Depth value (large) */}
       <div className="flex items-baseline gap-1 mb-2">
         <span
-          className="text-2xl font-extrabold tracking-tight tabular-nums leading-none"
-          style={{ color: depthColor }}
+          className="text-2xl font-extrabold tracking-tight tabular-nums leading-none text-slate-800"
         >
           {dataPoint.depth.toFixed(2)}
         </span>
         <span className="text-sm font-semibold text-slate-500">m</span>
-        <span className="text-[10px] text-slate-600 ml-1">depth</span>
+        <span className="text-[10px] text-slate-400 ml-1">depth</span>
       </div>
 
       {/* CI band */}
@@ -171,30 +170,29 @@ function DepthTooltip({ active, payload, label }: TooltipProps<number, string>) 
       </div>
       <div className="grid grid-cols-2 gap-x-3 gap-y-1.5 text-[11px]">
         <div>
-          <span className="text-slate-600">CI Lower</span>
-          <div className="font-semibold text-slate-300 tabular-nums">
+          <span className="text-slate-400">CI Lower</span>
+          <div className="font-semibold text-slate-700 tabular-nums">
             {dataPoint.lowerCI.toFixed(2)} m
           </div>
         </div>
         <div>
-          <span className="text-slate-600">CI Upper</span>
-          <div className="font-semibold text-slate-300 tabular-nums">
+          <span className="text-slate-400">CI Upper</span>
+          <div className="font-semibold text-slate-700 tabular-nums">
             {dataPoint.upperCI.toFixed(2)} m
           </div>
         </div>
         <div>
-          <span className="text-slate-600">Width</span>
-          <div className="font-semibold text-slate-300 tabular-nums">
+          <span className="text-slate-400">Width</span>
+          <div className="font-semibold text-slate-700 tabular-nums">
             {dataPoint.width.toFixed(0)} m
           </div>
         </div>
         <div>
-          <span className="text-slate-600">
+          <span className="text-slate-400">
             {cls === 'navigable' ? 'Margin' : 'Deficit'}
           </span>
           <div
-            className="font-semibold tabular-nums"
-            style={{ color: cls === 'non_navigable' ? '#ef4444' : '#22c55e' }}
+            className="font-semibold tabular-nums text-slate-700"
           >
             {marginToThreshold >= 0 ? '+' : ''}{marginToThreshold.toFixed(2)} m
           </div>
@@ -307,12 +305,12 @@ function BottleneckBadge({ km, depth }: BottleneckMarkerProps) {
     <div className="
       flex items-center gap-2 px-3 py-2 rounded-xl
       bg-red-500/10 border border-red-500/25
-      text-red-400
+      text-slate-400
     ">
       <ArrowDown size={14} className="flex-shrink-0" />
       <div>
         <div className="text-[11px] font-bold">Bottleneck</div>
-        <div className="text-[10px] font-medium text-red-500">
+        <div className="text-[10px] font-medium text-slate-500">
           km {km.toFixed(1)} · {depth.toFixed(2)} m
         </div>
       </div>
@@ -345,29 +343,29 @@ function SummaryStats({
     {
       label:  'Min Depth',
       value:  `${minDepth.toFixed(2)}m`,
-      color:  minDepth >= navigableThreshold ? 'text-emerald-400' :
-              minDepth >= conditionalThreshold ? 'text-amber-400' : 'text-red-400',
+      color:  minDepth >= navigableThreshold ? 'text-slate-400' :
+              minDepth >= conditionalThreshold ? 'text-slate-400' : 'text-slate-400',
       sub:    minDepth >= navigableThreshold ? '✓ Above threshold' :
               minDepth >= conditionalThreshold ? '⚠ Conditional zone' : '✕ Below threshold',
     },
     {
       label:  'Mean Depth',
       value:  `${meanDepth.toFixed(2)}m`,
-      color:  meanDepth >= navigableThreshold ? 'text-emerald-400' :
-              meanDepth >= conditionalThreshold ? 'text-amber-400' : 'text-red-400',
+      color:  meanDepth >= navigableThreshold ? 'text-slate-400' :
+              meanDepth >= conditionalThreshold ? 'text-slate-400' : 'text-slate-400',
       sub:    `Avg over full reach`,
     },
     {
       label:  'Max Depth',
       value:  `${maxDepth.toFixed(2)}m`,
-      color:  'text-blue-400',
+      color:  'text-slate-400',
       sub:    'Peak channel depth',
     },
     {
       label:  'Navigable',
       value:  `${navigablePct.toFixed(0)}%`,
-      color:  navigablePct >= 70 ? 'text-emerald-400' :
-              navigablePct >= 40 ? 'text-amber-400' : 'text-red-400',
+      color:  navigablePct >= 70 ? 'text-slate-400' :
+              navigablePct >= 40 ? 'text-slate-400' : 'text-slate-400',
       sub:    `Of total length`,
     },
   ];
@@ -379,7 +377,7 @@ function SummaryStats({
           key={s.label}
           className="
             flex flex-col gap-0.5 px-3 py-2.5 rounded-xl
-            bg-white/[0.03] border border-white/[0.06]
+            bg-white/[0.03] border border-slate-900/[0.06]
           "
         >
           <span className="text-[10px] font-semibold tracking-widest text-slate-500 uppercase">
@@ -388,7 +386,7 @@ function SummaryStats({
           <span className={cn('text-xl font-extrabold tracking-tight tabular-nums leading-tight', s.color)}>
             {s.value}
           </span>
-          <span className="text-[10px] text-slate-600 leading-tight">{s.sub}</span>
+          <span className="text-[10px] text-slate-400 leading-tight">{s.sub}</span>
         </div>
       ))}
     </div>
@@ -501,7 +499,7 @@ export function DepthProfileChart({
       <div
         className={cn(
           'flex items-center justify-center rounded-2xl',
-          'bg-white/[0.03] border border-white/[0.06]',
+          'bg-white/[0.03] border border-slate-900/[0.06]',
           className,
         )}
         style={{ height }}
@@ -524,14 +522,14 @@ export function DepthProfileChart({
         <div className="flex items-start justify-between gap-4 mb-4">
           <div>
             <div className="flex items-center gap-2">
-              <h3 className="text-sm font-bold text-slate-100">
+              <h3 className="text-sm font-bold text-slate-900">
                 Longitudinal Depth Profile
               </h3>
               {isMonsoon && (
                 <span className="
                   text-[9px] font-bold tracking-wider uppercase
                   px-2 py-0.5 rounded-full
-                  bg-blue-500/15 text-blue-400 border border-blue-500/25
+                  bg-blue-500/15 text-slate-400 border border-blue-500/25
                 ">
                   Monsoon
                 </span>
@@ -550,8 +548,8 @@ export function DepthProfileChart({
                 onClick={() => setLocalMonthOffset((v) => v - 1)}
                 className="
                   w-7 h-7 flex items-center justify-center rounded-lg
-                  text-slate-500 hover:text-slate-300 hover:bg-white/6
-                  border border-white/6 transition-colors duration-150
+                  text-slate-500 hover:text-slate-700 hover:bg-slate-200/6
+                  border border-slate-300 transition-colors duration-150
                 "
                 aria-label="Previous month"
               >
@@ -564,8 +562,8 @@ export function DepthProfileChart({
                 onClick={() => setLocalMonthOffset((v) => v + 1)}
                 className="
                   w-7 h-7 flex items-center justify-center rounded-lg
-                  text-slate-500 hover:text-slate-300 hover:bg-white/6
-                  border border-white/6 transition-colors duration-150
+                  text-slate-500 hover:text-slate-700 hover:bg-slate-200/6
+                  border border-slate-300 transition-colors duration-150
                 "
                 aria-label="Next month"
               >
@@ -631,7 +629,7 @@ export function DepthProfileChart({
 
             <CartesianGrid
               strokeDasharray="3 4"
-              stroke="rgba(255,255,255,0.04)"
+              stroke="rgba(15,23,42,0.04)"
               vertical={false}
             />
 
@@ -641,7 +639,7 @@ export function DepthProfileChart({
               domain={xDomain}
               tickCount={8}
               tick={<CustomXTick />}
-              axisLine={{ stroke: 'rgba(255,255,255,0.06)' }}
+              axisLine={{ stroke: 'rgba(15,23,42,0.06)' }}
               tickLine={false}
               label={{
                 value:    'Distance (km)',
@@ -658,7 +656,7 @@ export function DepthProfileChart({
               domain={[0, yDomainMax]}
               tickCount={6}
               tick={<CustomYTick />}
-              axisLine={{ stroke: 'rgba(255,255,255,0.06)' }}
+              axisLine={{ stroke: 'rgba(15,23,42,0.06)' }}
               tickLine={false}
               width={40}
             />
@@ -789,7 +787,7 @@ export function DepthProfileChart({
 
       {/* ── Chart footnote: threshold legend ────────────────────────────── */}
       {!compact && (
-        <div className="flex items-center flex-wrap gap-4 mt-3 pt-3 border-t border-white/[0.05]">
+        <div className="flex items-center flex-wrap gap-4 mt-3 pt-3 border-t border-slate-900/[0.05]">
           {/* Threshold legend items */}
           <div className="flex items-center gap-1.5">
             <div className="w-8 border-t-2 border-dashed border-emerald-500/70" />
@@ -824,8 +822,8 @@ export function DepthProfileChart({
 
           {/* IWAI standard badge */}
           <div className="ml-auto flex items-center gap-1.5">
-            <Anchor size={10} className="text-slate-600" />
-            <span className="text-[10px] text-slate-600 font-medium">
+            <Anchor size={10} className="text-slate-400" />
+            <span className="text-[10px] text-slate-400 font-medium">
               IWAI LAD standard · 1,500 DWT
             </span>
           </div>
@@ -850,13 +848,13 @@ export function DepthProfileChart({
                 w-8 h-8 rounded-lg flex items-center justify-center flex-shrink-0
                 bg-amber-500/15
               ">
-                <AlertTriangle size={16} className="text-amber-400" />
+                <AlertTriangle size={16} className="text-slate-400" />
               </div>
               <div>
-                <div className="text-[12px] font-semibold text-amber-300">
+                <div className="text-[12px] font-semibold text-slate-300">
                   Shallowest Point Detected
                 </div>
-                <div className="text-[11px] text-amber-600 mt-0.5">
+                <div className="text-[11px] text-slate-600 mt-0.5">
                   km {bottleneck.km.toFixed(1)} · {bottleneck.depth.toFixed(2)} m depth
                   {' '}({(NAVIGABLE_THRESHOLD - bottleneck.depth).toFixed(2)} m below navigable threshold)
                 </div>

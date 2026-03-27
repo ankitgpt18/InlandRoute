@@ -59,11 +59,11 @@ function SectionHeading({
       <div className="flex items-center gap-2.5 min-w-0">
         {Icon && (
           <div className="w-7 h-7 rounded-lg bg-blue-500/15 border border-blue-500/25 flex items-center justify-center flex-shrink-0">
-            <Icon size={14} className="text-blue-400" />
+            <Icon size={14} className="text-slate-400" />
           </div>
         )}
         <div className="min-w-0">
-          <h2 className="text-sm font-bold text-slate-100 leading-tight">{title}</h2>
+          <h2 className="text-sm font-bold text-slate-900 leading-tight">{title}</h2>
           {subtitle && (
             <p className="text-[11px] text-slate-500 mt-0.5 truncate">{subtitle}</p>
           )}
@@ -92,7 +92,7 @@ function ModelMetricsStrip() {
       transition={{ duration: 0.4, delay: 0.1 }}
       className="
         flex items-center gap-0 overflow-hidden
-        rounded-xl border border-white/[0.06]
+        rounded-xl border border-slate-900/[0.06]
         bg-white/[0.02]
       "
     >
@@ -114,7 +114,7 @@ function ModelMetricsStrip() {
               >
                 {m.value}
               </div>
-              <div className="text-[9px] text-slate-600 leading-none mt-0.5 hidden sm:block">
+              <div className="text-[9px] text-slate-400 leading-none mt-0.5 hidden sm:block">
                 {m.desc}
               </div>
             </div>
@@ -133,9 +133,9 @@ function ModelMetricsStrip() {
             <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75" />
             <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-500" />
           </span>
-          <span className="text-[11px] font-bold text-emerald-400">HydroFormer v1.0</span>
+          <span className="text-[11px] font-bold text-slate-400">HydroFormer v1.0</span>
         </div>
-        <span className="hidden md:block text-[10px] text-slate-600">
+        <span className="hidden md:block text-[10px] text-slate-400">
           TFT + Swin-T Ensemble
         </span>
       </div>
@@ -163,7 +163,7 @@ function RightPanelTabs({
   alertCount: number;
 }) {
   return (
-    <div className="flex items-center gap-0.5 p-0.5 bg-white/[0.04] rounded-xl border border-white/[0.06]">
+    <div className="flex items-center gap-0.5 p-0.5 bg-white/[0.04] rounded-xl border border-slate-900/[0.06]">
       {RIGHT_PANEL_TABS.map((tab) => {
         const Icon     = tab.icon;
         const isActive = active === tab.id;
@@ -176,8 +176,8 @@ function RightPanelTabs({
               'relative flex items-center gap-1.5 px-3 py-1.5 rounded-lg flex-1 justify-center',
               'text-[11px] font-semibold transition-all duration-200',
               isActive
-                ? 'bg-blue-500/20 text-blue-300'
-                : 'text-slate-500 hover:text-slate-300 hover:bg-white/[0.05]',
+                ? 'bg-blue-500/20 text-slate-300'
+                : 'text-slate-500 hover:text-slate-700 hover:bg-white/[0.05]',
             )}
           >
             <Icon size={12} strokeWidth={isActive ? 2.5 : 2} />
@@ -187,7 +187,7 @@ function RightPanelTabs({
             {tab.id === 'alerts' && alertCount > 0 && (
               <span className="
                 absolute -top-1 -right-1 min-w-[16px] h-4 px-1
-                bg-red-500 text-white text-[9px] font-bold rounded-full
+                bg-red-500 text-slate-900 text-[9px] font-bold rounded-full
                 flex items-center justify-center leading-none
               ">
                 {alertCount > 9 ? '9+' : alertCount}
@@ -276,14 +276,14 @@ export default function DashboardPage() {
         <div className="flex items-center justify-between">
           <div>
             <div className="flex items-center gap-3">
-              <h1 className="text-xl font-extrabold text-slate-100 tracking-tight">
+              <h1 className="text-xl font-extrabold text-slate-900 tracking-tight">
                 Overview
               </h1>
               {isMonsoon && (
                 <span className="
                   text-[10px] font-bold tracking-widest uppercase
                   px-2.5 py-1 rounded-full
-                  bg-sky-500/12 border border-sky-500/25 text-sky-400
+                  bg-sky-500/12 border border-sky-500/25 text-slate-400
                 ">
                   🌧 Monsoon Season
                 </span>
@@ -297,8 +297,8 @@ export default function DashboardPage() {
           </div>
 
           {/* Live timestamp */}
-          <div className="hidden md:flex items-center gap-2 text-[11px] text-slate-600">
-            <Satellite size={11} className="text-slate-600" />
+          <div className="hidden md:flex items-center gap-2 text-[11px] text-slate-400">
+            <Satellite size={11} className="text-slate-400" />
             <span>Sentinel-2 composite · 10 m resolution</span>
           </div>
         </div>
@@ -403,19 +403,19 @@ export default function DashboardPage() {
                 <div className="hidden lg:flex items-center gap-2">
                   <div className="flex items-center gap-1.5 px-2.5 py-1 rounded-lg bg-emerald-500/10 border border-emerald-500/20">
                     <span className="w-2 h-2 rounded-full bg-emerald-500 flex-shrink-0" />
-                    <span className="text-[10px] font-bold text-emerald-400 tabular-nums">
+                    <span className="text-[10px] font-bold text-slate-400 tabular-nums">
                       {navMap?.navigable_count ?? 0} nav
                     </span>
                   </div>
                   <div className="flex items-center gap-1.5 px-2.5 py-1 rounded-lg bg-amber-500/10 border border-amber-500/20">
                     <span className="w-2 h-2 rounded-full bg-amber-500 flex-shrink-0" />
-                    <span className="text-[10px] font-bold text-amber-400 tabular-nums">
+                    <span className="text-[10px] font-bold text-slate-400 tabular-nums">
                       {navMap?.conditional_count ?? 0} cond
                     </span>
                   </div>
                   <div className="flex items-center gap-1.5 px-2.5 py-1 rounded-lg bg-red-500/10 border border-red-500/20">
                     <span className="w-2 h-2 rounded-full bg-red-500 flex-shrink-0" />
-                    <span className="text-[10px] font-bold text-red-400 tabular-nums">
+                    <span className="text-[10px] font-bold text-slate-400 tabular-nums">
                       {navMap?.non_navigable_count ?? 0} closed
                     </span>
                   </div>
@@ -428,7 +428,7 @@ export default function DashboardPage() {
           <div
             className="
               flex-1 min-h-0 rounded-2xl overflow-hidden
-              border border-white/[0.06]
+              border border-slate-900/[0.06]
               shadow-[0_4px_32px_rgba(0,0,0,0.5)]
             "
           >
@@ -458,7 +458,7 @@ export default function DashboardPage() {
           <div
             className="
               flex-1 min-h-0 overflow-y-auto thin-scrollbar
-              rounded-2xl border border-white/[0.06]
+              rounded-2xl border border-slate-900/[0.06]
               bg-white/[0.02] backdrop-blur-sm
               p-4
             "
@@ -507,7 +507,7 @@ export default function DashboardPage() {
                 transition={{ duration: 0.25, ease: [0.16, 1, 0.3, 1] }}
               >
                 <div className="mb-3">
-                  <h3 className="text-sm font-bold text-slate-100">Depth Profile</h3>
+                  <h3 className="text-sm font-bold text-slate-900">Depth Profile</h3>
                   <p className="text-[11px] text-slate-500 mt-0.5">
                     {selectedWaterway} · {monthName} {selectedYear}
                   </p>
@@ -524,13 +524,13 @@ export default function DashboardPage() {
                     {
                       label: 'Annual Mean',
                       value: `${annualMeanDepth.toFixed(2)}m`,
-                      color: 'text-blue-400',
+                      color: 'text-slate-400',
                       bg:    'bg-blue-500/10 border-blue-500/20',
                     },
                     {
                       label: 'YoY Change',
                       value: `${yoyDepthChange >= 0 ? '+' : ''}${yoyDepthChange.toFixed(2)}m`,
-                      color: yoyDepthChange >= 0 ? 'text-emerald-400' : 'text-red-400',
+                      color: yoyDepthChange >= 0 ? 'text-slate-400' : 'text-slate-400',
                       bg:    yoyDepthChange >= 0
                         ? 'bg-emerald-500/10 border-emerald-500/20'
                         : 'bg-red-500/10 border-red-500/20',
@@ -559,7 +559,7 @@ export default function DashboardPage() {
           {/* ── Quick waterway info footer ────────────────────────────── */}
           <div className="
             flex-shrink-0 px-3.5 py-2.5 rounded-xl
-            bg-white/[0.03] border border-white/[0.06]
+            bg-white/[0.03] border border-slate-900/[0.06]
           ">
             <div className="flex items-center justify-between">
               <div>
@@ -567,7 +567,7 @@ export default function DashboardPage() {
                   {selectedWaterway === 'NW-1' ? 'Ganga · Varanasi → Haldia' : 'Brahmaputra · Dhubri → Sadiya'}
                 </div>
                 <div className="flex items-center gap-2 mt-1">
-                  <span className="text-xs font-bold text-slate-300">
+                  <span className="text-xs font-bold text-slate-700">
                     {totalKm.toFixed(0)} km
                   </span>
                   <span className="text-slate-700 text-xs">·</span>

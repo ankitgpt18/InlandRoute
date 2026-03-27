@@ -68,9 +68,9 @@ function formatRelativeTime(date: Date): string {
 
 function StatusDot({ status }: { status: 'online' | 'degraded' | 'offline' }) {
   const colors = {
-    online:   { dot: 'bg-emerald-400', ping: 'bg-emerald-400', label: 'Live Data',  text: 'text-emerald-400' },
-    degraded: { dot: 'bg-amber-400',   ping: 'bg-amber-400',   label: 'Degraded',   text: 'text-amber-400'   },
-    offline:  { dot: 'bg-red-400',     ping: 'bg-red-400',     label: 'Offline',    text: 'text-red-400'     },
+    online:   { dot: 'bg-emerald-400', ping: 'bg-emerald-400', label: 'Live Data',  text: 'text-slate-400' },
+    degraded: { dot: 'bg-amber-400',   ping: 'bg-amber-400',   label: 'Degraded',   text: 'text-slate-400'   },
+    offline:  { dot: 'bg-red-400',     ping: 'bg-red-400',     label: 'Offline',    text: 'text-slate-400'     },
   };
   const c = colors[status];
 
@@ -112,8 +112,8 @@ function AlertBell() {
           relative flex items-center justify-center w-9 h-9 rounded-xl
           border transition-all duration-200
           ${alertsPanelOpen
-            ? 'bg-blue-500/15 border-blue-500/40 text-blue-400'
-            : 'bg-white/[0.04] border-white/[0.08] text-slate-400 hover:text-slate-200 hover:bg-white/[0.07] hover:border-white/[0.12]'
+            ? 'bg-blue-50 border-blue-200 text-slate-600'
+            : 'bg-white border-slate-200 text-slate-500 hover:text-slate-800 hover:bg-slate-50 shadow-sm'
           }
         `}
         whileTap={{ scale: 0.93 }}
@@ -135,7 +135,7 @@ function AlertBell() {
             className={`
               absolute -top-1.5 -right-1.5 min-w-[18px] h-[18px] px-1
               flex items-center justify-center rounded-full
-              text-[9px] font-bold text-white leading-none
+              text-[9px] font-bold text-slate-900 leading-none
               ${criticalCount > 0 ? 'bg-red-500' : 'bg-amber-500'}
             `}
           >
@@ -176,8 +176,8 @@ function ExportButton() {
           flex items-center gap-2 px-3.5 py-2 rounded-xl text-sm font-semibold
           border transition-all duration-200
           ${exporting
-            ? 'bg-blue-500/10 border-blue-500/30 text-blue-400 cursor-wait'
-            : 'bg-blue-600 hover:bg-blue-500 border-blue-500 text-white shadow-lg shadow-blue-500/20'
+            ? 'bg-blue-500/10 border-blue-500/30 text-slate-400 cursor-wait'
+            : 'bg-blue-600 hover:bg-blue-500 border-blue-500 text-slate-900 shadow-lg shadow-blue-500/20'
           }
         `}
         disabled={!!exporting}
@@ -216,8 +216,8 @@ function ExportButton() {
               transition={{ duration: 0.15, ease: [0.16, 1, 0.3, 1] }}
               className="
                 absolute right-0 top-full mt-2 w-56 z-50
-                bg-slate-900/95 backdrop-blur-xl
-                border border-white/10 rounded-xl
+                bg-white/95 backdrop-blur-xl
+                border border-slate-300 rounded-xl
                 shadow-2xl shadow-black/50
                 overflow-hidden
               "
@@ -229,7 +229,7 @@ function ExportButton() {
                     onClick={() => handleExport(opt.id)}
                     className="
                       w-full flex items-center gap-3 px-3 py-2.5 rounded-lg
-                      text-slate-300 hover:text-white hover:bg-white/6
+                      text-slate-700 hover:text-slate-900 hover:bg-slate-200/6
                       transition-colors duration-150 text-left
                     "
                   >
@@ -253,12 +253,12 @@ function ExportButton() {
 
 function SatellitePill({ month, year }: { month: number; year: number }) {
   return (
-    <div className="hidden md:flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg bg-white/[0.04] border border-white/[0.06]">
+    <div className="hidden md:flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg bg-slate-50 border border-slate-200">
       <Satellite size={12} className="text-slate-500" />
-      <span className="text-[11px] text-slate-500 font-medium">
+      <span className="text-[11px] text-slate-600 font-medium">
         Sentinel-2
       </span>
-      <span className="text-[11px] text-slate-600">·</span>
+      <span className="text-[11px] text-slate-400">·</span>
       <span className="text-[11px] text-slate-400 font-semibold tabular-nums">
         {MONTH_NAMES[month - 1].slice(0, 3)} {year}
       </span>
@@ -272,11 +272,11 @@ function ModelConfidenceBadge() {
   const r2 = 0.918;
 
   return (
-    <div className="hidden lg:flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg bg-white/[0.04] border border-white/[0.06]">
-      <Zap size={12} className="text-blue-400" />
-      <span className="text-[11px] text-slate-500 font-medium">HydroFormer</span>
-      <span className="text-[11px] text-slate-600">·</span>
-      <span className="text-[11px] text-blue-400 font-bold tabular-nums">
+    <div className="hidden lg:flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg bg-slate-50 border border-slate-200">
+      <Zap size={12} className="text-slate-500" />
+      <span className="text-[11px] text-slate-600 font-medium">HydroFormer</span>
+      <span className="text-[11px] text-slate-400">·</span>
+      <span className="text-[11px] text-slate-400 font-bold tabular-nums">
         R² {r2.toFixed(3)}
       </span>
     </div>
@@ -301,7 +301,7 @@ function WaterwayTitle() {
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: 6 }}
             transition={{ duration: 0.2 }}
-            className="text-base font-bold text-slate-100 leading-tight tracking-tight"
+            className="text-base font-bold text-slate-900 leading-tight tracking-tight"
           >
             {meta.fullName}
           </motion.h1>
@@ -329,13 +329,13 @@ function WaterwayTitle() {
         <span className="text-slate-700 hidden sm:inline">·</span>
 
         {/* Segment count */}
-        <span className="hidden sm:inline text-[12px] text-slate-600">
+        <span className="hidden sm:inline text-[12px] text-slate-500">
           {meta.segments.toLocaleString('en-IN')} segments
         </span>
 
         {/* Last updated */}
         <span className="text-slate-700 hidden md:inline">·</span>
-        <div className="hidden md:flex items-center gap-1 text-[11px] text-slate-600">
+        <div className="hidden md:flex items-center gap-1 text-[11px] text-slate-400">
           <Clock size={10} />
           <span>
             Updated {formatRelativeTime(new Date(Date.now() - 23 * 60_000))}
@@ -357,7 +357,7 @@ function DataQualityBar() {
   const coverage = 100 - cloudCover;
 
   return (
-    <div className="hidden xl:flex items-center gap-3 px-3 py-1.5 rounded-lg bg-white/[0.03] border border-white/[0.05]">
+    <div className="hidden xl:flex items-center gap-3 px-3 py-1.5 rounded-lg bg-slate-50 border border-slate-200">
       <div className="flex items-center gap-1.5">
         <Signal size={11} className="text-slate-500" />
         <span className="text-[10px] text-slate-500 font-medium whitespace-nowrap">
@@ -366,7 +366,7 @@ function DataQualityBar() {
       </div>
 
       {/* Mini progress bar */}
-      <div className="w-20 h-1.5 rounded-full bg-white/[0.06] overflow-hidden">
+      <div className="w-20 h-1.5 rounded-full bg-slate-200 overflow-hidden">
         <motion.div
           className={`h-full rounded-full ${
             coverage >= 80 ? 'bg-emerald-500' :
@@ -380,8 +380,8 @@ function DataQualityBar() {
 
       <span
         className={`text-[11px] font-bold tabular-nums ${
-          coverage >= 80 ? 'text-emerald-400' :
-          coverage >= 60 ? 'text-amber-400' : 'text-red-400'
+          coverage >= 80 ? 'text-slate-400' :
+          coverage >= 60 ? 'text-slate-400' : 'text-slate-400'
         }`}
       >
         {coverage}%
@@ -410,8 +410,8 @@ function RefreshButton() {
       whileTap={{ scale: 0.93 }}
       className="
         flex items-center justify-center w-9 h-9 rounded-xl
-        bg-white/[0.04] border border-white/[0.08]
-        text-slate-400 hover:text-slate-200 hover:bg-white/[0.07] hover:border-white/[0.12]
+        bg-white border border-slate-200 shadow-sm
+        text-slate-500 hover:text-slate-800 hover:bg-slate-50
         transition-all duration-200
         disabled:opacity-50 disabled:cursor-not-allowed
       "
@@ -445,8 +445,8 @@ function AlertsQuickSummary() {
   if (criticalAlerts.length === 0) {
     return (
       <div className="hidden lg:flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg bg-emerald-500/8 border border-emerald-500/15">
-        <CheckCircle2 size={12} className="text-emerald-400" />
-        <span className="text-[11px] font-semibold text-emerald-400">All Clear</span>
+        <CheckCircle2 size={12} className="text-slate-400" />
+        <span className="text-[11px] font-semibold text-slate-400">All Clear</span>
       </div>
     );
   }
@@ -456,15 +456,15 @@ function AlertsQuickSummary() {
       onClick={() => setAlertsPanelOpen(true)}
       className="
         hidden lg:flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg
-        bg-red-500/10 border border-red-500/25
-        hover:bg-red-500/15 hover:border-red-500/40
+        bg-red-50 border border-red-200
+        hover:bg-red-100 hover:border-red-300
         transition-all duration-200 cursor-pointer
       "
       animate={{ scale: [1, 1.02, 1] }}
       transition={{ duration: 2, repeat: Infinity, ease: 'easeInOut' }}
     >
-      <AlertTriangle size={12} className="text-red-400" />
-      <span className="text-[11px] font-bold text-red-400">
+      <AlertTriangle size={12} className="text-slate-400" />
+      <span className="text-[11px] font-bold text-slate-400">
         {criticalAlerts.length} Critical
       </span>
     </motion.button>
@@ -481,9 +481,9 @@ export function Header() {
   return (
     <header
       className="
-        relative flex items-center h-16 flex-shrink-0 px-5
-        bg-slate-900/60 backdrop-blur-xl
-        border-b border-white/[0.06]
+        relative flex items-center min-h-[5rem] py-3 flex-shrink-0 px-5
+        bg-white/95 backdrop-blur-md
+        border-b border-slate-200
         z-50
       "
     >
@@ -511,7 +511,7 @@ export function Header() {
         <AlertBell />
 
         {/* Divider */}
-        <div className="hidden sm:block w-px h-6 bg-white/[0.08] mx-1" />
+        <div className="hidden sm:block w-px h-6 bg-slate-200 mx-1" />
 
         {/* Export */}
         <ExportButton />

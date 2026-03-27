@@ -150,9 +150,9 @@ interface RiverMapProps {
 function SegmentTooltip({ info }: { info: HoverInfo }) {
   const cls = info.navigabilityClass;
   const colorMap: Record<NavigabilityClass, string> = {
-    navigable: "text-emerald-400",
-    conditional: "text-amber-400",
-    non_navigable: "text-red-400",
+    navigable: "text-slate-400",
+    conditional: "text-slate-400",
+    non_navigable: "text-slate-400",
   };
   const bgMap: Record<NavigabilityClass, string> = {
     navigable: "border-emerald-500/30",
@@ -174,7 +174,7 @@ function SegmentTooltip({ info }: { info: HoverInfo }) {
       transition={{ duration: 0.12, ease: [0.16, 1, 0.3, 1] }}
       className={cn(
         "absolute z-50 pointer-events-none",
-        "bg-slate-900/95 backdrop-blur-xl",
+        "bg-white/95 backdrop-blur-xl",
         "border rounded-xl",
         "px-3 py-2.5 min-w-[210px]",
         "shadow-2xl shadow-black/60",
@@ -191,9 +191,9 @@ function SegmentTooltip({ info }: { info: HoverInfo }) {
       }}
     >
       {/* Header */}
-      <div className="flex items-center justify-between mb-2 pb-2 border-b border-white/[0.07]">
+      <div className="flex items-center justify-between mb-2 pb-2 border-b border-slate-900/[0.07]">
         <div>
-          <div className="text-[12px] font-bold text-slate-100">
+          <div className="text-[12px] font-bold text-slate-900">
             {info.waterwayId} · Seg {info.segmentId.split("-").pop()}
           </div>
           <div className="text-[10px] text-slate-500 mt-0.5 font-medium tabular-nums">
@@ -205,9 +205,9 @@ function SegmentTooltip({ info }: { info: HoverInfo }) {
         <span
           className={cn(
             "text-[9px] font-bold tracking-wider uppercase px-2 py-0.5 rounded-full",
-            cls === "navigable" && "bg-emerald-500/15 text-emerald-400",
-            cls === "conditional" && "bg-amber-500/15 text-amber-400",
-            cls === "non_navigable" && "bg-red-500/15 text-red-400",
+            cls === "navigable" && "bg-emerald-500/15 text-slate-400",
+            cls === "conditional" && "bg-amber-500/15 text-slate-400",
+            cls === "non_navigable" && "bg-red-500/15 text-slate-400",
           )}
         >
           {labels[cls]}
@@ -235,8 +235,8 @@ function SegmentTooltip({ info }: { info: HoverInfo }) {
       </div>
 
       {/* Click hint */}
-      <div className="mt-2 pt-1.5 border-t border-white/[0.05]">
-        <p className="text-[9px] text-slate-600">
+      <div className="mt-2 pt-1.5 border-t border-slate-900/[0.05]">
+        <p className="text-[9px] text-slate-400">
           Click to view full segment details
         </p>
       </div>
@@ -255,11 +255,11 @@ function TooltipRow({
 }) {
   return (
     <div>
-      <div className="text-[10px] text-slate-600 font-medium">{label}</div>
+      <div className="text-[10px] text-slate-400 font-medium">{label}</div>
       <div
         className={cn(
           "text-[12px] font-bold tabular-nums",
-          highlight ? "" : "text-slate-200",
+          highlight ? "" : "text-slate-800",
         )}
         style={highlight ? { color: highlight } : undefined}
       >
@@ -296,9 +296,9 @@ function MapStyleToggle({
         onClick={() => setOpen((v) => !v)}
         className="
           flex items-center gap-1.5 px-2.5 py-2 rounded-xl
-          bg-slate-900/90 backdrop-blur-sm
-          border border-white/[0.1]
-          text-slate-300 hover:text-white
+          bg-white/90 backdrop-blur-sm
+          border border-slate-900/[0.1]
+          text-slate-700 hover:text-slate-900
           text-[11px] font-semibold
           transition-all duration-150
           shadow-lg
@@ -327,8 +327,8 @@ function MapStyleToggle({
               transition={{ duration: 0.12, ease: [0.16, 1, 0.3, 1] }}
               className="
                 absolute right-0 top-full mt-1.5 w-36 z-50
-                bg-slate-900/95 backdrop-blur-xl
-                border border-white/[0.1] rounded-xl
+                bg-white/95 backdrop-blur-xl
+                border border-slate-900/[0.1] rounded-xl
                 shadow-2xl overflow-hidden
               "
             >
@@ -345,14 +345,14 @@ function MapStyleToggle({
                       "w-full flex items-center gap-2.5 px-3 py-2.5",
                       "text-[12px] font-medium transition-colors duration-100",
                       current === opt.value
-                        ? "bg-blue-500/15 text-blue-300"
-                        : "text-slate-400 hover:text-white hover:bg-white/[0.06]",
+                        ? "bg-blue-500/15 text-slate-300"
+                        : "text-slate-400 hover:text-slate-900 hover:bg-white/[0.06]",
                     )}
                   >
                     <OptionIcon size={13} className="flex-shrink-0" />
                     {opt.label}
                     {current === opt.value && (
-                      <span className="ml-auto text-[10px] text-blue-400 font-bold">
+                      <span className="ml-auto text-[10px] text-slate-400 font-bold">
                         ✓
                       </span>
                     )}
@@ -393,9 +393,9 @@ function LayerToggles({
         onClick={() => setExpanded((v) => !v)}
         className="
           flex items-center gap-1.5 px-2.5 py-2 rounded-xl
-          bg-slate-900/90 backdrop-blur-sm
-          border border-white/[0.1]
-          text-slate-300 hover:text-white
+          bg-white/90 backdrop-blur-sm
+          border border-slate-900/[0.1]
+          text-slate-700 hover:text-slate-900
           text-[11px] font-semibold
           transition-all duration-150 shadow-lg
         "
@@ -415,8 +415,8 @@ function LayerToggles({
             exit={{ opacity: 0, y: -6, scale: 0.95 }}
             transition={{ duration: 0.15, ease: [0.16, 1, 0.3, 1] }}
             className="
-              w-44 bg-slate-900/95 backdrop-blur-xl
-              border border-white/[0.1] rounded-xl
+              w-44 bg-white/95 backdrop-blur-xl
+              border border-slate-900/[0.1] rounded-xl
               shadow-2xl overflow-hidden p-1
             "
           >
@@ -451,14 +451,14 @@ function LayerToggles({
                 "
               >
                 <span
-                  className={item.active ? "text-slate-200" : "text-slate-500"}
+                  className={item.active ? "text-slate-800" : "text-slate-500"}
                 >
                   {item.label}
                 </span>
                 {item.active ? (
-                  <Eye size={13} className="text-blue-400 flex-shrink-0" />
+                  <Eye size={13} className="text-slate-400 flex-shrink-0" />
                 ) : (
-                  <EyeOff size={13} className="text-slate-600 flex-shrink-0" />
+                  <EyeOff size={13} className="text-slate-400 flex-shrink-0" />
                 )}
               </button>
             ))}
@@ -473,7 +473,7 @@ function LayerToggles({
 
 function MapLoadingSkeleton() {
   return (
-    <div className="absolute inset-0 flex flex-col items-center justify-center bg-slate-950 z-10">
+    <div className="absolute inset-0 flex flex-col items-center justify-center bg-slate-50 z-10">
       {/* Ripple animation */}
       <div className="relative flex items-center justify-center mb-6">
         {[0, 1, 2].map((i) => (
@@ -499,7 +499,7 @@ function MapLoadingSkeleton() {
             height="20"
             viewBox="0 0 24 24"
             fill="none"
-            className="text-white"
+            className="text-slate-900"
           >
             <path
               d="M2 12C2 12 5 7 12 7C19 7 22 12 22 12C22 12 19 17 12 17C5 17 2 12 2 12Z"
@@ -525,7 +525,7 @@ function MapLoadingSkeleton() {
       >
         Loading satellite data…
       </motion.p>
-      <p className="text-xs text-slate-600 mt-1">
+      <p className="text-xs text-slate-400 mt-1">
         Compositing Sentinel-2 imagery
       </p>
     </div>
@@ -549,23 +549,23 @@ function MapStatsOverlay({
     {
       label: "Navigable",
       value: `${navPct.toFixed(0)}%`,
-      color: "text-emerald-400",
+      color: "text-slate-400",
       bg: "bg-emerald-500/10",
       border: "border-emerald-500/20",
     },
     {
       label: "Segments",
       value: navMap.total_segments?.toString() ?? "—",
-      color: "text-blue-400",
+      color: "text-slate-400",
       bg: "bg-blue-500/10",
       border: "border-blue-500/20",
     },
     {
       label: "Critical",
       value: criticalCount.toString(),
-      color: criticalCount > 0 ? "text-red-400" : "text-slate-500",
-      bg: criticalCount > 0 ? "bg-red-500/10" : "bg-white/5",
-      border: criticalCount > 0 ? "border-red-500/20" : "border-white/10",
+      color: criticalCount > 0 ? "text-slate-400" : "text-slate-500",
+      bg: criticalCount > 0 ? "bg-red-500/10" : "bg-slate-200/5",
+      border: criticalCount > 0 ? "border-red-500/20" : "border-slate-300",
     },
   ];
 
@@ -826,24 +826,24 @@ export function RiverMap({
       <div
         className={cn(
           "relative flex flex-col items-center justify-center",
-          "bg-slate-900 rounded-2xl border border-white/10",
+          "bg-white rounded-2xl border border-slate-300",
           "text-center px-8 py-12",
           className,
         )}
       >
         <div className="w-12 h-12 rounded-xl bg-amber-500/15 border border-amber-500/30 flex items-center justify-center mb-4">
-          <Info size={22} className="text-amber-400" />
+          <Info size={22} className="text-slate-400" />
         </div>
-        <h3 className="text-base font-semibold text-slate-200 mb-2">
+        <h3 className="text-base font-semibold text-slate-800 mb-2">
           Mapbox Token Required
         </h3>
         <p className="text-sm text-slate-500 max-w-xs leading-relaxed">
           Set{" "}
-          <code className="text-amber-400 bg-amber-500/10 px-1.5 py-0.5 rounded text-xs">
+          <code className="text-slate-400 bg-amber-500/10 px-1.5 py-0.5 rounded text-xs">
             NEXT_PUBLIC_MAPBOX_TOKEN
           </code>{" "}
           in your{" "}
-          <code className="text-slate-400 bg-white/5 px-1 rounded text-xs">
+          <code className="text-slate-400 bg-slate-200/5 px-1 rounded text-xs">
             .env.local
           </code>{" "}
           file to enable the interactive river map.
@@ -859,7 +859,7 @@ export function RiverMap({
             />
           ))}
         </div>
-        <p className="text-[10px] text-slate-600 mt-2">
+        <p className="text-[10px] text-slate-400 mt-2">
           Navigable · Conditional · Non-Navigable
         </p>
       </div>
@@ -996,9 +996,9 @@ export function RiverMap({
             onClick={() => setIsFullscreen((v) => !v)}
             className="
               flex items-center justify-center w-9 h-9 rounded-xl
-              bg-slate-900/90 backdrop-blur-sm
-              border border-white/[0.1]
-              text-slate-400 hover:text-white
+              bg-white/90 backdrop-blur-sm
+              border border-slate-900/[0.1]
+              text-slate-400 hover:text-slate-900
               transition-colors duration-150 shadow-lg
             "
             aria-label={isFullscreen ? "Exit fullscreen" : "Enter fullscreen"}
@@ -1011,9 +1011,9 @@ export function RiverMap({
             onClick={handleResetView}
             className="
               flex items-center justify-center w-9 h-9 rounded-xl
-              bg-slate-900/90 backdrop-blur-sm
-              border border-white/[0.1]
-              text-slate-400 hover:text-white
+              bg-white/90 backdrop-blur-sm
+              border border-slate-900/[0.1]
+              text-slate-400 hover:text-slate-900
               transition-colors duration-150 shadow-lg
             "
             aria-label="Reset map view"
@@ -1032,9 +1032,9 @@ export function RiverMap({
             onClick={() => setShowLegend((v) => !v)}
             className="
               flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg
-              bg-slate-900/90 backdrop-blur-sm
-              border border-white/[0.1]
-              text-slate-500 hover:text-slate-300
+              bg-white/90 backdrop-blur-sm
+              border border-slate-900/[0.1]
+              text-slate-500 hover:text-slate-700
               text-[10px] font-semibold
               transition-colors duration-150 self-start
             "
@@ -1073,9 +1073,9 @@ export function RiverMap({
                 <div
                   className="
                   flex items-center gap-2 px-2.5 py-1.5 mb-2
-                  bg-slate-900/90 backdrop-blur-sm
-                  border border-white/[0.1] rounded-xl
-                  text-[11px] font-semibold text-slate-300
+                  bg-white/90 backdrop-blur-sm
+                  border border-slate-900/[0.1] rounded-xl
+                  text-[11px] font-semibold text-slate-700
                   shadow-lg
                 "
                 >
@@ -1116,19 +1116,19 @@ export function RiverMap({
             transition={{ delay: 0.4 }}
             className="
               px-3 py-1.5 rounded-lg
-              bg-slate-900/80 backdrop-blur-sm
-              border border-white/[0.08]
+              bg-white/80 backdrop-blur-sm
+              border border-slate-900/[0.08]
               text-[11px] text-slate-500 font-medium
             "
           >
             Press{" "}
-            <kbd className="px-1 py-0.5 bg-white/10 rounded text-[10px] font-mono">
+            <kbd className="px-1 py-0.5 bg-slate-200/10 rounded text-[10px] font-mono">
               Esc
             </kbd>{" "}
             or use the
             <button
               onClick={() => setIsFullscreen(false)}
-              className="pointer-events-auto ml-1 text-blue-400 hover:text-blue-300 underline underline-offset-2 transition-colors"
+              className="pointer-events-auto ml-1 text-slate-400 hover:text-slate-300 underline underline-offset-2 transition-colors"
             >
               minimize button
             </button>{" "}

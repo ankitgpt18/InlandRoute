@@ -84,58 +84,58 @@ interface VariantConfig {
 
 const VARIANT_CONFIG: Record<StatCardVariant, VariantConfig> = {
   default: {
-    cardBg:     'bg-white/[0.04]',
-    cardBorder: 'border-white/[0.08]',
+    cardBg:     'bg-white',
+    cardBorder: 'border-slate-200 shadow-sm',
     cardGlow:   '',
-    iconBg:     'bg-white/[0.08]',
-    iconColor:  'text-slate-400',
-    valueColor: 'text-slate-100',
-    accentLine: 'bg-slate-600',
+    iconBg:     'bg-slate-50',
+    iconColor:  'text-slate-500',
+    valueColor: 'text-slate-900',
+    accentLine: 'bg-slate-100',
   },
   navigable: {
-    cardBg:     'bg-emerald-500/[0.06]',
-    cardBorder: 'border-emerald-500/[0.2]',
-    cardGlow:   'shadow-[0_0_24px_rgba(34,197,94,0.12)]',
-    iconBg:     'bg-emerald-500/[0.15]',
-    iconColor:  'text-emerald-400',
-    valueColor: 'text-emerald-300',
-    accentLine: 'bg-emerald-500',
+    cardBg:     'bg-white',
+    cardBorder: 'border-emerald-100 shadow-sm',
+    cardGlow:   'shadow-[0_0_24px_rgba(34,197,94,0.05)]',
+    iconBg:     'bg-emerald-50 text-slate-600',
+    iconColor:  'text-slate-500',
+    valueColor: 'text-slate-600',
+    accentLine: 'bg-emerald-100',
   },
   conditional: {
-    cardBg:     'bg-amber-500/[0.06]',
-    cardBorder: 'border-amber-500/[0.2]',
-    cardGlow:   'shadow-[0_0_24px_rgba(245,158,11,0.12)]',
-    iconBg:     'bg-amber-500/[0.15]',
-    iconColor:  'text-amber-400',
-    valueColor: 'text-amber-300',
-    accentLine: 'bg-amber-500',
+    cardBg:     'bg-white',
+    cardBorder: 'border-amber-100 shadow-sm',
+    cardGlow:   'shadow-[0_0_24px_rgba(245,158,11,0.05)]',
+    iconBg:     'bg-amber-50 text-slate-600',
+    iconColor:  'text-slate-500',
+    valueColor: 'text-slate-600',
+    accentLine: 'bg-amber-100',
   },
   non_navigable: {
-    cardBg:     'bg-red-500/[0.06]',
-    cardBorder: 'border-red-500/[0.2]',
-    cardGlow:   'shadow-[0_0_24px_rgba(239,68,68,0.12)]',
-    iconBg:     'bg-red-500/[0.15]',
-    iconColor:  'text-red-400',
-    valueColor: 'text-red-300',
-    accentLine: 'bg-red-500',
+    cardBg:     'bg-white',
+    cardBorder: 'border-red-100 shadow-sm',
+    cardGlow:   'shadow-[0_0_24px_rgba(239,68,68,0.05)]',
+    iconBg:     'bg-red-50 text-slate-600',
+    iconColor:  'text-slate-500',
+    valueColor: 'text-slate-600',
+    accentLine: 'bg-red-100',
   },
   accent: {
-    cardBg:     'bg-blue-500/[0.07]',
-    cardBorder: 'border-blue-500/[0.25]',
-    cardGlow:   'shadow-[0_0_24px_rgba(59,130,246,0.12)]',
-    iconBg:     'bg-blue-500/[0.15]',
-    iconColor:  'text-blue-400',
-    valueColor: 'text-blue-300',
-    accentLine: 'bg-blue-500',
+    cardBg:     'bg-white',
+    cardBorder: 'border-blue-100 shadow-sm',
+    cardGlow:   'shadow-[0_0_24px_rgba(59,130,246,0.05)]',
+    iconBg:     'bg-blue-50 text-slate-600',
+    iconColor:  'text-slate-500',
+    valueColor: 'text-slate-600',
+    accentLine: 'bg-blue-100',
   },
   info: {
-    cardBg:     'bg-sky-500/[0.06]',
-    cardBorder: 'border-sky-500/[0.18]',
-    cardGlow:   'shadow-[0_0_24px_rgba(14,165,233,0.10)]',
-    iconBg:     'bg-sky-500/[0.15]',
-    iconColor:  'text-sky-400',
-    valueColor: 'text-sky-300',
-    accentLine: 'bg-sky-500',
+    cardBg:     'bg-white',
+    cardBorder: 'border-sky-100 shadow-sm',
+    cardGlow:   'shadow-[0_0_24px_rgba(14,165,233,0.05)]',
+    iconBg:     'bg-sky-50 text-slate-600',
+    iconColor:  'text-slate-500',
+    valueColor: 'text-slate-600',
+    accentLine: 'bg-sky-100',
   },
 };
 
@@ -281,8 +281,8 @@ function TrendIndicator({
   const colorClass = isNeutral
     ? 'text-slate-500'
     : isGood
-      ? 'text-emerald-400'
-      : 'text-red-400';
+      ? 'text-slate-400'
+      : 'text-slate-400';
 
   const bgClass = isNeutral
     ? 'bg-slate-500/10'
@@ -300,7 +300,7 @@ function TrendIndicator({
         {isNeutral ? '—' : `${Math.abs(trend).toFixed(1)}%`}
       </span>
       {label && (
-        <span className="text-[9px] text-slate-600 font-normal ml-0.5 hidden sm:inline">
+        <span className="text-[9px] text-slate-400 font-normal ml-0.5 hidden sm:inline">
           {label}
         </span>
       )}
@@ -314,7 +314,7 @@ function StatCardSkeleton({ className }: { className?: string }) {
   return (
     <div
       className={cn(
-        'relative overflow-hidden rounded-2xl border border-white/[0.06] bg-white/[0.03] p-5',
+        'relative overflow-hidden rounded-2xl border border-slate-200 bg-white p-5 shadow-sm',
         className,
       )}
     >
@@ -467,15 +467,15 @@ export function StatCard({
             <div className="group relative flex-shrink-0">
               <Info
                 size={11}
-                className="text-slate-600 hover:text-slate-400 cursor-help transition-colors"
+                className="text-slate-400 hover:text-slate-400 cursor-help transition-colors"
               />
               {/* Tooltip popup */}
               <div
                 className="
                   absolute bottom-full left-1/2 -translate-x-1/2 mb-2 z-50
                   w-48 px-2.5 py-2 rounded-lg
-                  bg-slate-800 border border-white/10
-                  text-[11px] text-slate-300 leading-relaxed
+                  bg-slate-100 border border-slate-300
+                  text-[11px] text-slate-700 leading-relaxed
                   shadow-xl pointer-events-none
                   opacity-0 group-hover:opacity-100
                   transition-opacity duration-150
@@ -589,7 +589,7 @@ export function StatCard({
           whileHover={{ opacity: 1 }}
           style={{
             background:
-              'linear-gradient(135deg, rgba(255,255,255,0.04) 0%, rgba(255,255,255,0.0) 60%)',
+              'linear-gradient(135deg, rgba(15,23,42,0.02) 0%, rgba(15,23,42,0.0) 60%)',
           }}
         />
       )}
