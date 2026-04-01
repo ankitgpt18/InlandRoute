@@ -1,10 +1,17 @@
-# InlandRoute 🚢
+# InlandRoute
 
 > **Predicting Inland Waterway Navigability Using Satellite Remote Sensing and Deep Learning**
 
+[![Python](https://img.shields.io/badge/Python-3.11-blue?logo=python)](https://python.org)
+[![FastAPI](https://img.shields.io/badge/FastAPI-0.110-009688?logo=fastapi)](https://fastapi.tiangolo.com)
+[![PyTorch](https://img.shields.io/badge/PyTorch-2.2-EE4C2C?logo=pytorch)](https://pytorch.org)
+[![Sentinel-2](https://img.shields.io/badge/Sentinel--2-GEE-4285F4?logo=google-earth)](https://developers.google.com/earth-engine)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow)](https://opensource.org/licenses/MIT)
+[![Docker](https://img.shields.io/badge/Docker-Compose-2496ED?logo=docker)](https://docs.docker.com/compose/)
+
 InlandRoute is a deep learning system for predicting the navigability of India's National Inland Waterways using multitemporal Sentinel-2 satellite imagery combined with hydrological gauge data. It helps in route planning by providing monthly navigability maps, seasonal calendars, and real-time risk alerts.
 
-## Tech Stack 🛠️
+## Tech Stack
 
 - **Backend:** FastAPI, PostgreSQL + PostGIS, Redis, Celery
 - **Machine Learning:** PyTorch, LightGBM, Swin Transformer
@@ -12,7 +19,7 @@ InlandRoute is a deep learning system for predicting the navigability of India's
 - **Frontend:** Next.js, Mapbox GL, Tailwind CSS
 - **Infrastructure:** Docker, Nginx
 
-## Quick Start 🚀
+## Quick Start
 
 1. **Clone the repository**
    ```bash
@@ -36,5 +43,5 @@ InlandRoute is a deep learning system for predicting the navigability of India's
    - **Frontend:** http://localhost
    - **API Docs:** http://localhost/docs
 
-## License 📜
+## License
 This project is licensed under the MIT License.
