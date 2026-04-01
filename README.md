@@ -23,8 +23,8 @@ InlandRoute is a deep learning system for predicting the navigability of India's
 
 1. **Clone the repository**
    ```bash
-   git clone https://github.com/ankitgpt18/aidstl.git
-   cd aidstl
+   git clone https://github.com/ankitgpt18/InlandRoute.git
+   cd InlandRoute
    ```
 
 2. **Environment Setup**
