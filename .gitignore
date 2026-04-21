@@ -43,3 +43,31 @@ venv/
 env/
 .env
 *.log
+
+# Secrets — NEVER commit
+backend/secrets/
+*.json.bak
+
+# ML model artifacts
+ml/models/saved/**/*.pt
+ml/models/saved/**/*.joblib
+ml/models/saved/**/*.pkl
+
+# Docker
+*.log
+backend/logs/
+
+# IDE
+.vscode/
+.idea/
+
+# Documents & Artifacts
+*.pdf
+*.docx
+*.zip
+*.pptx
+walkthrough.md
+task.md
+implementation_plan.md
+Project_Report*
+Project Proposal*

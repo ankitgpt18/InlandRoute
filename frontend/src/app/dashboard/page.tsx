@@ -1,5 +1,5 @@
 // ============================================================
-// AIDSTL — Inland Waterway Navigability Prediction System
+// InlandRoute - Inland Waterway Navigability Prediction System
 // Dashboard Page — Main overview with map, stats, alerts
 // ============================================================
 
@@ -17,6 +17,7 @@ import {
   Activity,
   Satellite,
 } from 'lucide-react';
+import { useSearchParams } from 'next/navigation';
 import { useAppStore } from '@/store/app-store';
 import {
   getMockNavigabilityMap,
@@ -213,20 +214,54 @@ export default function DashboardPage() {
   const [rightTab, setRightTab] = React.useState<RightPanelTab>('alerts');
 
   // ── Data ───────────────────────────────────────────────────────────────────
-  const navMap = useMemo(
-    () => getMockNavigabilityMap(selectedWaterway, selectedMonth),
-    [selectedWaterway, selectedMonth],
-  );
+  const [navMap, setNavMap] = React.useState<ReturnType<typeof getMockNavigabilityMap> | null>(null);
+  const [stats, setStats] = React.useState<ReturnType<typeof getMockWaterwayStats> | null>(null);
+  const [alerts, setAlerts] = React.useState<ReturnType<typeof getMockAlerts>>([]);
 
-  const stats = useMemo(
-    () => getMockWaterwayStats(selectedWaterway, selectedYear),
-    [selectedWaterway, selectedYear],
-  );
+  React.useEffect(() => {
+    let active = true;
+    
+    // Immediately set mock fallbacks so the UI paints instantly
+    setNavMap(getMockNavigabilityMap(selectedWaterway, selectedMonth));
+    setStats(getMockWaterwayStats(selectedWaterway, selectedYear));
+    setAlerts(getMockAlerts(selectedWaterway));
 
-  const alerts = useMemo(
-    () => getMockAlerts(selectedWaterway),
-    [selectedWaterway],
-  );
+    const fetchData = async () => {
+      try {
+        const baseUrl = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000/api/v1';
+        const [mapRes, statsRes] = await Promise.all([
+          fetch(`${baseUrl}/navigability/${selectedWaterway}/map?month=${selectedMonth}&year=${selectedYear}`),
+          fetch(`${baseUrl}/navigability/${selectedWaterway}/stats?year=${selectedYear}`)
+        ]);
+
+        if (!active) return;
+        
+        // If the real API responds successfully, override the mock data!
+        if (mapRes.ok) {
+          const mapData = await mapRes.json();
+          const predictions = mapData.predictions || [];
+          
+          setNavMap((prev) => ({
+            ...(prev as any),
+            predictions: predictions,
+            navigable_count: mapData.navigable_count ?? predictions.filter((s: any) => s.navigability_class === 'navigable').length,
+            conditional_count: mapData.conditional_count ?? predictions.filter((s: any) => s.navigability_class === 'conditional').length,
+            non_navigable_count: mapData.non_navigable_count ?? predictions.filter((s: any) => s.navigability_class === 'non_navigable').length,
+            navigable_km: mapData.navigable_length_km ?? (predictions.filter((s: any) => s.navigability_class === 'navigable').length * 5),
+            conditional_km: mapData.conditional_length_km ?? (predictions.filter((s: any) => s.navigability_class === 'conditional').length * 5),
+            non_navigable_km: mapData.non_navigable_length_km ?? (predictions.filter((s: any) => s.navigability_class === 'non_navigable').length * 5),
+            total_km: mapData.total_length_km ?? mapData.total_km ?? (predictions.length * 5),
+            navigable_pct: mapData.overall_navigability_pct ?? (predictions.length > 0 ? (predictions.filter((s: any) => s.navigability_class === 'navigable').length / predictions.length) * 100 : 0),
+            mean_confidence: mapData.mean_confidence ?? (predictions.length > 0 ? predictions.reduce((acc: number, p: any) => acc + (p.confidence || 0), 0) / predictions.length : 0),
+          }));
+        }
+      } catch (err) {
+        console.warn("Using mock data because real API is not accessible yet.");
+      }
+    };
+    fetchData();
+    return () => { active = false; };
+  }, [selectedWaterway, selectedMonth, selectedYear]);
 
   const activeAlerts   = alerts.filter((a) => a.is_active);
   const criticalAlerts = activeAlerts.filter((a) => a.severity === 'CRITICAL');

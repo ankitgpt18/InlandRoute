@@ -1,5 +1,5 @@
 // ============================================================
-// AIDSTL — Inland Waterway Navigability Prediction
+// InlandRoute - Inland Waterway Navigability Prediction
 // Comprehensive Mock Data for Development & Fallback
 // ============================================================
 
@@ -56,7 +56,13 @@ function monsoonMultiplier(month: number): number {
   return profile[month - 1] ?? 0.6;
 }
 
-const NOW_ISO = new Date().toISOString();
+// Pseudo-random deterministic generator for mock data to prevent hydration errors
+function pseudoRandom(seed: number): number {
+  const x = Math.sin(seed++) * 10000;
+  return x - Math.floor(x);
+}
+
+const NOW_ISO = new Date("2024-08-15T12:00:00Z").toISOString(); // Static date for hydration
 
 // ============================================================
 // NW-1 GANGA — GeoJSON (20 segments, Allahabad → Kolkata corridor)
@@ -173,7 +179,7 @@ export function buildNW1GeoJSON(
         navigability_class: cls,
         depth_m: parseFloat(depth.toFixed(2)),
         width_m: 400 + i * 25 + (month >= 6 && month <= 9 ? 120 : 0),
-        confidence: 0.82 + Math.random() * 0.15,
+        confidence: 0.82 + pseudoRandom(i + month * 10) * 0.15,
         velocity_ms: 0.4 + depth * 0.08,
         landmark,
         state: NW1_STATES[i],
@@ -261,7 +267,7 @@ export function buildNW2GeoJSON(
         navigability_class: cls,
         depth_m: parseFloat(depth.toFixed(2)),
         width_m: 600 + i * 40 + (month >= 6 && month <= 9 ? 250 : 0),
-        confidence: 0.85 + Math.random() * 0.12,
+        confidence: 0.85 + pseudoRandom(i + month * 20) * 0.12,
         velocity_ms: 0.6 + depth * 0.07,
         landmark,
         state: "Assam",
@@ -288,7 +294,7 @@ export function buildNavigabilityMap(
 
   const predictions = geojson.features.map((f, idx) => {
     const p = f.properties;
-    const stdDev = 0.3 + Math.random() * 0.4;
+    const stdDev = 0.3 + pseudoRandom(1) * 0.4;
     return {
       prediction_id: `pred-${f.id}-${year}-${month}`,
       segment_id: f.id,
@@ -302,10 +308,10 @@ export function buildNavigabilityMap(
       probability: p.confidence,
       risk_score:
         p.navigability_class === "non_navigable"
-          ? 70 + Math.random() * 28
+          ? 70 + pseudoRandom(2) * 28
           : p.navigability_class === "conditional"
-            ? 35 + Math.random() * 30
-            : 5 + Math.random() * 25,
+            ? 35 + pseudoRandom(3) * 30
+            : 5 + pseudoRandom(4) * 25,
       depth_ci: {
         lower_95: parseFloat((p.depth_m - stdDev * 1.96).toFixed(2)),
         upper_95: parseFloat((p.depth_m + stdDev * 1.96).toFixed(2)),
@@ -314,12 +320,12 @@ export function buildNavigabilityMap(
         std_dev: parseFloat(stdDev.toFixed(3)),
       },
       spectral_indices: {
-        mndwi: parseFloat((0.15 + Math.random() * 0.65).toFixed(4)),
-        ndwi: parseFloat((0.1 + Math.random() * 0.55).toFixed(4)),
-        ndvi: parseFloat((-0.05 + Math.random() * 0.2).toFixed(4)),
-        stumpf_ratio: parseFloat((1.02 + Math.random() * 0.8).toFixed(4)),
-        awei_sh: parseFloat((0.08 + Math.random() * 0.5).toFixed(4)),
-        awei_nsh: parseFloat((0.05 + Math.random() * 0.45).toFixed(4)),
+        mndwi: parseFloat((0.15 + pseudoRandom(5) * 0.65).toFixed(4)),
+        ndwi: parseFloat((0.1 + pseudoRandom(6) * 0.55).toFixed(4)),
+        ndvi: parseFloat((-0.05 + pseudoRandom(7) * 0.2).toFixed(4)),
+        stumpf_ratio: parseFloat((1.02 + pseudoRandom(8) * 0.8).toFixed(4)),
+        awei_sh: parseFloat((0.08 + pseudoRandom(9) * 0.5).toFixed(4)),
+        awei_nsh: parseFloat((0.05 + pseudoRandom(10) * 0.45).toFixed(4)),
       },
       depth_threshold_m: 3.0,
       is_above_threshold: p.depth_m >= 3.0,
@@ -392,10 +398,10 @@ function buildCalendarRow(
     const cls = classifyDepth(depth);
     const prob =
       cls === "navigable"
-        ? 0.78 + Math.random() * 0.2
+        ? 0.78 + pseudoRandom(11) * 0.2
         : cls === "conditional"
-          ? 0.55 + Math.random() * 0.25
-          : 0.65 + Math.random() * 0.3;
+          ? 0.55 + pseudoRandom(12) * 0.25
+          : 0.65 + pseudoRandom(13) * 0.3;
     return {
       month: m,
       navigability_class: cls,
@@ -403,10 +409,10 @@ function buildCalendarRow(
       probability: parseFloat(prob.toFixed(3)),
       risk_score:
         cls === "non_navigable"
-          ? 60 + Math.random() * 35
+          ? 60 + pseudoRandom(14) * 35
           : cls === "conditional"
-            ? 30 + Math.random() * 30
-            : 5 + Math.random() * 20,
+            ? 30 + pseudoRandom(15) * 30
+            : 5 + pseudoRandom(16) * 20,
       is_monsoon: m >= 6 && m <= 9,
       label: monthLabel(m),
     };
@@ -466,9 +472,9 @@ export function buildSeasonalCalendar(
       dominant_class: cls,
       alert_count:
         cls === "non_navigable"
-          ? 3 + Math.floor(Math.random() * 4)
+          ? 3 + Math.floor(pseudoRandom(17) * 4)
           : cls === "conditional"
-            ? 1 + Math.floor(Math.random() * 3)
+            ? 1 + Math.floor(pseudoRandom(18) * 3)
             : 0,
     };
   });
@@ -713,7 +719,7 @@ export function buildDepthProfile(
       // Add slight sinusoidal variation along segment
       const variation = Math.sin(fraction * Math.PI) * 0.4;
       const depth = Math.max(0.5, baseDepth * mult + variation - 0.2);
-      const stdDev = 0.3 + Math.random() * 0.3;
+      const stdDev = 0.3 + pseudoRandom(19) * 0.3;
       points.push({
         km: parseFloat(km.toFixed(1)),
         depth_m: parseFloat(depth.toFixed(2)),
@@ -777,8 +783,8 @@ export function buildWaterwayStats(
       ),
       alert_count:
         navCount < depths.length * 0.5
-          ? 3 + Math.floor(Math.random() * 4)
-          : Math.floor(Math.random() * 2),
+          ? 3 + Math.floor(pseudoRandom(20) * 4)
+          : Math.floor(pseudoRandom(21) * 2),
     };
   });
 
@@ -841,7 +847,7 @@ export function buildAnalyticsTrends(
         100,
         (navCount / depths.length) * 100 +
           improvement * 100 +
-          (Math.random() - 0.5) * 4,
+          (pseudoRandom(22) - 0.5) * 4,
       );
       return {
         month: m,

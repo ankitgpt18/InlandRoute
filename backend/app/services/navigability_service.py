@@ -41,6 +41,9 @@ from typing import Any, Optional
 
 import numpy as np
 import redis.asyncio as aioredis
+from shapely import wkb
+from shapely.geometry import mapping
+
 from app.core.config import get_settings
 from app.models.schemas.navigability import (
     AlertSeverity,
@@ -62,6 +65,9 @@ from app.models.schemas.navigability import (
     WaterwayStats,
 )
 from app.services.gee_service import GEEService, get_gee_service
+from sqlalchemy import select
+from app.core.database import get_session_factory
+from app.models.domain import Segment
 from app.services.model_service import ModelService
 
 logger = logging.getLogger(__name__)
@@ -428,14 +434,53 @@ class NavigabilityService:
 
         Returns segments ordered upstream → downstream (by segment index).
         """
-        # Generate synthetic segment metadata (replace with DB query in production)
-        segment_dicts = _generate_synthetic_segments(waterway_id, month, year)
+        # Try to fetch real segments from database
+        session_factory = get_session_factory()
+        async with session_factory() as session:
+            stmt = select(Segment).where(Segment.waterway_id == waterway_id).order_by(Segment.segment_index)
+            result = await session.execute(stmt)
+            db_segments = result.scalars().all()
+
+        if db_segments:
+            logger.info("Retrieved %d real segments from database for %s.", len(db_segments), waterway_id)
+            segment_dicts = []
+            for s in db_segments:
+                # Convert geometry from PostGIS WKB to GeoJSON dict
+                geom_dict = {}
+                try:
+                    if s.geom is not None:
+                        # WKB data is in s.geom.data
+                        geom_dict = mapping(wkb.loads(bytes(s.geom.data)))
+                except Exception as exc:
+                    logger.warning("Failed to convert geometry for %s: %s", s.id, exc)
+
+                # Merge base fields with seeded features in 'meta'
+                d = {
+                    "segment_id": s.id,
+                    "waterway_id": s.waterway_id,
+                    "segment_index": s.segment_index,
+                    "chainage_start_km": s.chainage_start_km,
+                    "chainage_end_km": s.chainage_end_km,
+                    "length_km": s.length_km,
+                    "geometry": geom_dict,
+                    "sinuosity": s.sinuosity or 1.0,
+                    "month": month,
+                    "year": year,
+                }
+                # Inject seeded spectral features if they exist in 'meta'
+                if s.meta:
+                    # Protect crucial fields from being overwritten by metadata
+                    meta_to_update = {k: v for k, v in s.meta.items() if k not in ["segment_id", "waterway_id", "geometry"]}
+                    d.update(meta_to_update)
+                segment_dicts.append(d)
+        else:
+            logger.warning("No real segments found in DB for %s. Falling back to synthetic.", waterway_id)
+            segment_dicts = _generate_synthetic_segments(waterway_id, month, year)
 
         model_svc = await self._get_model_service()
 
-        # Inject GEE features when not running in synthetic/dev mode
-        # In production: call await self._gee_service.extract_batch_segment_features(...)
-        # and merge results into segment_dicts.
+        # In production, we would call GEE here if features are missing or stale.
+        # For now, we rely on seeded features or synthetic fallbacks.
 
         predictions = await model_svc.predict_batch(
             segments=segment_dicts,

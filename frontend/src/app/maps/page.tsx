@@ -1,5 +1,5 @@
 // ============================================================
-// AIDSTL — Inland Waterway Navigability Prediction System
+// InlandRoute - Inland Waterway Navigability Prediction System
 // Maps Page — Full-screen interactive river navigability map
 // ============================================================
 
@@ -1052,17 +1052,77 @@ export default function MapsPage() {
   const [searchQuery,  setSearchQuery]  = useState('');
 
   // ── Data ────────────────────────────────────────────────────────────────────
-  const navMap = useMemo(
-    () => getMockNavigabilityMap(selectedWaterway, selectedMonth),
-    [selectedWaterway, selectedMonth],
-  );
+  const [navMap, setNavMap] = useState<ReturnType<typeof getMockNavigabilityMap> | null>(null);
+  const [geojsonData, setGeojsonData] = useState<any>(null);
+  const [alerts, setAlerts] = useState<any[]>([]);
+  const [loading, setLoading] = useState(true);
 
-  const geojsonData = useMemo(
-    () => selectedWaterway === 'NW-1'
-      ? buildNW1GeoJSON(selectedMonth)
-      : buildNW2GeoJSON(selectedMonth),
-    [selectedWaterway, selectedMonth],
-  );
+  // Fetch real data from Backend REST API
+  React.useEffect(() => {
+    let active = true;
+    const fetchData = async () => {
+      setLoading(true);
+      try {
+        const baseUrl = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000/api/v1';
+        
+        // Use Promise.all to fetch all pieces of state in parallel
+        const [mapRes, alertsRes] = await Promise.all([
+          fetch(`${baseUrl}/navigability/${selectedWaterway}/map?month=${selectedMonth}&year=${selectedYear}`),
+          // Fallback to mock alerts if real endpoint doesn't exist yet, but let's assume it does:
+          Promise.resolve({ json: () => getMockAlerts(selectedWaterway) })
+        ]);
+
+        if (!active) return;
+
+        if (mapRes.ok) {
+          const mapData = await mapRes.json();
+          setNavMap({
+            waterway_id: mapData.waterway_id,
+            month: mapData.month,
+            year: mapData.year,
+            total_segments: mapData.total_segments,
+            navigable_count: mapData.navigable_count,
+            overall_navigability_pct: mapData.overall_navigability_pct ?? 0,
+            navigable_km: mapData.navigable_length_km ?? 0,
+          });
+
+          // Re-map backend output schema to GeoJSON features expected by the UI
+          setGeojsonData({
+            type: "FeatureCollection",
+            features: (mapData.predictions || []).map((seg: any) => {
+              const idxStr = seg.segment_id.split('-').pop() || '0';
+              const idx = parseInt(idxStr, 10);
+              return {
+                type: "Feature",
+                properties: {
+                  segment_id: seg.segment_id,
+                  waterway_id: mapData.waterway_id,
+                  km_start: idx * 5,
+                  km_end: (idx * 5) + 5,
+                  navigability_class: seg.navigability_class,
+                  depth_m: seg.predicted_depth_m,
+                  width_m: seg.width_m,
+                  confidence: seg.confidence,
+                  state: "Real River Segment"
+                },
+                geometry: seg.geometry
+              };
+            })
+          });
+        }
+        
+        // Load alerts
+        const alts = await alertsRes.json();
+        setAlerts(alts);
+      } catch (err) {
+        console.error("Failed to fetch backend navigability data", err);
+      } finally {
+        if (active) setLoading(false);
+      }
+    };
+    fetchData();
+    return () => { active = false; };
+  }, [selectedWaterway, selectedMonth, selectedYear]);
 
   // Build segment list from GeoJSON features
   const segments = useMemo<SegmentInfo[]>(() => {
@@ -1089,8 +1149,8 @@ export default function MapsPage() {
     [segments, selectedSegmentId],
   );
 
-  const alerts    = useMemo(() => getMockAlerts(selectedWaterway), [selectedWaterway]);
-  const alertCount = alerts.filter((a) => a.is_active && a.severity === 'CRITICAL').length;
+  const activeAlerts = useMemo(() => getMockAlerts(selectedWaterway), [selectedWaterway]);
+  const alertCount = activeAlerts.filter((a) => a.is_active && a.severity === 'CRITICAL').length;
 
   // ── Handlers ──────────────────────────────────────────────────────────────
   const handleSegmentSelect = useCallback((segId: string) => {

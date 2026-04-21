@@ -1,5 +1,5 @@
 // ============================================================
-// AIDSTL — Inland Waterway Navigability Prediction System
+// InlandRoute - Inland Waterway Navigability Prediction System
 // Sidebar Navigation Component
 // ============================================================
 
@@ -509,7 +509,7 @@ export function Sidebar() {
                 className="overflow-hidden whitespace-nowrap"
               >
                 <div className="text-sm font-bold text-slate-900 tracking-tight leading-tight">
-                  AIDSTL
+                  InlandRoute
                 </div>
                 <div className="text-[10px] text-slate-500 font-medium tracking-wide">
                   Waterway Intelligence

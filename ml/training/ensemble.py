@@ -38,8 +38,8 @@ import pandas as pd
 import shap
 import torch
 import xgboost as xgb
-from mapie.classification import MapieClassifier
-from mapie.regression import MapieRegressor
+from mapie.classification import CrossConformalClassifier
+from mapie.regression.regression import CrossConformalRegressor
 from sklearn.calibration import CalibratedClassifierCV
 from sklearn.linear_model import RidgeCV
 from sklearn.metrics import (
@@ -249,8 +249,8 @@ class HydroFormerInferenceWrapper:
             fs = self.n_static_features
             ft_total = X.shape[1] - fs
             ft = ft_total // self.sequence_length
-            X_static = X[:, :fs]
-            X_temporal = X[:, fs:].reshape(N, self.sequence_length, ft)
+            X_temporal = X[:, :ft_total].reshape(N, self.sequence_length, ft)
+            X_static = X[:, ft_total:]
 
         ds = TensorDataset(
             torch.from_numpy(X_static.astype(np.float32)),
@@ -318,6 +318,8 @@ class EnsembleConfig:
         Random state for reproducibility.
     feature_names:
         Optional list of feature column names for SHAP plots.
+    n_static_features:
+        Number of static features (used for inferring shapes from flat input).
     """
 
     n_splits: int = 5
@@ -333,6 +335,7 @@ class EnsembleConfig:
     conformal_alpha: float = 0.1
     random_seed: int = 42
     feature_names: Optional[List[str]] = None
+    n_static_features: int = 16
 
 
 class EnsembleDepthEstimator:
@@ -380,13 +383,14 @@ class EnsembleDepthEstimator:
                 model=hydroformer_model,
                 device=self.device,
                 batch_size=self.config.hydroformer_batch_size,
+                n_static_features=self.config.n_static_features,
             )
 
         # ── Meta-learner ─────────────────────────────────────────────────
         self.meta_learner = RidgeCV(alphas=self.config.ridge_alphas)
 
         # ── Conformal wrapper ────────────────────────────────────────────
-        self.mapie_regressor: Optional[MapieRegressor] = None
+        self.mapie_regressor: Optional[CrossConformalRegressor] = None
 
         # ── State flags ──────────────────────────────────────────────────
         self._is_fitted: bool = False
@@ -568,13 +572,14 @@ class EnsembleDepthEstimator:
 
         # ── Conformal wrapper on meta-learner ────────────────────────────
         base_ridge = RidgeCV(alphas=self.config.ridge_alphas)
-        self.mapie_regressor = MapieRegressor(
+        self.mapie_regressor = CrossConformalRegressor(
             estimator=base_ridge,
+            confidence_level=1.0 - self.config.conformal_alpha,
             method="plus",
             cv=5,
             random_state=self.config.random_seed,
         )
-        self.mapie_regressor.fit(oof_matrix, y)
+        self.mapie_regressor.fit_conformalize(oof_matrix, y)
 
         self._is_fitted = True
         logger.info("EnsembleDepthEstimator fit complete.")
@@ -682,8 +687,8 @@ class EnsembleDepthEstimator:
         mean_pred = self.meta_learner.predict(meta)
 
         # Conformal intervals from MAPIE
-        _, intervals = self.mapie_regressor.predict(
-            meta, alpha=self.config.conformal_alpha
+        _, intervals = self.mapie_regressor.predict_interval(
+            meta
         )
         lower_ci = intervals[:, 0, 0]
         upper_ci = intervals[:, 1, 0]
@@ -999,7 +1004,7 @@ class NavigabilityClassifier:
         )
 
         # ── MAPIE conformal classifier ───────────────────────────────────
-        self.mapie_clf: Optional[MapieClassifier] = None
+        self.mapie_clf: Optional[CrossConformalClassifier] = None
 
         # ── SHAP explainer ───────────────────────────────────────────────
         self.shap_explainer: Optional[shap.TreeExplainer] = None
@@ -1112,13 +1117,13 @@ class NavigabilityClassifier:
             n_estimators=self.config.n_estimators,
             random_state=self.config.random_seed,
         )
-        self.mapie_clf = MapieClassifier(
+        self.mapie_clf = CrossConformalClassifier(
             estimator=lgb_for_mapie,
-            method="raps",
-            cv="prefit" if False else 5,  # use CV internally
+            confidence_level=1.0 - self.config.conformal_alpha,
+            cv=5,  # use CV internally
             random_state=self.config.random_seed,
         )
-        self.mapie_clf.fit(X, y_enc)
+        self.mapie_clf.fit_conformalize(X, y_enc)
         logger.info("MAPIE MapieClassifier fitted.")
 
         # ── SHAP explainer (on underlying LightGBM) ─────────────────────
@@ -1175,7 +1180,7 @@ class NavigabilityClassifier:
         labels = self.predict(X)  # (N,)
 
         # MAPIE conformal prediction sets
-        _, conf_sets = self.mapie_clf.predict(X, alpha=self.config.conformal_alpha)
+        _, conf_sets = self.mapie_clf.predict_set(X)
         # conf_sets shape: (N, n_classes, n_alphas)
 
         results: List[Dict[str, Any]] = []

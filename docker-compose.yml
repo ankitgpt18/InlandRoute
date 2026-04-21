@@ -61,7 +61,7 @@ networks:
   # Internal network — only backend services communicate here
   internal:
     driver: bridge
-    internal: true
+#    internal: true
     labels:
       project: "aidstl"
       tier: "internal"
@@ -151,9 +151,7 @@ services:
       - internal
 
     ports:
-      # Expose on localhost only for pgAdmin / DBeaver during development.
-      # Remove this mapping in production.
-      - "127.0.0.1:5432:5432"
+      - "5432:5432"
 
     healthcheck:
       <<: *healthcheck-defaults

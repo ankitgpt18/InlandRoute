@@ -553,7 +553,9 @@ class TemporalSequenceBuilder:
         cols = [c for c in self.config.feature_columns if c in df.columns]
         arr = df[cols].values.astype(np.float32)
         self._mean = np.nanmean(arr, axis=0)
+        self._mean = np.nan_to_num(self._mean, nan=0.0)
         self._std = np.nanstd(arr, axis=0)
+        self._std = np.nan_to_num(self._std, nan=1.0)
         self._std[self._std < 1e-8] = 1.0  # avoid divide-by-zero
         logger.info("Fitted normalisation on %d samples × %d features.", *arr.shape)
         return self
@@ -674,6 +676,9 @@ class TemporalSequenceBuilder:
             X = (X - self._mean[np.newaxis, np.newaxis, :]) / self._std[
                 np.newaxis, np.newaxis, :
             ]
+            X = np.nan_to_num(
+                X, nan=cfg.pad_value, posinf=cfg.pad_value, neginf=cfg.pad_value
+            )
 
         logger.info(
             "Built sequences: X=%s, y=%s, segments=%d",
@@ -960,6 +965,7 @@ class RiverSegmentDataset(Dataset):
             static_df = compute_static_features(df)
             static_df = static_df.set_index("segment_id")
             static_arr = static_df.loc[seg_ids].values.astype(np.float32)
+            np.nan_to_num(static_arr, nan=0.0, posinf=0.0, neginf=0.0, copy=False)
         except Exception as exc:
             logger.warning("Could not compute static features: %s", exc)
             static_arr = None

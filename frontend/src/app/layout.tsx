@@ -1,5 +1,5 @@
 // ============================================================
-// AIDSTL — Inland Waterway Navigability Prediction System
+// InlandRoute - Inland Waterway Navigability Prediction System
 // Root Layout
 // ============================================================
 
@@ -30,8 +30,8 @@ const jetbrainsMono = JetBrains_Mono({
 
 export const metadata: Metadata = {
   title: {
-    default: 'AIDSTL — Inland Waterway Navigability',
-    template: '%s | AIDSTL',
+    default: 'InlandRoute - Inland Waterway Navigability',
+    template: '%s | InlandRoute',
   },
   description:
     'AI-powered inland waterway navigability prediction for India\'s National Waterways using Sentinel-2 satellite imagery and deep learning.',
@@ -56,10 +56,10 @@ export const metadata: Metadata = {
   openGraph: {
     type: 'website',
     locale: 'en_IN',
-    title: 'AIDSTL — Inland Waterway Navigability Prediction',
+    title: 'InlandRoute - Inland Waterway Navigability Prediction',
     description:
       'Predict navigability of India\'s inland waterways using satellite imagery and AI.',
-    siteName: 'AIDSTL',
+    siteName: 'InlandRoute',
   },
   icons: {
     icon: '/favicon.svg',

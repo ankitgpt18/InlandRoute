@@ -1,7 +1,0 @@
-{
-  "/maps/page": "app/maps/page.js",
-  "/dashboard/page": "app/dashboard/page.js",
-  "/analytics/page": "app/analytics/page.js",
-  "/alerts/page": "app/alerts/page.js",
-  "/model/page": "app/model/page.js"
-}

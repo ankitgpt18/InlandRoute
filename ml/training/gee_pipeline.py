@@ -41,6 +41,7 @@ import math
 import os
 import time
 import warnings
+from concurrent.futures import ThreadPoolExecutor, as_completed
 from dataclasses import dataclass, field
 from datetime import date, datetime, timedelta
 from pathlib import Path
@@ -1353,21 +1354,35 @@ class GEEPipeline:
                     gauge_df, segments, date_ts
                 )
 
-            for segment in segments:
-                row = self._extract_segment_month_features(segment, year, month)
-
-                # Merge gauge data
-                if segment.segment_id in gauge_interp:
-                    row.update(gauge_interp[segment.segment_id])
-                else:
-                    row.update(
-                        {
-                            "gauge_water_level_m": float("nan"),
-                            "gauge_discharge_m3s": float("nan"),
-                        }
-                    )
-
-                all_rows.append(row)
+            # Parallelize segment extraction within a month
+            with ThreadPoolExecutor(max_workers=10) as executor:
+                futures = {
+                    executor.submit(
+                        self._extract_segment_month_features, segment, year, month
+                    ): segment
+                    for segment in segments
+                }
+                for future in as_completed(futures):
+                    segment = futures[future]
+                    try:
+                        row = future.result()
+                        # Merge gauge data
+                        if segment.segment_id in gauge_interp:
+                            row.update(gauge_interp[segment.segment_id])
+                        else:
+                            row.update(
+                                {
+                                    "gauge_water_level_m": float("nan"),
+                                    "gauge_discharge_m3s": float("nan"),
+                                }
+                            )
+                        all_rows.append(row)
+                    except Exception as exc:
+                        logger.error(
+                            "Parallel extraction failed for %s: %s",
+                            segment.segment_id,
+                            exc,
+                        )
 
         df = pd.DataFrame(all_rows)
 

@@ -91,9 +91,12 @@ def create_engine(
     def _on_connect(dbapi_conn: Any, connection_record: Any) -> None:  # noqa: ANN001
         """Set per-connection runtime parameters on raw psycopg2/asyncpg connections."""
         # asyncpg exposes a different interface; guard accordingly.
-        if hasattr(dbapi_conn, "cursor"):
-            with dbapi_conn.cursor() as cur:
-                cur.execute("SET TIME ZONE 'UTC'")
+        try:
+            if hasattr(dbapi_conn, "cursor"):
+                with dbapi_conn.cursor() as cur:
+                    cur.execute("SET TIME ZONE 'UTC'")
+        except (AttributeError, TypeError):
+            pass
 
     logger.info("Async database engine created: %s", url.split("@")[-1])
     return engine
