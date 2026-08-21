@@ -36,11 +36,20 @@ import logging
 import math
 from typing import Dict, List, Optional, Tuple
 
-import timm
-import torch
-import torch.nn as nn
-import torch.nn.functional as F
-from torch import Tensor
+try:
+    import timm
+    import torch
+    import torch.nn as nn
+    import torch.nn.functional as F
+    from torch import Tensor
+    HAS_TORCH = True
+except ImportError:
+    timm = None
+    torch = None
+    nn = object
+    F = None
+    Tensor = Any
+    HAS_TORCH = False
 
 logger = logging.getLogger(__name__)
 logging.basicConfig(

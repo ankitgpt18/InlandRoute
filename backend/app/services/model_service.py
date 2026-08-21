@@ -50,9 +50,14 @@ from typing import Any, Optional
 import joblib
 from app.core.config import get_settings
 import numpy as np
-import redis.asyncio as aioredis
-import torch
-import torch.nn as nn
+try:
+    import torch
+    import torch.nn as nn
+    HAS_TORCH = True
+except ImportError:
+    torch = None
+    nn = None
+    HAS_TORCH = False
 from app.models.dl.hydroformer import (
     HydroFormer,
 )
