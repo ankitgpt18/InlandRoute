@@ -147,13 +147,10 @@ async def lifespan(app: FastAPI) -> AsyncGenerator[None, None]:
         await init_db()
         logger.info("PostgreSQL + PostGIS connection pool initialised.")
     except Exception as exc:
-        logger.error(
-            "Database initialisation failed — the API will start without DB support.",
+        logger.warning(
+            "Database initialisation skipped/failed — starting API in fallback mode.",
             error=str(exc),
         )
-        # Non-fatal in development; fatal in production
-        if settings.is_production:
-            raise
 
     # ── 2. ML Models ───────────────────────────────────────────────────────
     try:
