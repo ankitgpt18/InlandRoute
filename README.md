@@ -9,14 +9,14 @@
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow)](https://opensource.org/licenses/MIT)
 [![Docker](https://img.shields.io/badge/Docker-Compose-2496ED?logo=docker)](https://docs.docker.com/compose/)
 
-InlandRoute is a deep learning system for predicting the navigability of India's National Inland Waterways using multitemporal Sentinel-2 satellite imagery combined with hydrological gauge data. It helps in route planning by providing monthly navigability maps, seasonal calendars, and real-time risk alerts.
+InlandRoute is an enterprise geospatial platform for predicting the navigability of India's National Inland Waterways (**NW-1 Ganga** and **NW-2 Brahmaputra**) using multitemporal Sentinel-2 satellite imagery combined with CWC hydrological gauge data. It assists IWAI fleet logistics by providing monthly navigability maps, 12-month depth calendars, longitudinal profile charts, and automated risk early warning alerts.
 
 ## Tech Stack
 
 - **Backend:** FastAPI, PostgreSQL + PostGIS, Redis, Celery
 - **Machine Learning:** PyTorch, LightGBM, Swin Transformer
-- **Geospatial:** Google Earth Engine (Sentinel-2), GeoPandas
-- **Frontend:** Next.js, Leaflet GIS, Tailwind CSS, Recharts
+- **Geospatial:** Google Earth Engine (Sentinel-2), GeoPandas, Leaflet GIS
+- **Frontend:** Next.js 14, TypeScript, Tailwind CSS, Recharts
 - **Infrastructure:** Docker, Nginx
 
 ## Quick Start
@@ -28,11 +28,11 @@ InlandRoute is a deep learning system for predicting the navigability of India's
    ```
 
 2. **Environment Setup**
-   Copy the example environment file and add your credentials:
+   Copy the example environment file and configure your settings:
    ```bash
    cp backend/.env.example backend/.env
    ```
-   *Make sure to add your database URL, Google Earth Engine service account info, and Mapbox token.*
+   *Note: Includes transparent fallback telemetry data so the platform runs out-of-the-box.*
 
 3. **Run with Docker**
    ```bash
@@ -40,8 +40,8 @@ InlandRoute is a deep learning system for predicting the navigability of India's
    ```
 
 4. **Access the App**
-   - **Frontend:** http://localhost
-   - **API Docs:** http://localhost/docs
+   - **Frontend:** http://localhost:3000
+   - **API Docs:** http://localhost:8000/docs
 
 ## License
 This project is licensed under the MIT License.
