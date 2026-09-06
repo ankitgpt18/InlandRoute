@@ -12,6 +12,7 @@ import {
   Map,
   BarChart3,
   Bell,
+  Navigation,
   BrainCircuit,
   ChevronLeft,
   ChevronRight,
@@ -48,6 +49,7 @@ const NAV_GROUPS: NavGroup[] = [
   {
     title: 'Operations',
     items: [
+      { href: '/navigation', label: 'Vessel Route Pathfinder', icon: Navigation },
       { href: '/alerts', label: 'Risk & Early Warning', icon: Bell, badge: true },
     ],
   },
