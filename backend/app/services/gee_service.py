@@ -307,25 +307,23 @@ class GEEService:
 
     def _authenticate_sync(self) -> None:
         """Blocking GEE authentication (runs in thread pool)."""
+        project_id = getattr(settings, "GEE_PROJECT_ID", "inlandroute")
         key_file = settings.gee_key_file_path
 
-        if not key_file.exists():
-            raise FileNotFoundError(
-                f"GEE key file not found: {key_file}. "
-                "Set GEE_KEY_FILE in your .env to a valid service-account JSON path."
+        if key_file.exists():
+            credentials = ee.ServiceAccountCredentials(
+                email=settings.GEE_SERVICE_ACCOUNT,
+                key_file=str(key_file),
             )
-
-        credentials = ee.ServiceAccountCredentials(
-            email=settings.GEE_SERVICE_ACCOUNT,
-            key_file=str(key_file),
-        )
-        project = settings.GEE_PROJECT_ID or None
-        ee.Initialize(
-            credentials=credentials,
-            project=project,
-            opt_url="https://earthengine.googleapis.com",
-        )
-        logger.info("Authenticated with GEE as '%s'.", settings.GEE_SERVICE_ACCOUNT)
+            ee.Initialize(credentials, project=project_id)
+        else:
+            try:
+                ee.Initialize(project=project_id)
+            except Exception:
+                try:
+                    ee.Initialize(project="pathly-493317")
+                except Exception as exc:
+                    logger.warning("Default GEE auth attempt failed, using open STAC fallback engine: %s", exc)
 
     # ------------------------------------------------------------------
     # Health check
