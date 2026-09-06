@@ -319,11 +319,8 @@ class GEEService:
         else:
             try:
                 ee.Initialize(project=project_id)
-            except Exception:
-                try:
-                    ee.Initialize(project="pathly-493317")
-                except Exception as exc:
-                    logger.warning("Default GEE auth attempt failed, using open STAC fallback engine: %s", exc)
+            except Exception as exc:
+                logger.warning("GEE authentication for project '%s' using open STAC fallback: %s", project_id, exc)
 
     # ------------------------------------------------------------------
     # Health check
