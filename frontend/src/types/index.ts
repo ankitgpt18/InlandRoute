@@ -5,7 +5,7 @@
 
 export type NavigabilityClass = 'navigable' | 'conditional' | 'non_navigable';
 
-export type WaterwayId = 'NW-1' | 'NW-2';
+export type WaterwayId = 'NW-1' | 'NW-2' | 'NW-3' | 'NW-4' | 'NW-5';
 
 export type MapStyle = 'satellite' | 'dark' | 'light';
 

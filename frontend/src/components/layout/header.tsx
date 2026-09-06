@@ -76,27 +76,26 @@ export function Header() {
       {/* Left Section: Waterway Selector */}
       <div className="flex items-center gap-4">
         {/* Waterway Pill Selector */}
-        <div className="flex items-center bg-zinc-800 p-1 rounded-xl border border-zinc-700">
-          <button
-            onClick={() => setSelectedWaterway('NW-1')}
-            className={`px-3 py-1.5 rounded-lg text-xs font-semibold transition-all ${
-              selectedWaterway === 'NW-1'
-                ? 'bg-white text-zinc-900 shadow-sm'
-                : 'text-zinc-400 hover:text-white'
-            }`}
-          >
-            NW-1 · Ganga
-          </button>
-          <button
-            onClick={() => setSelectedWaterway('NW-2')}
-            className={`px-3 py-1.5 rounded-lg text-xs font-semibold transition-all ${
-              selectedWaterway === 'NW-2'
-                ? 'bg-white text-zinc-900 shadow-sm'
-                : 'text-zinc-400 hover:text-white'
-            }`}
-          >
-            NW-2 · Brahmaputra
-          </button>
+        <div className="flex items-center bg-zinc-800 p-1 rounded-xl border border-zinc-700 overflow-x-auto">
+          {[
+            { id: 'NW-1', label: 'NW-1 · Ganga' },
+            { id: 'NW-2', label: 'NW-2 · Brahmaputra' },
+            { id: 'NW-3', label: 'NW-3 · West Coast' },
+            { id: 'NW-4', label: 'NW-4 · Godavari/Krishna' },
+            { id: 'NW-5', label: 'NW-5 · Brahmani' },
+          ].map((ww) => (
+            <button
+              key={ww.id}
+              onClick={() => setSelectedWaterway(ww.id as any)}
+              className={`px-2.5 py-1.5 rounded-lg text-xs font-semibold whitespace-nowrap transition-all ${
+                selectedWaterway === ww.id
+                  ? 'bg-white text-zinc-900 shadow-sm'
+                  : 'text-zinc-400 hover:text-white'
+              }`}
+            >
+              {ww.label}
+            </button>
+          ))}
         </div>
       </div>
 

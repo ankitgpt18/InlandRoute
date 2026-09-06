@@ -90,12 +90,38 @@ export const NW2_PORTS: RiverPort[] = [
   { id: 'port-sdy', name: 'Sadiya Inland Port', waterwayId: 'NW-2', lat: 27.8333, lng: 95.6667, km: 891, type: 'Inland Port', capacityDWT: 800, status: 'Operational' },
 ];
 
+export const NW3_PORTS: RiverPort[] = [
+  { id: 'port-ktp', name: 'Kottapuram Terminal', waterwayId: 'NW-3', lat: 10.2000, lng: 76.2000, km: 0, type: 'Inland Port', capacityDWT: 1000, status: 'Operational' },
+  { id: 'port-udg', name: 'Udyogmandal Industrial Lock', waterwayId: 'NW-3', lat: 10.0800, lng: 76.2900, km: 35, type: 'Lock Gate', capacityDWT: 800, status: 'Operational' },
+  { id: 'port-alp', name: 'Alappuzha Floating Jetty', waterwayId: 'NW-3', lat: 9.4900, lng: 76.3300, km: 110, type: 'Jetty', capacityDWT: 500, status: 'Operational' },
+  { id: 'port-kym', name: 'Kayamkulam Reach Terminal', waterwayId: 'NW-3', lat: 9.1700, lng: 76.5000, km: 160, type: 'Inland Port', capacityDWT: 800, status: 'Operational' },
+  { id: 'port-klm', name: 'Kollam Multimodal Port', waterwayId: 'NW-3', lat: 8.8800, lng: 76.5800, km: 205, type: 'Multimodal Terminal', capacityDWT: 1500, status: 'Operational' },
+];
+
+export const NW4_PORTS: RiverPort[] = [
+  { id: 'port-kkd', name: 'Kakinada Deepwater Lock', waterwayId: 'NW-4', lat: 16.9800, lng: 82.2400, km: 0, type: 'Lock Gate', capacityDWT: 2500, status: 'Operational' },
+  { id: 'port-rjy', name: 'Rajahmundry Godavari Port', waterwayId: 'NW-4', lat: 17.0000, lng: 81.7800, km: 210, type: 'Inland Port', capacityDWT: 2000, status: 'Operational' },
+  { id: 'port-vjw', name: 'Vijayawada Krishna Terminal', waterwayId: 'NW-4', lat: 16.5100, lng: 80.6200, km: 540, type: 'Multimodal Terminal', capacityDWT: 2000, status: 'Operational' },
+  { id: 'port-mkt', name: 'Muktyala Mineral Terminal', waterwayId: 'NW-4', lat: 16.8200, lng: 80.0500, km: 720, type: 'Inland Port', capacityDWT: 1800, status: 'Operational' },
+  { id: 'port-pdy', name: 'Puducherry Southern Port', waterwayId: 'NW-4', lat: 11.9300, lng: 79.8300, km: 1078, type: 'Inland Port', capacityDWT: 1500, status: 'Operational' },
+];
+
+export const NW5_PORTS: RiverPort[] = [
+  { id: 'port-tlc', name: 'Talcher Coal Industrial Port', waterwayId: 'NW-5', lat: 20.9500, lng: 85.2200, km: 0, type: 'Multimodal Terminal', capacityDWT: 3000, status: 'Operational' },
+  { id: 'port-mng', name: 'Mangalgadi River Jetty', waterwayId: 'NW-5', lat: 20.7800, lng: 86.1200, km: 180, type: 'Jetty', capacityDWT: 1200, status: 'Operational' },
+  { id: 'port-dmr', name: 'Dhamra Feeder Terminal', waterwayId: 'NW-5', lat: 20.8000, lng: 86.9200, km: 380, type: 'Multimodal Terminal', capacityDWT: 3500, status: 'Operational' },
+  { id: 'port-pdp', name: 'Paradip Lock Gate', waterwayId: 'NW-5', lat: 20.2700, lng: 86.6700, km: 588, type: 'Lock Gate', capacityDWT: 3000, status: 'Operational' },
+];
+
 export const CWC_GAUGES: CWCGaugeStation[] = [
   { id: 'cwc-vns', name: 'Varanasi CWC Station', waterwayId: 'NW-1', lat: 25.3000, lng: 83.0200, waterLevelM: 68.4, dischargeCumech: 2450, trend: 'Stable' },
   { id: 'cwc-ptn', name: 'Patna Gandhat CWC', waterwayId: 'NW-1', lat: 25.6100, lng: 85.1400, waterLevelM: 49.2, dischargeCumech: 5120, trend: 'Rising' },
   { id: 'cwc-frk', name: 'Farakka Barrage CWC', waterwayId: 'NW-1', lat: 24.8000, lng: 87.9200, waterLevelM: 22.8, dischargeCumech: 7800, trend: 'Falling' },
   { id: 'cwc-dhb', name: 'Dhubri CWC Station', waterwayId: 'NW-2', lat: 26.0100, lng: 89.9800, waterLevelM: 28.5, dischargeCumech: 9200, trend: 'Rising' },
   { id: 'cwc-ght', name: 'Guwahati Pandu CWC', waterwayId: 'NW-2', lat: 26.1800, lng: 91.7200, waterLevelM: 48.1, dischargeCumech: 11400, trend: 'Stable' },
+  { id: 'cwc-klm', name: 'Kollam CWC Station', waterwayId: 'NW-3', lat: 8.8900, lng: 76.5900, waterLevelM: 12.1, dischargeCumech: 850, trend: 'Stable' },
+  { id: 'cwc-vjw', name: 'Vijayawada Krishna CWC', waterwayId: 'NW-4', lat: 16.5200, lng: 80.6300, waterLevelM: 35.4, dischargeCumech: 4200, trend: 'Rising' },
+  { id: 'cwc-dmr', name: 'Dhamra Estuary CWC', waterwayId: 'NW-5', lat: 20.8100, lng: 86.9300, waterLevelM: 18.6, dischargeCumech: 3100, trend: 'Stable' },
 ];
 
 // Monsoon depth multiplier: depth is highest Jun–Oct, lowest Mar–May
@@ -329,7 +355,112 @@ export function buildNW2GeoJSON(
 }
 
 // ============================================================
-// NAVIGABILITY MAP — NW-1
+// NW-3, NW-4, NW-5 — GeoJSON Builders
+// ============================================================
+
+export function buildNW3GeoJSON(month: number = 8, year: number = 2024): RiverGeoJSON {
+  const mult = monsoonMultiplier(month);
+  const waypoints: [number, number][] = [
+    [76.20, 10.20], [76.25, 10.05], [76.29, 10.08], [76.33, 9.75],
+    [76.33, 9.49], [76.40, 9.30], [76.50, 9.17], [76.58, 8.88]
+  ];
+  const landmarks = ["Kottapuram", "Udyogmandal", "Kochi Canal", "Vaikom", "Alappuzha", "Kayamkulam", "Chavara", "Kollam"];
+
+  const features = landmarks.slice(0, waypoints.length - 1).map((landmark, i) => {
+    const depth = (3.5 + (i % 3) * 0.8) * mult;
+    const cls = classifyDepth(depth);
+    const segId = `NW3-SEG-${String(i + 1).padStart(2, '0')}`;
+    return {
+      type: "Feature" as const,
+      id: segId,
+      geometry: { type: "LineString" as const, coordinates: [waypoints[i], waypoints[i + 1]] as [number, number][] },
+      properties: {
+        segment_id: segId,
+        waterway_id: "NW-3" as WaterwayId,
+        km_start: i * 28,
+        km_end: (i + 1) * 28,
+        navigability_class: cls,
+        depth_m: parseFloat(depth.toFixed(2)),
+        width_m: 65 + i * 5,
+        confidence: 0.88,
+        velocity_ms: 0.3 + depth * 0.05,
+        landmark,
+        state: "Kerala",
+      },
+    };
+  });
+  return { type: "FeatureCollection", features };
+}
+
+export function buildNW4GeoJSON(month: number = 8, year: number = 2024): RiverGeoJSON {
+  const mult = monsoonMultiplier(month);
+  const waypoints: [number, number][] = [
+    [82.24, 16.98], [81.78, 17.00], [81.20, 16.80], [80.62, 16.51],
+    [80.05, 16.82], [79.95, 15.50], [80.10, 14.40], [80.20, 13.00], [79.83, 11.93]
+  ];
+  const landmarks = ["Kakinada", "Rajahmundry", "Tanuku", "Vijayawada", "Muktyala", "Ongole", "Nellore", "Chennai Reach", "Puducherry"];
+
+  const features = landmarks.slice(0, waypoints.length - 1).map((landmark, i) => {
+    const depth = (4.2 + (i % 4) * 0.7) * mult;
+    const cls = classifyDepth(depth);
+    const segId = `NW4-SEG-${String(i + 1).padStart(2, '0')}`;
+    return {
+      type: "Feature" as const,
+      id: segId,
+      geometry: { type: "LineString" as const, coordinates: [waypoints[i], waypoints[i + 1]] as [number, number][] },
+      properties: {
+        segment_id: segId,
+        waterway_id: "NW-4" as WaterwayId,
+        km_start: i * 130,
+        km_end: (i + 1) * 130,
+        navigability_class: cls,
+        depth_m: parseFloat(depth.toFixed(2)),
+        width_m: 220 + i * 30,
+        confidence: 0.84,
+        velocity_ms: 0.5 + depth * 0.06,
+        landmark,
+        state: i < 6 ? "Andhra Pradesh" : "Tamil Nadu",
+      },
+    };
+  });
+  return { type: "FeatureCollection", features };
+}
+
+export function buildNW5GeoJSON(month: number = 8, year: number = 2024): RiverGeoJSON {
+  const mult = monsoonMultiplier(month);
+  const waypoints: [number, number][] = [
+    [85.22, 20.95], [85.80, 20.85], [86.12, 20.78], [86.50, 20.75], [86.92, 20.80], [86.67, 20.27]
+  ];
+  const landmarks = ["Talcher", "Kamakhyanagar", "Mangalgadi", "Jajpur", "Dhamra Port", "Paradip Lock"];
+
+  const features = landmarks.slice(0, waypoints.length - 1).map((landmark, i) => {
+    const depth = (4.8 + (i % 3) * 0.9) * mult;
+    const cls = classifyDepth(depth);
+    const segId = `NW5-SEG-${String(i + 1).padStart(2, '0')}`;
+    return {
+      type: "Feature" as const,
+      id: segId,
+      geometry: { type: "LineString" as const, coordinates: [waypoints[i], waypoints[i + 1]] as [number, number][] },
+      properties: {
+        segment_id: segId,
+        waterway_id: "NW-5" as WaterwayId,
+        km_start: i * 115,
+        km_end: (i + 1) * 115,
+        navigability_class: cls,
+        depth_m: parseFloat(depth.toFixed(2)),
+        width_m: 310 + i * 20,
+        confidence: 0.86,
+        velocity_ms: 0.45 + depth * 0.07,
+        landmark,
+        state: "Odisha",
+      },
+    };
+  });
+  return { type: "FeatureCollection", features };
+}
+
+// ============================================================
+// NAVIGABILITY MAP — NW-1 to NW-5
 // ============================================================
 
 export function buildNavigabilityMap(
@@ -337,10 +468,12 @@ export function buildNavigabilityMap(
   month: number,
   year: number,
 ): NavigabilityMap {
-  const isNW1 = waterwayId === "NW-1";
-  const geojson = isNW1
-    ? buildNW1GeoJSON(month, year)
-    : buildNW2GeoJSON(month, year);
+  let geojson: RiverGeoJSON;
+  if (waterwayId === "NW-1") geojson = buildNW1GeoJSON(month, year);
+  else if (waterwayId === "NW-2") geojson = buildNW2GeoJSON(month, year);
+  else if (waterwayId === "NW-3") geojson = buildNW3GeoJSON(month, year);
+  else if (waterwayId === "NW-4") geojson = buildNW4GeoJSON(month, year);
+  else geojson = buildNW5GeoJSON(month, year);
 
   const predictions = geojson.features.map((f, idx) => {
     const p = f.properties;
@@ -379,10 +512,10 @@ export function buildNavigabilityMap(
       },
       depth_threshold_m: 3.0,
       is_above_threshold: p.depth_m >= 3.0,
-      margin_m: parseFloat((p.depth_m - 3.0).toFixed(2)),
-      discharge_m3s: isNW1
-        ? 4000 + idx * 200 + monsoonMultiplier(month) * 8000
-        : 8000 + idx * 350 + monsoonMultiplier(month) * 20000,
+      discharge_m3s:
+        waterwayId === 'NW-1'
+          ? 4000 + idx * 200 + monsoonMultiplier(month) * 8000
+          : 6000 + idx * 300 + monsoonMultiplier(month) * 15000,
       velocity_ms: p.velocity_ms,
       water_surface_area_km2: parseFloat(
         ((p.width_m * 0.06 * (p.km_end - p.km_start)) / 1000).toFixed(1),
@@ -391,16 +524,25 @@ export function buildNavigabilityMap(
   });
 
   const navigable = predictions.filter(
-    (p) => p.navigability_class === "navigable",
+    (p) => p.navigability_class === 'navigable',
   );
   const conditional = predictions.filter(
-    (p) => p.navigability_class === "conditional",
+    (p) => p.navigability_class === 'conditional',
   );
   const nonNavigable = predictions.filter(
-    (p) => p.navigability_class === "non_navigable",
+    (p) => p.navigability_class === 'non_navigable',
   );
 
-  const totalKm = isNW1 ? 1020 : 770;
+  const totalKm =
+    waterwayId === 'NW-1'
+      ? 1620
+      : waterwayId === 'NW-2'
+      ? 891
+      : waterwayId === 'NW-3'
+      ? 205
+      : waterwayId === 'NW-4'
+      ? 1078
+      : 588;
   const navPct = navigable.length / predictions.length;
 
   return {

@@ -72,14 +72,49 @@ export const NW2_BRAHMAPUTRA_BELT: BeltPoint[] = [
   { lat: 27.8333, lng: 95.6667, name: 'Sadiya Terminal', km: 891, depthM: 3.0, class: 'navigable', isTerminal: true },
 ];
 
+export const NW3_WESTCOAST_BELT: BeltPoint[] = [
+  { lat: 10.2000, lng: 76.2000, name: 'Kottapuram Terminal', km: 0, depthM: 3.5, class: 'navigable', isTerminal: true },
+  { lat: 10.0800, lng: 76.2900, name: 'Udyogmandal Industrial Lock', km: 35, depthM: 3.2, class: 'navigable', isTerminal: true },
+  { lat: 9.4900, lng: 76.3300, name: 'Alappuzha Floating Jetty', km: 110, depthM: 3.0, class: 'navigable', isTerminal: true },
+  { lat: 9.1700, lng: 76.5000, name: 'Kayamkulam Reach Terminal', km: 160, depthM: 2.8, class: 'conditional', isTerminal: true },
+  { lat: 8.8800, lng: 76.5800, name: 'Kollam Multimodal Port', km: 205, depthM: 3.6, class: 'navigable', isTerminal: true },
+];
+
+export const NW4_GODAVARI_BELT: BeltPoint[] = [
+  { lat: 16.9800, lng: 82.2400, name: 'Kakinada Deepwater Lock', km: 0, depthM: 4.2, class: 'navigable', isTerminal: true },
+  { lat: 17.0000, lng: 81.7800, name: 'Rajahmundry Godavari Port', km: 210, depthM: 3.8, class: 'navigable', isTerminal: true },
+  { lat: 16.5100, lng: 80.6200, name: 'Vijayawada Krishna Terminal', km: 540, depthM: 3.6, class: 'navigable', isTerminal: true },
+  { lat: 16.8200, lng: 80.0500, name: 'Muktyala Mineral Terminal', km: 720, depthM: 2.9, class: 'conditional', isTerminal: true },
+  { lat: 11.9300, lng: 79.8300, name: 'Puducherry Southern Port', km: 1078, depthM: 3.4, class: 'navigable', isTerminal: true },
+];
+
+export const NW5_BRAHMANI_BELT: BeltPoint[] = [
+  { lat: 20.9500, lng: 85.2200, name: 'Talcher Coal Industrial Port', km: 0, depthM: 4.5, class: 'navigable', isTerminal: true },
+  { lat: 20.7800, lng: 86.1200, name: 'Mangalgadi River Jetty', km: 180, depthM: 3.5, class: 'navigable', isTerminal: true },
+  { lat: 20.8000, lng: 86.9200, name: 'Dhamra Feeder Terminal', km: 380, depthM: 4.8, class: 'navigable', isTerminal: true },
+  { lat: 20.2700, lng: 86.6700, name: 'Paradip Lock Gate', km: 588, depthM: 4.2, class: 'navigable', isTerminal: true },
+];
+
 const WATERWAY_BOUNDS: Record<WaterwayId, [[number, number], [number, number]]> = {
   'NW-1': [
-    [21.8, 82.6], // Haldia / Kolkata
-    [25.8, 88.5], // Varanasi / Patna
+    [21.8, 82.6],
+    [25.8, 88.5],
   ],
   'NW-2': [
-    [25.8, 89.6], // Dhubri
-    [28.0, 95.8], // Sadiya
+    [25.8, 89.6],
+    [28.0, 95.8],
+  ],
+  'NW-3': [
+    [8.80, 76.10],
+    [10.30, 76.70],
+  ],
+  'NW-4': [
+    [11.80, 79.50],
+    [17.10, 82.50],
+  ],
+  'NW-5': [
+    [20.10, 85.10],
+    [21.10, 87.10],
   ],
 };
 
@@ -111,7 +146,11 @@ export function RiverMap({
 
   // Active belt points for selected waterway
   const activeBelt = useMemo(() => {
-    return selectedWaterway === 'NW-1' ? NW1_GANGA_BELT : NW2_BRAHMAPUTRA_BELT;
+    if (selectedWaterway === 'NW-1') return NW1_GANGA_BELT;
+    if (selectedWaterway === 'NW-2') return NW2_BRAHMAPUTRA_BELT;
+    if (selectedWaterway === 'NW-3') return NW3_WESTCOAST_BELT;
+    if (selectedWaterway === 'NW-4') return NW4_GODAVARI_BELT;
+    return NW5_BRAHMANI_BELT;
   }, [selectedWaterway]);
 
   // 1. Initialize Leaflet Map Instance
