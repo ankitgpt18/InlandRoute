@@ -1,10 +1,10 @@
 // ============================================================
-// InlandRoute — Minimalist Light/Dark Depth Profile Chart
+// InlandRoute  -  Depth Profile Chart (Statsio Clean Dark UI)
 // ============================================================
 
-'use client';
+"use client";
 
-import React from 'react';
+import React from "react";
 import {
   AreaChart,
   Area,
@@ -14,22 +14,29 @@ import {
   Tooltip,
   ReferenceLine,
   ResponsiveContainer,
-} from 'recharts';
-import type { DepthProfile } from '@/types';
+} from "recharts";
+import type { DepthProfile } from "@/types";
 
 export interface DepthProfileChartProps {
   data?: DepthProfile | null;
   height?: number;
 }
 
-export function DepthProfileChart({ data, height = 300 }: DepthProfileChartProps) {
-  if (!data || !(data.profile_points || data.points) || (data.profile_points || data.points)?.length === 0) {
+export function DepthProfileChart({
+  data,
+  height = 320,
+}: DepthProfileChartProps) {
+  if (
+    !data ||
+    !(data.profile_points || data.points) ||
+    (data.profile_points || data.points)?.length === 0
+  ) {
     return (
       <div
-        className="flex items-center justify-center saas-card p-6 text-slate-500 dark:text-zinc-400 text-xs font-medium"
+        className="flex items-center justify-center rounded-lg border border-neutral-800 bg-black p-6 text-neutral-400 text-xs font-medium"
         style={{ height }}
       >
-        No longitudinal depth profile data available
+        No longitudinal depth profile telemetry available
       </div>
     );
   }
@@ -45,24 +52,24 @@ export function DepthProfileChart({ data, height = 300 }: DepthProfileChartProps
   }));
 
   return (
-    <div className="saas-card p-5 space-y-4">
-      <div className="flex items-center justify-between">
+    <div className="rounded-lg border border-neutral-800 bg-black p-4 space-y-4">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-neutral-800 pb-3">
         <div>
-          <h3 className="text-sm font-bold text-slate-900 dark:text-white tracking-tight">
+          <h3 className="text-sm font-semibold text-white tracking-tight">
             Longitudinal Riverbed Depth Profile
           </h3>
-          <p className="text-xs text-slate-500 dark:text-zinc-400">
-            Predicted water depth along {data.waterway_id} reach ({data.total_length_km ?? 1540} km)
+          <p className="text-xs text-neutral-400 mt-0.5">
+            Predicted water fairway depth along {data.waterway_id} reach ({data.total_length_km ?? 1540} km)
           </p>
         </div>
-        <div className="flex items-center gap-4 text-xs font-medium text-slate-600 dark:text-zinc-400">
+        <div className="flex items-center gap-4 text-xs text-neutral-400">
           <div className="flex items-center gap-1.5">
-            <span className="w-2.5 h-2.5 rounded-full bg-sky-500" />
+            <span className="h-2 w-2 rounded-full bg-cyan-400" />
             <span>Predicted Depth (m)</span>
           </div>
           <div className="flex items-center gap-1.5">
-            <span className="w-2.5 h-2.5 rounded-full bg-emerald-500" />
-            <span>IWAI 3.0m Target</span>
+            <span className="h-2 w-2 rounded-full bg-neutral-500" />
+            <span>IWAI 2.5m Standard</span>
           </div>
         </div>
       </div>
@@ -71,60 +78,64 @@ export function DepthProfileChart({ data, height = 300 }: DepthProfileChartProps
         <ResponsiveContainer width="100%" height="100%">
           <AreaChart
             data={chartPoints}
-            margin={{ top: 10, right: 20, left: 0, bottom: 0 }}
+            margin={{ top: 10, right: 15, left: -15, bottom: 0 }}
           >
             <defs>
               <linearGradient id="depthFill" x1="0" y1="0" x2="0" y2="1">
-                <stop offset="0%" stopColor="#0284c7" stopOpacity={0.4} />
-                <stop offset="100%" stopColor="#0284c7" stopOpacity={0.05} />
+                <stop offset="0%" stopColor="#38bdf8" stopOpacity={0.25} />
+                <stop offset="100%" stopColor="#38bdf8" stopOpacity={0.0} />
               </linearGradient>
             </defs>
-            <CartesianGrid strokeDasharray="3 3" />
+            <CartesianGrid strokeDasharray="2 2" stroke="#1f1f1f" vertical={false} />
             <XAxis
               dataKey="km"
               unit=" km"
               tickLine={false}
+              axisLine={false}
               fontSize={11}
+              tick={{ fill: "#a1a1aa" }}
             />
             <YAxis
               unit=" m"
               tickLine={false}
+              axisLine={false}
               fontSize={11}
-              domain={[0, 'auto']}
+              domain={[0, "auto"]}
+              tick={{ fill: "#a1a1aa" }}
+            />
+            <ReferenceLine
+              y={2.5}
+              stroke="#52525b"
+              strokeDasharray="4 4"
+              label={{
+                value: "IWAI 2.50m LAD Standard",
+                fill: "#71717a",
+                fontSize: 10,
+                position: "insideTopRight",
+              }}
             />
             <Tooltip
               content={({ active, payload }) => {
                 if (!active || !payload || !payload.length) return null;
                 const point = payload[0].payload;
                 return (
-                  <div className="bg-white dark:bg-zinc-800 border border-slate-200 dark:border-zinc-700 p-3 rounded-lg shadow-lg text-xs space-y-1">
-                    <div className="font-bold text-slate-900 dark:text-white">
-                      Segment {point.segmentId} (km {point.km})
+                  <div className="rounded-md border border-neutral-800 bg-neutral-950 p-2.5 shadow-xl text-xs space-y-1">
+                    <div className="font-semibold text-white">Chainage {point.km} km</div>
+                    <div className="text-[11px] text-neutral-400">Reach: {point.segmentId ?? "Main Channel"}</div>
+                    <div className="font-mono text-cyan-400 font-semibold mt-1">
+                      Depth: {point.depth ? point.depth.toFixed(2) : "N/A"} m
                     </div>
-                    <div className="text-slate-700 dark:text-zinc-300">
-                      Depth: <span className="font-bold">{point.depth?.toFixed(2)} m</span>
-                    </div>
-                    {point.lowerCI !== undefined && (
-                      <div className="text-slate-500 dark:text-zinc-400 text-[11px]">
-                        90% CI: {point.lowerCI?.toFixed(2)}m – {point.upperCI?.toFixed(2)}m
-                      </div>
-                    )}
                   </div>
                 );
               }}
             />
-            <ReferenceLine
-              y={3.0}
-              stroke="#10b981"
-              strokeDasharray="4 4"
-              label={{ value: '3.0m Threshold', fill: '#10b981', fontSize: 10, position: 'insideTopRight' }}
-            />
             <Area
               type="monotone"
               dataKey="depth"
-              stroke="#0284c7"
-              strokeWidth={2}
+              stroke="#38bdf8"
+              strokeWidth={1.8}
               fill="url(#depthFill)"
+              activeDot={{ r: 4, fill: "#fff", stroke: "#38bdf8", strokeWidth: 2 }}
             />
           </AreaChart>
         </ResponsiveContainer>

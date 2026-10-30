@@ -1,5 +1,5 @@
-// ============================================================
-// AIDSTL — Inland Waterway Navigability Prediction
+﻿// ============================================================
+// AIDSTL  -  Inland Waterway Navigability Prediction
 // Zustand Global App Store
 // ============================================================
 
@@ -391,7 +391,7 @@ export const useAppStore = create<AppStore>()(
             ),
         }),
 
-        // ── Persist config — only persist non-transient UI prefs ──────────
+        // ── Persist config  -  only persist non-transient UI prefs ──────────
         {
           name:    'aidstl-app-store',
           version: 1,

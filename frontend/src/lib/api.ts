@@ -1,5 +1,5 @@
-// ============================================================
-// InlandRoute — Resilient Axios API Client + Automatic Fallback
+﻿// ============================================================
+// InlandRoute  -  Resilient Axios API Client + Automatic Fallback
 // ============================================================
 
 import axios, { AxiosInstance, AxiosResponse, AxiosError, InternalAxiosRequestConfig } from 'axios';

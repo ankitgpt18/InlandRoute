@@ -1,5 +1,5 @@
 /* ============================================================
-   InlandRoute — Complete High-Contrast SaaS Dark Theme
+   InlandRoute  -  Complete High-Contrast SaaS Dark Theme
    ============================================================ */
 
 @tailwind base;
@@ -152,23 +152,23 @@
     box-shadow: 0 10px 20px -3px rgba(0, 0, 0, 0.6);
   }
 
-  /* Status Badges */
+  /* Status Badges - Understated Non-AI Design */
   .badge-navigable {
-    background-color: rgba(16, 185, 129, 0.15);
-    border: 1px solid rgba(16, 185, 129, 0.3);
-    color: #34d399;
+    background-color: rgba(255, 255, 255, 0.04);
+    border: 1px solid #27272a;
+    color: #f4f4f5;
   }
 
   .badge-conditional {
-    background-color: rgba(245, 158, 11, 0.15);
-    border: 1px solid rgba(245, 158, 11, 0.3);
-    color: #fbbf24;
+    background-color: rgba(255, 255, 255, 0.04);
+    border: 1px solid #27272a;
+    color: #e4e4e7;
   }
 
   .badge-non-navigable {
-    background-color: rgba(239, 68, 68, 0.15);
-    border: 1px solid rgba(239, 68, 68, 0.3);
-    color: #f87171;
+    background-color: rgba(255, 255, 255, 0.04);
+    border: 1px solid #27272a;
+    color: #f4f4f5;
   }
 
   /* Micro Pills */
@@ -266,3 +266,96 @@
   font-weight: 600 !important;
   font-size: 12px !important;
 }
+
+/* ─── Statsio Style Motion Paths & Utilities ──────────────── */
+@layer utilities {
+  @media (min-width: 540px) and (max-width: 640px) {
+    .mt-tab {
+      margin-top: 7rem;
+    }
+  }
+}
+
+.multiline {
+  offset-anchor: 10px 0px;
+  animation: multiline-animation-path;
+  animation-iteration-count: infinite;
+  animation-timing-function: linear;
+  animation-duration: 3s;
+}
+
+.ml-light-1 {
+  offset-path: path(
+    "M 69 49.8 h -30 q -3 0 -3 -3 v -13 q 0 -3 -3 -3 h -23 q -3 0 -3 -3 v -13 q 0 -3 -3 -3 h -50"
+  );
+}
+
+@keyframes multiline-animation-path {
+  0% {
+    offset-distance: 0%;
+  }
+  50% {
+    offset-distance: 100%;
+  }
+  100% {
+    offset-distance: 100%;
+  }
+}
+
+.frameworkline {
+  offset-anchor: 10px 0px;
+  animation: frameworkline-animation-path;
+  animation-iteration-count: infinite;
+  animation-timing-function: cubic-bezier(0.9, 0.8, 0.8, 0.9);
+  animation-duration: 3.5s;
+}
+
+.framework-line {
+  offset-path: path(
+    "M 1 0 v 5 q 0 5 5 5 h 39 q 5 0 5 5 v 71 q 0 5 5 5 h 39 q 5 0 5 5 v 20"
+  );
+}
+
+@keyframes frameworkline-animation-path {
+  0% {
+    offset-distance: 0%;
+  }
+  85% {
+    offset-distance: 100%;
+  }
+  100% {
+    offset-distance: 100%;
+  }
+}
+
+.leftrightline {
+  offset-anchor: 10px 0px;
+  animation: leftrightline-animation-path;
+  animation-iteration-count: infinite;
+  animation-timing-function: linear;
+  animation-duration: 3s;
+}
+
+.left-line {
+  offset-path: path(
+    "M 1 12 v 65 l 28 24 v 80"
+  );
+}
+.right-line {
+  offset-path: path(
+    "M 29 12 v 65 l -28 24 v 80"
+  );
+}
+
+@keyframes leftrightline-animation-path {
+  0% {
+    offset-distance: 0%;
+  }
+  60% {
+    offset-distance: 100%;
+  }
+  100% {
+    offset-distance: 100%;
+  }
+}
+

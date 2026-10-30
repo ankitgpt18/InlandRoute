@@ -1,4 +1,4 @@
-// ============================================================
+﻿// ============================================================
 // InlandRoute - Inland Waterway Navigability Prediction
 // Comprehensive Mock Data for Development & Fallback
 // ============================================================
@@ -141,17 +141,17 @@ function pseudoRandom(seed: number): number {
 const NOW_ISO = new Date("2024-08-15T12:00:00Z").toISOString(); // Static date for hydration
 
 // ============================================================
-// NW-1 GANGA — GeoJSON (20 segments, Allahabad → Kolkata corridor)
+// NW-1 GANGA  -  GeoJSON (20 segments, Allahabad → Kolkata corridor)
 // Approximate centreline coordinates along Ganga
 // ============================================================
 
-// Base depths at peak monsoon (Aug) for each segment — realistic values in metres
+// Base depths at peak monsoon (Aug) for each segment  -  realistic values in metres
 const NW1_BASE_DEPTHS_AUG = [
   6.2, 5.8, 7.1, 4.9, 5.3, 6.8, 4.2, 3.8, 5.6, 6.4, 5.0, 4.5, 6.1, 5.7, 4.3,
   3.9, 5.2, 6.0, 4.8, 5.5,
 ];
 
-// Approx coordinates along Ganga (lng, lat) — 20 waypoints Allahabad to Kolkata
+// Approx coordinates along Ganga (lng, lat)  -  20 waypoints Allahabad to Kolkata
 const NW1_WAYPOINTS: [number, number][] = [
   [81.84, 25.45], // Allahabad / Prayagraj
   [82.0, 25.4],
@@ -267,7 +267,7 @@ export function buildNW1GeoJSON(
 }
 
 // ============================================================
-// NW-2 BRAHMAPUTRA — GeoJSON (15 segments, Dhubri → Dibrugarh)
+// NW-2 BRAHMAPUTRA  -  GeoJSON (15 segments, Dhubri → Dibrugarh)
 // ============================================================
 
 const NW2_BASE_DEPTHS_AUG = [
@@ -355,7 +355,7 @@ export function buildNW2GeoJSON(
 }
 
 // ============================================================
-// NW-3, NW-4, NW-5 — GeoJSON Builders
+// NW-3, NW-4, NW-5  -  GeoJSON Builders
 // ============================================================
 
 export function buildNW3GeoJSON(month: number = 8, year: number = 2024): RiverGeoJSON {
@@ -460,7 +460,7 @@ export function buildNW5GeoJSON(month: number = 8, year: number = 2024): RiverGe
 }
 
 // ============================================================
-// NAVIGABILITY MAP — NW-1 to NW-5
+// NAVIGABILITY MAP  -  NW-1 to NW-5
 // ============================================================
 
 export function buildNavigabilityMap(
@@ -693,7 +693,7 @@ export const MOCK_ALERTS_NW1: RiskAlert[] = [
     km_end: 410,
     severity: "CRITICAL",
     alert_type: "DEPTH_CRITICAL",
-    title: "Critical Depth Deficiency — Ballia Reach",
+    title: "Critical Depth Deficiency  -  Ballia Reach",
     description:
       "Predicted depth of 1.41 m falls critically below the 2.0 m minimum threshold. " +
       "All commercial vessel movements should be suspended immediately.",
@@ -721,7 +721,7 @@ export const MOCK_ALERTS_NW1: RiskAlert[] = [
     km_end: 460,
     severity: "CRITICAL",
     alert_type: "SEASONAL_CLOSURE",
-    title: "Seasonal Navigability Closure — Chhapra Reach",
+    title: "Seasonal Navigability Closure  -  Chhapra Reach",
     description:
       "Predicted depth of 1.71 m. Seasonal low-water conditions expected to persist for 6–8 weeks.",
     predicted_value: 1.71,
@@ -747,7 +747,7 @@ export const MOCK_ALERTS_NW1: RiskAlert[] = [
     km_end: 260,
     severity: "WARNING",
     alert_type: "DEPTH_WARNING",
-    title: "Depth Below Advisory Level — Varanasi Reach",
+    title: "Depth Below Advisory Level  -  Varanasi Reach",
     description:
       "Predicted depth of 2.28 m is approaching the 3.0 m navigable threshold. " +
       "Vessel operators advised to exercise caution and reduce draft.",
@@ -774,7 +774,7 @@ export const MOCK_ALERTS_NW1: RiskAlert[] = [
     km_end: 790,
     severity: "WARNING",
     alert_type: "VELOCITY_HIGH",
-    title: "Elevated Current Velocity — Kahalgaon Reach",
+    title: "Elevated Current Velocity  -  Kahalgaon Reach",
     description:
       "River current velocity of 2.1 m/s exceeds safe navigation threshold (1.5 m/s) " +
       "following upstream discharge from Farakka Barrage.",
@@ -801,7 +801,7 @@ export const MOCK_ALERTS_NW1: RiskAlert[] = [
     km_end: 960,
     severity: "INFO",
     alert_type: "FLOOD_RISK",
-    title: "Elevated Flood Risk — Murshidabad Reach",
+    title: "Elevated Flood Risk  -  Murshidabad Reach",
     description:
       "Water level 0.8 m above HFL recorded at Murshidabad gauge. " +
       "Floodplain inundation may affect bank infrastructure.",
@@ -830,7 +830,7 @@ export const MOCK_ALERTS_NW2: RiskAlert[] = [
     km_end: 525,
     severity: "WARNING",
     alert_type: "OBSTACLE_DETECTED",
-    title: "Sand Bar Formation — Majuli Island Reach",
+    title: "Sand Bar Formation  -  Majuli Island Reach",
     description:
       "Satellite imagery indicates dynamic sand bar formation at km 489. " +
       "Effective navigable width reduced to ~210 m.",
@@ -857,7 +857,7 @@ export const MOCK_ALERTS_NW2: RiskAlert[] = [
     km_end: 175,
     severity: "INFO",
     alert_type: "DEPTH_WARNING",
-    title: "Seasonal Depth Reduction — Jogighopa Reach",
+    title: "Seasonal Depth Reduction  -  Jogighopa Reach",
     description:
       "Post-monsoon depth reduction trend detected. Depth forecast to approach " +
       "3.0 m threshold within 3 weeks.",
@@ -1089,7 +1089,7 @@ export const MOCK_FEATURE_IMPORTANCE: FeatureImportance = {
       direction: "positive",
       category: "spectral",
       description:
-        "Most influential predictor — higher MNDWI strongly indicates greater water extent and depth.",
+        "Most influential predictor  -  higher MNDWI strongly indicates greater water extent and depth.",
     },
     {
       feature_name: "stumpf_ratio",
@@ -1127,7 +1127,7 @@ export const MOCK_FEATURE_IMPORTANCE: FeatureImportance = {
       direction: "mixed",
       category: "temporal",
       description:
-        "Captures strong seasonality — monsoon months (Jun–Sep) dominate navigability.",
+        "Captures strong seasonality  -  monsoon months (Jun–Sep) dominate navigability.",
     },
     {
       feature_name: "upstream_discharge",
@@ -1248,7 +1248,7 @@ export const MOCK_MODEL_METRICS: ModelMetrics = {
 };
 
 // ============================================================
-// CONVENIENCE EXPORTS — pre-built for current month/year
+// CONVENIENCE EXPORTS  -  pre-built for current month/year
 // ============================================================
 
 const CURRENT_MONTH = (new Date().getMonth() + 1) as Month;

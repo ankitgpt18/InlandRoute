@@ -1,3 +1,7 @@
+<p align="center">
+  <img src="frontend/public/logo.svg" alt="InlandRoute Logo" width="180" />
+</p>
+
 # InlandRoute
 
 > **Predicting Inland Waterway Navigability Using Satellite Remote Sensing and Deep Learning**

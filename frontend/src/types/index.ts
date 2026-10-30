@@ -1,5 +1,5 @@
-// ============================================================
-// AIDSTL — Inland Waterway Navigability Prediction
+﻿// ============================================================
+// AIDSTL  -  Inland Waterway Navigability Prediction
 // TypeScript Type Definitions (Aligned 1:1 with Backend Pydantic Schemas)
 // ============================================================
 

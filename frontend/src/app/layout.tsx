@@ -7,8 +7,7 @@ import type { Metadata, Viewport } from 'next';
 import { Inter, JetBrains_Mono } from 'next/font/google';
 import './globals.css';
 import { Providers } from '@/components/layout/providers';
-import { Sidebar } from '@/components/layout/sidebar';
-import { Header } from '@/components/layout/header';
+import { AppShell } from '@/components/layout/app-shell';
 
 // ─── Fonts ────────────────────────────────────────────────────────────────────
 
@@ -34,11 +33,12 @@ export const metadata: Metadata = {
     template: '%s | InlandRoute',
   },
   description:
-    'AI-powered inland waterway navigability prediction for India\'s National Waterways using Sentinel-2 satellite imagery and deep learning.',
+    'Inland waterway navigability prediction for India\'s National Waterways using Sentinel-2 satellite imagery and deep learning.',
   keywords: [
     'inland waterways',
     'navigability prediction',
     'satellite remote sensing',
+    'bathymetry',
     'deep learning',
     'Ganga',
     'Brahmaputra',
@@ -48,22 +48,21 @@ export const metadata: Metadata = {
     'India',
   ],
   authors: [
-    { name: 'Dev Yadav' },
-    { name: 'Chakshu Vashisth' },
-    { name: 'Ankit Gupta' },
+    { name: 'InlandRoute Team' },
   ],
-  creator: 'Gati Shakti Vishwavidyalaya, Vadodara',
+  creator: 'InlandRoute',
   openGraph: {
     type: 'website',
     locale: 'en_IN',
     title: 'InlandRoute - Inland Waterway Navigability Prediction',
     description:
-      'Predict navigability of India\'s inland waterways using satellite imagery and AI.',
+      'Predict navigability of India\'s inland waterways using satellite imagery and hydrodynamics.',
     siteName: 'InlandRoute',
   },
   icons: {
-    icon: '/favicon.svg',
+    icon: '/logo.svg',
     shortcut: '/favicon.svg',
+    apple: '/logo.png',
   },
   robots: {
     index: true,
@@ -72,7 +71,7 @@ export const metadata: Metadata = {
 };
 
 export const viewport: Viewport = {
-  themeColor: '#020817',
+  themeColor: '#000000',
   width: 'device-width',
   initialScale: 1,
   colorScheme: 'dark',
@@ -91,46 +90,12 @@ export default function RootLayout({ children }: RootLayoutProps) {
       className={`${inter.variable} ${jetbrainsMono.variable} dark`}
       suppressHydrationWarning
     >
-      <body className="bg-zinc-950 text-zinc-100 antialiased font-sans overflow-hidden">
+      <body className="bg-black text-white antialiased font-sans">
         <Providers>
-          {/* App Shell */}
-          <div className="flex h-screen w-screen overflow-hidden">
-            {/* Sidebar */}
-            <Sidebar />
-
-            {/* Main Content Area */}
-            <div className="flex flex-col flex-1 min-w-0 overflow-hidden">
-              {/* Top Header */}
-              <Header />
-
-              {/* Page Content */}
-              <main className="flex-1 overflow-y-auto overflow-x-hidden thin-scrollbar relative">
-                {/* Subtle background pattern */}
-                <div
-                  className="absolute inset-0 pointer-events-none"
-                  style={{
-                    backgroundImage:
-                      'radial-gradient(rgba(15,23,42,0.025) 1px, transparent 1px)',
-                    backgroundSize: '28px 28px',
-                  }}
-                  aria-hidden="true"
-                />
-                {/* Waterway gradient accent — top */}
-                <div
-                  className="absolute top-0 left-0 right-0 h-48 pointer-events-none"
-                  style={{
-                    background:
-                      'linear-gradient(180deg, rgba(3,105,161,0.06) 0%, transparent 100%)',
-                  }}
-                  aria-hidden="true"
-                />
-
-                <div className="relative z-10">{children}</div>
-              </main>
-            </div>
-          </div>
+          <AppShell>{children}</AppShell>
         </Providers>
       </body>
     </html>
   );
 }
+

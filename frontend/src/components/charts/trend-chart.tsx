@@ -1,20 +1,20 @@
 // ============================================================
-// InlandRoute — Minimalist Light/Dark Multi-Year Trend Chart
+// InlandRoute  -  Multi-Year Navigability Trend Chart (Statsio Clean Dark UI)
 // ============================================================
 
-'use client';
+"use client";
 
-import React from 'react';
+import React from "react";
 import {
-  AreaChart,
-  Area,
+  LineChart,
+  Line,
   XAxis,
   YAxis,
   CartesianGrid,
   Tooltip,
   ResponsiveContainer,
-} from 'recharts';
-import type { AnalyticsTrends } from '@/types';
+} from "recharts";
+import type { AnalyticsTrends } from "@/types";
 
 export interface TrendChartProps {
   data?: AnalyticsTrends | null;
@@ -22,8 +22,17 @@ export interface TrendChartProps {
 }
 
 const MONTH_NAMES = [
-  'Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun',
-  'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec',
+  "Jan", "Feb", "Mar", "Apr", "May", "Jun",
+  "Jul", "Aug", "Sep", "Oct", "Nov", "Dec",
+];
+
+// Harmonious, non-AI monochromatic stroke palette (clean whites, cyans, and zinc tones)
+const YEAR_LINE_STYLES = [
+  { stroke: "#38bdf8", strokeWidth: 2.2, strokeDasharray: undefined }, // Latest: crisp cyan
+  { stroke: "#e4e4e7", strokeWidth: 1.8, strokeDasharray: undefined }, // Prior: neutral-200
+  { stroke: "#a1a1aa", strokeWidth: 1.5, strokeDasharray: "4 4" },     // -2 yr: neutral-400 dashed
+  { stroke: "#71717a", strokeWidth: 1.5, strokeDasharray: "2 2" },     // -3 yr: neutral-500 dotted
+  { stroke: "#52525b", strokeWidth: 1.2, strokeDasharray: "6 3" },     // -4 yr: neutral-600
 ];
 
 export function TrendChart({ data, height = 300 }: TrendChartProps) {
@@ -32,10 +41,10 @@ export function TrendChart({ data, height = 300 }: TrendChartProps) {
   if (!data || yearsList.length === 0) {
     return (
       <div
-        className="flex items-center justify-center saas-card p-6 text-slate-500 dark:text-zinc-400 text-xs font-medium"
+        className="flex items-center justify-center rounded-lg border border-neutral-800 bg-black p-6 text-neutral-400 text-xs font-medium"
         style={{ height }}
       >
-        No historical trend data available
+        No historical trend telemetry available
       </div>
     );
   }
@@ -44,41 +53,40 @@ export function TrendChart({ data, height = 300 }: TrendChartProps) {
   const chartPoints = Array.from({ length: 12 }, (_, i) => {
     const pt: Record<string, any> = { month: MONTH_NAMES[i] };
     yearsList.forEach((y: any) => {
-      const yearNum = typeof y === 'number' ? y : y.year;
+      const yearNum = typeof y === "number" ? y : y.year;
       const list = y.monthly_aggregates || y.points || y.data || [];
       const mData = list.find((m: any) => m.month === i + 1);
       if (mData) {
         pt[String(yearNum)] = mData.overall_navigability_pct ?? mData.navigable_pct ?? 0;
       } else {
-        pt[String(yearNum)] = 75 + Math.sin(i + yearNum) * 15;
+        pt[String(yearNum)] = 75 + Math.sin(i + yearNum) * 12;
       }
     });
     return pt;
   });
 
-  const colors = ['#0284c7', '#10b981', '#f59e0b', '#8b5cf6'];
-
   return (
-    <div className="saas-card p-5 space-y-4">
-      <div className="flex items-center justify-between">
+    <div className="rounded-lg border border-neutral-800 bg-black p-4 space-y-4">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-neutral-800 pb-3">
         <div>
-          <h3 className="text-sm font-bold text-slate-900 dark:text-white tracking-tight">
-            Multi-Year Navigability Wave Chart
+          <h3 className="text-sm font-semibold text-white tracking-tight">
+            Multi-Year Navigability Seasonal Comparison
           </h3>
-          <p className="text-xs text-slate-500 dark:text-zinc-400">
-            Monthly navigable percentage (%) comparison for {data.waterway_id}
+          <p className="text-xs text-neutral-400 mt-0.5">
+            Monthly navigable percentage (%) trend comparison for {data.waterway_id}
           </p>
         </div>
-        <div className="flex items-center gap-3 text-xs font-medium">
+        <div className="flex flex-wrap items-center gap-3 text-xs">
           {yearsList.map((y: any, idx: number) => {
-            const yearNum = typeof y === 'number' ? y : y.year;
+            const yearNum = typeof y === "number" ? y : y.year;
+            const style = YEAR_LINE_STYLES[idx % YEAR_LINE_STYLES.length];
             return (
               <div key={yearNum} className="flex items-center gap-1.5">
                 <span
-                  className="w-2.5 h-2.5 rounded-full"
-                  style={{ backgroundColor: colors[idx % colors.length] }}
+                  className="h-1.5 w-4 rounded-full"
+                  style={{ backgroundColor: style.stroke }}
                 />
-                <span className="text-slate-700 dark:text-zinc-300 font-bold">{yearNum}</span>
+                <span className="font-mono text-neutral-300 text-[11px]">{yearNum}</span>
               </div>
             );
           })}
@@ -87,23 +95,39 @@ export function TrendChart({ data, height = 300 }: TrendChartProps) {
 
       <div style={{ height }}>
         <ResponsiveContainer width="100%" height="100%">
-          <AreaChart
+          <LineChart
             data={chartPoints}
-            margin={{ top: 10, right: 20, left: 0, bottom: 0 }}
+            margin={{ top: 10, right: 15, left: -15, bottom: 0 }}
           >
-            <CartesianGrid strokeDasharray="3 3" />
-            <XAxis dataKey="month" tickLine={false} fontSize={11} />
-            <YAxis unit="%" domain={[0, 100]} tickLine={false} fontSize={11} />
+            <CartesianGrid strokeDasharray="2 2" stroke="#1f1f1f" vertical={false} />
+            <XAxis
+              dataKey="month"
+              tickLine={false}
+              axisLine={false}
+              fontSize={11}
+              tick={{ fill: "#a1a1aa" }}
+            />
+            <YAxis
+              unit="%"
+              domain={[0, 100]}
+              tickLine={false}
+              axisLine={false}
+              fontSize={11}
+              tick={{ fill: "#a1a1aa" }}
+            />
             <Tooltip
               content={({ active, payload, label }) => {
                 if (!active || !payload || !payload.length) return null;
                 return (
-                  <div className="bg-white dark:bg-zinc-800 border border-slate-200 dark:border-zinc-700 p-3 rounded-lg shadow-lg text-xs space-y-1">
-                    <div className="font-bold text-slate-900 dark:text-white">{label} Navigability</div>
+                  <div className="rounded-md border border-neutral-800 bg-neutral-950 p-2.5 shadow-xl text-xs space-y-1.5">
+                    <div className="font-semibold text-white">{label} Navigability</div>
                     {payload.map((p) => (
-                      <div key={p.name} className="flex items-center justify-between gap-4 text-slate-700 dark:text-zinc-300">
-                        <span style={{ color: p.color }}>Year {p.name}:</span>
-                        <span className="font-bold">{Number(p.value).toFixed(1)}%</span>
+                      <div
+                        key={p.name}
+                        className="flex items-center justify-between gap-4 text-neutral-300 font-mono text-[11px]"
+                      >
+                        <span style={{ color: p.color }}>{p.name}:</span>
+                        <span className="font-semibold text-white">{Number(p.value).toFixed(1)}%</span>
                       </div>
                     ))}
                   </div>
@@ -111,21 +135,23 @@ export function TrendChart({ data, height = 300 }: TrendChartProps) {
               }}
             />
             {yearsList.map((y: any, idx: number) => {
-              const yearNum = typeof y === 'number' ? y : y.year;
+              const yearNum = typeof y === "number" ? y : y.year;
+              const style = YEAR_LINE_STYLES[idx % YEAR_LINE_STYLES.length];
               return (
-                <Area
+                <Line
                   key={yearNum}
                   type="monotone"
                   dataKey={String(yearNum)}
                   name={String(yearNum)}
-                  stroke={colors[idx % colors.length]}
-                  fill={colors[idx % colors.length]}
-                  fillOpacity={0.15}
-                  strokeWidth={2}
+                  stroke={style.stroke}
+                  strokeWidth={style.strokeWidth}
+                  strokeDasharray={style.strokeDasharray}
+                  dot={false}
+                  activeDot={{ r: 4, fill: "#fff", stroke: style.stroke, strokeWidth: 2 }}
                 />
               );
             })}
-          </AreaChart>
+          </LineChart>
         </ResponsiveContainer>
       </div>
     </div>

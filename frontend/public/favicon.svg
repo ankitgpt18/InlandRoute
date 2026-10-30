@@ -1,18 +1,34 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" fill="none">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" fill="none">
   <defs>
-    <linearGradient id="bg" x1="0" y1="0" x2="64" y2="64">
-      <stop offset="0%" stop-color="#0369a1"/>
-      <stop offset="100%" stop-color="#0ea5e9"/>
+    <linearGradient id="fav-bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#18181b" />
+      <stop offset="100%" stop-color="#050507" />
     </linearGradient>
-    <linearGradient id="wave" x1="0" y1="0" x2="64" y2="0">
-      <stop offset="0%" stop-color="#bae6fd"/>
-      <stop offset="100%" stop-color="#f0f9ff"/>
+    <linearGradient id="fav-border" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#38bdf8" />
+      <stop offset="100%" stop-color="#0284c7" />
     </linearGradient>
+    <linearGradient id="fav-river" x1="15%" y1="10%" x2="85%" y2="90%">
+      <stop offset="0%" stop-color="#38bdf8" />
+      <stop offset="50%" stop-color="#0284c7" />
+      <stop offset="100%" stop-color="#2563eb" />
+    </linearGradient>
+    <radialGradient id="fav-glow" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#38bdf8" stop-opacity="1" />
+      <stop offset="100%" stop-color="#0284c7" stop-opacity="0" />
+    </radialGradient>
   </defs>
-  <rect width="64" height="64" rx="14" fill="url(#bg)"/>
-  <path d="M8 36 C16 28, 24 28, 32 36 C40 44, 48 44, 56 36" stroke="url(#wave)" stroke-width="4" stroke-linecap="round" fill="none" opacity="0.5"/>
-  <path d="M8 30 C16 22, 24 22, 32 30 C40 38, 48 38, 56 30" stroke="url(#wave)" stroke-width="4" stroke-linecap="round" fill="none" opacity="0.75"/>
-  <path d="M8 24 C16 16, 24 16, 32 24 C40 32, 48 32, 56 24" stroke="white" stroke-width="4.5" stroke-linecap="round" fill="none"/>
-  <circle cx="32" cy="18" r="3.5" fill="white" opacity="0.9"/>
-  <path d="M32 18 L32 12 M32 12 L29 15" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" opacity="0.9"/>
+
+  <rect x="24" y="24" width="464" height="464" rx="112" fill="url(#fav-bg)" stroke="url(#fav-border)" stroke-width="8" />
+  <circle cx="256" cy="256" r="160" fill="url(#fav-glow)" opacity="0.2" />
+
+  <!-- Outer River Channel Ribbon -->
+  <path d="M 116 112 C 180 180, 204 294, 276 294 C 336 294, 362 220, 416 264 C 402 284, 344 340, 260 334 C 184 328, 140 224, 116 112 Z" fill="url(#fav-river)" />
+  <!-- Centerline navigation fairway -->
+  <path d="M 148 132 C 196 200, 216 280, 272 280 C 324 280, 350 234, 388 260" stroke="#f8fafc" stroke-width="12" stroke-linecap="round" />
+
+  <!-- Radar Target / Beacon Signal Point -->
+  <circle cx="366" cy="168" r="28" fill="#38bdf8" opacity="0.35" />
+  <circle cx="366" cy="168" r="16" fill="#38bdf8" />
+  <circle cx="366" cy="168" r="7" fill="#ffffff" />
 </svg>

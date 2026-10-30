@@ -1,5 +1,5 @@
-// ============================================================
-// InlandRoute — High-Precision Vessel Navigation Pathfinding Engine
+﻿// ============================================================
+// InlandRoute  -  High-Precision Vessel Navigation Pathfinding Engine
 // (A* / Dijkstra Waterway Least-Cost Path Routing & Fuel/ETA Calculator)
 // ============================================================
 

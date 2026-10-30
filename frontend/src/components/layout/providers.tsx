@@ -1,5 +1,5 @@
-// ============================================================
-// AIDSTL — Inland Waterway Navigability Prediction System
+﻿// ============================================================
+// AIDSTL  -  Inland Waterway Navigability Prediction System
 // Client-side Providers Wrapper
 // ============================================================
 
@@ -19,7 +19,7 @@ function makeQueryClient(): QueryClient {
   return new QueryClient({
     defaultOptions: {
       queries: {
-        // Data considered fresh for 5 minutes — satellite data doesn't change second-to-second
+        // Data considered fresh for 5 minutes  -  satellite data doesn't change second-to-second
         staleTime: 5 * 60 * 1000,
         // Keep in cache for 30 minutes after all observers unmount
         gcTime: 30 * 60 * 1000,
@@ -65,8 +65,8 @@ interface ProvidersProps {
 /**
  * Wraps the entire application with all necessary client-side providers:
  *
- * - TanStack QueryClientProvider   — server-state caching & synchronisation
- * - ReactQueryDevtools              — visible only in development
+ * - TanStack QueryClientProvider    -  server-state caching & synchronisation
+ * - ReactQueryDevtools               -  visible only in development
  *
  * Add additional providers here (e.g. Toaster, Theme) as the app grows.
  */
@@ -80,7 +80,7 @@ export function Providers({ children }: ProvidersProps) {
     <QueryClientProvider client={queryClient}>
       {children}
 
-      {/* React Query DevTools — only rendered in development builds */}
+      {/* React Query DevTools  -  only rendered in development builds */}
       {process.env.NODE_ENV === 'development' && (
         <ReactQueryDevtools
           initialIsOpen={false}
